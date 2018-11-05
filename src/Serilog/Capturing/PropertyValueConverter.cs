@@ -86,17 +86,17 @@ namespace Serilog.Capturing
             _depthLimiter = new DepthLimiter(maximumDestructuringDepth, this);
         }
 
-        public LogEventProperty CreateProperty(string name, object value, bool destructureObjects = false)
+        public LogEventProperty CreateProperty(in string name, in object value, in bool destructureObjects = false)
         {
             return new LogEventProperty(name, CreatePropertyValue(value, destructureObjects));
         }
 
-        public LogEventPropertyValue CreatePropertyValue(object value, bool destructureObjects = false)
+        public LogEventPropertyValue CreatePropertyValue(in object value, in bool destructureObjects = false)
         {
             return CreatePropertyValue(value, destructureObjects, 1);
         }
 
-        public LogEventPropertyValue CreatePropertyValue(object value, Destructuring destructuring)
+        public LogEventPropertyValue CreatePropertyValue(in object value, in Destructuring destructuring)
         {
             try
             {
@@ -113,7 +113,7 @@ namespace Serilog.Capturing
             }
         }
 
-        LogEventPropertyValue CreatePropertyValue(object value, bool destructureObjects, int depth)
+        LogEventPropertyValue CreatePropertyValue(in object value, in bool destructureObjects, in int depth)
         {
             return CreatePropertyValue(
                 value,
@@ -123,7 +123,7 @@ namespace Serilog.Capturing
                 depth);
         }
 
-        LogEventPropertyValue CreatePropertyValue(object value, Destructuring destructuring, int depth)
+        LogEventPropertyValue CreatePropertyValue(object value, in Destructuring destructuring, in int depth)
         {
             if (value == null)
                 return new ScalarValue(null);
@@ -171,7 +171,7 @@ namespace Serilog.Capturing
             return new ScalarValue(value.ToString());
         }        
 
-        bool TryConvertEnumerable(object value, Destructuring destructuring, Type valueType, out LogEventPropertyValue result)
+        bool TryConvertEnumerable(in object value, in Destructuring destructuring, in Type valueType, out LogEventPropertyValue result)
         {
             if (value is IEnumerable enumerable)
             {
@@ -230,7 +230,7 @@ namespace Serilog.Capturing
             return false;
         }
 
-        bool TryConvertValueTuple(object value, Destructuring destructuring, Type valueType, out LogEventPropertyValue result)
+        bool TryConvertValueTuple(in object value, in Destructuring destructuring, in Type valueType, out LogEventPropertyValue result)
         {
             if (!(value is IStructuralEquatable && valueType.IsConstructedGenericType))
             {
@@ -274,7 +274,7 @@ namespace Serilog.Capturing
             return false;
         }
 
-        bool TryConvertCompilerGeneratedType(object value, Destructuring destructuring, Type valueType, out LogEventPropertyValue result)
+        bool TryConvertCompilerGeneratedType(in object value, in Destructuring destructuring, in Type valueType, out LogEventPropertyValue result)
         {
             if (destructuring == Destructuring.Destructure)
             {
@@ -309,7 +309,7 @@ namespace Serilog.Capturing
             return text;
         }
 
-        bool TryGetDictionary(object value, Type valueType, out IDictionary dictionary)
+        bool TryGetDictionary(in object value, in Type valueType, out IDictionary dictionary)
         {
             if (valueType.IsConstructedGenericType &&
                 valueType.GetGenericTypeDefinition() == typeof(Dictionary<,>) &&
@@ -323,7 +323,7 @@ namespace Serilog.Capturing
             return false;
         }
 
-        bool IsValidDictionaryKeyType(Type valueType)
+        bool IsValidDictionaryKeyType(in Type valueType)
         {
             return BuiltInScalarTypes.Contains(valueType) ||
                    valueType.GetTypeInfo().IsEnum;
@@ -359,7 +359,7 @@ namespace Serilog.Capturing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool IsCompilerGeneratedType(Type type)
+        internal static bool IsCompilerGeneratedType(in Type type)
         {
             var typeInfo = type.GetTypeInfo();
             var typeName = type.Name;

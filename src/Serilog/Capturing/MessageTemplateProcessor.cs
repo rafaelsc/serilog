@@ -26,19 +26,19 @@ namespace Serilog.Capturing
         readonly PropertyBinder _propertyBinder;
         readonly PropertyValueConverter _propertyValueConverter;
 
-        public MessageTemplateProcessor(PropertyValueConverter propertyValueConverter)
+        public MessageTemplateProcessor(in PropertyValueConverter propertyValueConverter)
         {
             _propertyValueConverter = propertyValueConverter;
             _propertyBinder = new PropertyBinder(_propertyValueConverter);
         }
 
-        public void Process(string messageTemplate, object[] messageTemplateParameters, out MessageTemplate parsedTemplate, out IEnumerable<LogEventProperty> properties)
+        public void Process(in string messageTemplate, in object[] messageTemplateParameters, out MessageTemplate parsedTemplate, out IEnumerable<LogEventProperty> properties)
         {
             parsedTemplate = _parser.Parse(messageTemplate);
             properties = _propertyBinder.ConstructProperties(parsedTemplate, messageTemplateParameters);
         }
 
-        public LogEventProperty CreateProperty(string name, object value, bool destructureObjects = false)
+        public LogEventProperty CreateProperty(in string name, in object value, in bool destructureObjects = false)
         {
             return _propertyValueConverter.CreateProperty(name, value, destructureObjects);
         }

@@ -8,13 +8,12 @@ namespace Serilog.Tests.Support
     {
         readonly Action<LogEvent, ILogEventPropertyFactory> _enrich;
 
-        public DelegatingEnricher(Action<LogEvent, ILogEventPropertyFactory> enrich)
+        public DelegatingEnricher(in Action<LogEvent, ILogEventPropertyFactory> enrich)
         {
-            if (enrich == null) throw new ArgumentNullException(nameof(enrich));
-            _enrich = enrich;
+            _enrich = enrich ?? throw new ArgumentNullException(nameof(enrich));
         }
 
-        public void Enrich(in LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
+        public void Enrich(in LogEvent logEvent, in ILogEventPropertyFactory propertyFactory)
         {
             _enrich(logEvent, propertyFactory);
         }

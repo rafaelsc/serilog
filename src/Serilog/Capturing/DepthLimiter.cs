@@ -31,7 +31,7 @@ namespace Serilog.Capturing
             readonly int _maximumDestructuringDepth;
             readonly PropertyValueConverter _propertyValueConverter;
 
-            public DepthLimiter(int maximumDepth, PropertyValueConverter propertyValueConverter)
+            public DepthLimiter(in int maximumDepth, in PropertyValueConverter propertyValueConverter)
             {
                 _maximumDestructuringDepth = maximumDepth;
                 _propertyValueConverter = propertyValueConverter;
@@ -42,7 +42,7 @@ namespace Serilog.Capturing
                 _currentDepth = depth;
             }
 
-            public LogEventPropertyValue CreatePropertyValue(object value, Destructuring destructuring)
+            public LogEventPropertyValue CreatePropertyValue(in object value, in Destructuring destructuring)
             {
                 var storedDepth = _currentDepth;
 
@@ -54,7 +54,7 @@ namespace Serilog.Capturing
                 return result;
             }
 
-            LogEventPropertyValue ILogEventPropertyValueFactory.CreatePropertyValue(object value, bool destructureObjects)
+            LogEventPropertyValue ILogEventPropertyValueFactory.CreatePropertyValue(in object value, in bool destructureObjects)
             {
                 var storedDepth = _currentDepth;
 
@@ -66,7 +66,7 @@ namespace Serilog.Capturing
                 return result;
             }
 
-            LogEventPropertyValue DefaultIfMaximumDepth(int depth)
+            LogEventPropertyValue DefaultIfMaximumDepth(in int depth)
             {
                 if (depth == _maximumDestructuringDepth)
                 {
