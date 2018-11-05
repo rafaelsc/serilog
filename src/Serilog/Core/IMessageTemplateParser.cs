@@ -18,6 +18,6 @@ namespace Serilog.Core
 {
     interface IMessageTemplateParser
     {
-        MessageTemplate Parse(string messageTemplate);
+        MessageTemplate Parse(in string messageTemplate);
     }
 }

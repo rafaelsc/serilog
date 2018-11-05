@@ -37,13 +37,13 @@ namespace Serilog.Core.Pipeline
         const int MaxCacheItems = 1000;
         const int MaxCachedTemplateLength = 1024;
 
-        public MessageTemplateCache(IMessageTemplateParser innerParser)
+        public MessageTemplateCache(in IMessageTemplateParser innerParser)
         {
             if (innerParser == null) throw new ArgumentNullException(nameof(innerParser));
             _innerParser = innerParser;
         }
 
-        public MessageTemplate Parse(string messageTemplate)
+        public MessageTemplate Parse(in string messageTemplate)
         {
             if (messageTemplate == null) throw new ArgumentNullException(nameof(messageTemplate));
 

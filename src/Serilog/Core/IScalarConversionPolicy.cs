@@ -14,6 +14,6 @@ namespace Serilog.Core
         /// <param name="value">The value to convert.</param>
         /// <param name="result">The converted value, or null.</param>
         /// <returns>True if the value could be converted under this policy.</returns>
-        bool TryConvertToScalar(object value, out ScalarValue result);
+        bool TryConvertToScalar(in object value, out ScalarValue result);
     }
 }

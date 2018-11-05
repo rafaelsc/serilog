@@ -23,12 +23,12 @@ namespace Serilog.Policies
     {
         readonly HashSet<Type> _scalarTypes;
 
-        public SimpleScalarConversionPolicy(IEnumerable<Type> scalarTypes)
+        public SimpleScalarConversionPolicy(in IEnumerable<Type> scalarTypes)
         {
             _scalarTypes = new HashSet<Type>(scalarTypes);
         }
 
-        public bool TryConvertToScalar(object value, out ScalarValue result)
+        public bool TryConvertToScalar(in object value, out ScalarValue result)
         {
             if (_scalarTypes.Contains(value.GetType()))
             {
