@@ -30,13 +30,13 @@ namespace Serilog.Core.Enrichers
             _enrichers = enrichers.ToArray();
         }
 
-        public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
+        public void Enrich(in LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
             foreach (var enricher in _enrichers)
             {
                 try
                 {
-                    enricher.Enrich(logEvent, propertyFactory);
+                    enricher.Enrich(in logEvent, propertyFactory);
                 }
                 catch (Exception ex)
                 {

@@ -14,7 +14,7 @@ namespace Serilog.Tests.Support
             _enrich = enrich;
         }
 
-        public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
+        public void Enrich(in LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
             _enrich(logEvent, propertyFactory);
         }
