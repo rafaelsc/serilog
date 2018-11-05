@@ -23,7 +23,7 @@ namespace Serilog.Policies
         readonly Func<Type, bool> _canApply;
         readonly Func<object, object> _projection;
 
-        public ProjectedDestructuringPolicy(Func<Type, bool> canApply, Func<object, object> projection)
+        public ProjectedDestructuringPolicy(in Func<Type, bool> canApply, in Func<object, object> projection)
         {
             if (canApply == null) throw new ArgumentNullException(nameof(canApply));
             if (projection == null) throw new ArgumentNullException(nameof(projection));
@@ -31,7 +31,7 @@ namespace Serilog.Policies
             _projection = projection;
         }
 
-        public bool TryDestructure(object value, ILogEventPropertyValueFactory propertyValueFactory, out LogEventPropertyValue result)
+        public bool TryDestructure(in object value, in ILogEventPropertyValueFactory propertyValueFactory, out LogEventPropertyValue result)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
 

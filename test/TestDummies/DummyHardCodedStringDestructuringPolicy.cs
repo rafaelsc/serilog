@@ -8,12 +8,12 @@ namespace TestDummies
     {
         readonly string _hardCodedString;
 
-        public DummyHardCodedStringDestructuringPolicy(string hardCodedString)
+        public DummyHardCodedStringDestructuringPolicy(in string hardCodedString)
         {
             _hardCodedString = hardCodedString ?? throw new ArgumentNullException(nameof(hardCodedString));
         }
 
-        public bool TryDestructure(object value, ILogEventPropertyValueFactory propertyValueFactory, out LogEventPropertyValue result)
+        public bool TryDestructure(in object value, in ILogEventPropertyValueFactory propertyValueFactory, out LogEventPropertyValue result)
         {
             result = new ScalarValue(_hardCodedString);
             return true;

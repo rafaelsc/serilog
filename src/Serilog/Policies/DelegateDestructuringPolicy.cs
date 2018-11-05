@@ -20,7 +20,7 @@ namespace Serilog.Policies
 {
     class DelegateDestructuringPolicy : IDestructuringPolicy
     {
-        public bool TryDestructure(object value, ILogEventPropertyValueFactory propertyValueFactory, out LogEventPropertyValue result)
+        public bool TryDestructure(in object value, in ILogEventPropertyValueFactory propertyValueFactory, out LogEventPropertyValue result)
         {
             var del = value as Delegate;
             if (del != null)
