@@ -28,7 +28,6 @@ namespace Serilog.Core.Enrichers
 
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
-            if (logEvent == null) throw new ArgumentNullException(nameof(logEvent));
             logEvent.AddPropertyIfAbsent(_logEventProperty);
         }
     }

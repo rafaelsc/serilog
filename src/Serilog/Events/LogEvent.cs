@@ -21,7 +21,7 @@ namespace Serilog.Events
     /// <summary>
     /// A log event.
     /// </summary>
-    public class LogEvent
+    public struct LogEvent
     {
         readonly Dictionary<string, LogEventPropertyValue> _properties;
 
@@ -37,6 +37,7 @@ namespace Serilog.Events
         {
             if (messageTemplate == null) throw new ArgumentNullException(nameof(messageTemplate));
             if (properties == null) throw new ArgumentNullException(nameof(properties));
+
             Timestamp = timestamp;
             Level = level;
             Exception = exception;

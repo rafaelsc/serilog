@@ -385,15 +385,12 @@ namespace Serilog.Core
         /// <param name="logEvent">The event to write.</param>
         public void Write(LogEvent logEvent)
         {
-            if (logEvent == null) return;
             if (!IsEnabled(logEvent.Level)) return;
             Dispatch(logEvent);
         }
 
         void ILogEventSink.Emit(LogEvent logEvent)
         {
-            if (logEvent == null) throw new ArgumentNullException(nameof(logEvent));
-
             // Bypasses the level check so that child loggers
             // using this one as a sink can increase verbosity.
             Dispatch(logEvent);

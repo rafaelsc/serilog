@@ -20,7 +20,7 @@ namespace Serilog.Tests.Settings
         [Fact]
         public void LastValueIsTakenWhenKeysAreDuplicate()
         {
-            LogEvent evt = null;
+            LogEvent evt = default;
             var log = new LoggerConfiguration()
                 .ReadFrom.KeyValuePairs(new List<KeyValuePair<string, string>>
                 {
@@ -49,7 +49,7 @@ namespace Serilog.Tests.Settings
         [Fact]
         public void PropertyEnrichmentIsApplied()
         {
-            LogEvent evt = null;
+            LogEvent evt = default;
             var log = new LoggerConfiguration()
                 .ReadFrom.KeyValuePairs(new Dictionary<string, string>
                 {
@@ -155,7 +155,7 @@ namespace Serilog.Tests.Settings
                 ["minimum-level:override:System"] = "Warning",
             };
 
-            LogEvent evt = null;
+            object evt = default;
 
             var log = new LoggerConfiguration()
                  .ReadFrom.KeyValuePairs(settings)
@@ -170,7 +170,7 @@ namespace Serilog.Tests.Settings
             systemLogger.Warning("Bad things");
             Assert.NotNull(evt);
 
-            evt = null;
+            evt = default;
             log.Write(Some.InformationEvent());
             Assert.NotNull(evt);
         }
@@ -220,7 +220,7 @@ namespace Serilog.Tests.Settings
                 ["minimum-level:controlled-by"] = "$switch1",
             };
 
-            LogEvent evt = null;
+            object evt = default;
 
             var log = new LoggerConfiguration()
                 .ReadFrom.KeyValuePairs(settings)
@@ -263,7 +263,7 @@ namespace Serilog.Tests.Settings
                 ["write-to:DummyWithLevelSwitch.controlLevelSwitch"] = "$switch1"
             };
 
-            LogEvent evt = null;
+            object evt = default;
 
             var log = new LoggerConfiguration()
                 .ReadFrom.KeyValuePairs(settings)
@@ -315,7 +315,7 @@ namespace Serilog.Tests.Settings
                 ["write-to:DummyWithLevelSwitch.controlLevelSwitch"] = "$specificSwitch"
             };
 
-            LogEvent evt = null;
+            object evt = default;
 
             var log = new LoggerConfiguration()
                 .ReadFrom.KeyValuePairs(settings)
@@ -327,7 +327,7 @@ namespace Serilog.Tests.Settings
             log.Write(Some.InformationEvent());
             Assert.False(evt is null, "Minimum level is Debug. It should log Information messages");
 
-            evt = null;
+            evt = default;
             // ReSharper disable HeuristicUnreachableCode
             systemLogger.Write(Some.InformationEvent());
             Assert.True(evt is null, "LoggingLevelSwitch initial level was Warning for logger System.*. It should not log Information messages for SourceContext System.Bar");
@@ -336,7 +336,7 @@ namespace Serilog.Tests.Settings
             Assert.False(evt is null, "LoggingLevelSwitch initial level was Warning for logger System.*. It should log Warning messages for SourceContext System.Bar");
 
 
-            evt = null;
+            evt = default;
             var controlSwitch = DummyWithLevelSwitchSink.ControlLevelSwitch;
 
             controlSwitch.MinimumLevel = LogEventLevel.Information;
@@ -385,7 +385,7 @@ namespace Serilog.Tests.Settings
         [Fact]
         public void DestructuringToMaximumDepthIsApplied()
         {
-            LogEvent evt = null;
+            LogEvent evt = default;
             var log = new LoggerConfiguration()
                 .ReadFrom.KeyValuePairs(new Dictionary<string, string>
                 {
@@ -418,7 +418,7 @@ namespace Serilog.Tests.Settings
         [Fact]
         public void DestructuringToMaximumStringLengthIsApplied()
         {
-            LogEvent evt = null;
+            LogEvent evt = default;
             var log = new LoggerConfiguration()
                 .ReadFrom.KeyValuePairs(new Dictionary<string, string>
                 {
@@ -436,7 +436,7 @@ namespace Serilog.Tests.Settings
         [Fact]
         public void DestructuringToMaximumCollectionCountIsApplied()
         {
-            LogEvent evt = null;
+            LogEvent evt = default;
             var log = new LoggerConfiguration()
                 .ReadFrom.KeyValuePairs(new Dictionary<string, string>
                 {
@@ -456,7 +456,7 @@ namespace Serilog.Tests.Settings
         [Fact]
         public void DestructuringWithCustomExtensionMethodIsApplied()
         {
-            LogEvent evt = null;
+            LogEvent evt = default;
             var log = new LoggerConfiguration()
                 .ReadFrom.KeyValuePairs(new Dictionary<string, string>
                 {
@@ -475,7 +475,7 @@ namespace Serilog.Tests.Settings
         [Fact]
         public void DestructuringAsScalarIsAppliedWithShortTypeName()
         {
-            LogEvent evt = null;
+            LogEvent evt = default;
             var log = new LoggerConfiguration()
                 .ReadFrom.KeyValuePairs(new Dictionary<string, string>
                 {
@@ -493,7 +493,7 @@ namespace Serilog.Tests.Settings
         [Fact]
         public void DestructuringAsScalarIsAppliedWithAssemblyQualifiedName()
         {
-            LogEvent evt = null;
+            LogEvent evt = default;
             var log = new LoggerConfiguration()
                 .ReadFrom.KeyValuePairs(new Dictionary<string, string>
                 {
@@ -511,7 +511,7 @@ namespace Serilog.Tests.Settings
         [Fact]
         public void DestructuringWithIsAppliedWithCustomDestructuringPolicy()
         {
-            LogEvent evt = null;
+            LogEvent evt = default;
             var log = new LoggerConfiguration()
                 .ReadFrom.KeyValuePairs(new Dictionary<string, string>
                 {
@@ -643,7 +643,7 @@ namespace Serilog.Tests.Settings
         [Fact]
         public void EnrichWithIsAppliedWithCustomEnricher()
         {
-            LogEvent evt = null;
+            LogEvent evt = default;
             var log = new LoggerConfiguration()
                 .ReadFrom.KeyValuePairs(new Dictionary<string, string>
                 {
@@ -662,7 +662,7 @@ namespace Serilog.Tests.Settings
         [Fact]
         public void FilterWithIsAppliedWithCustomFilter()
         {
-            LogEvent evt = null;
+            object evt = default;
             var log = new LoggerConfiguration()
                 .ReadFrom.KeyValuePairs(new Dictionary<string, string>
                 {

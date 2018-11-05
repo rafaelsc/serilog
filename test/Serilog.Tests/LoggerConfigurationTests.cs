@@ -431,7 +431,8 @@ namespace Serilog.Tests
 
         private string LogAndGetAsString(object x, Func<LoggerConfiguration, LoggerConfiguration> conf, string destructuringSymbol = "")
         {
-            LogEvent evt = null;
+            LogEvent evt = default;
+
             var logConf = new LoggerConfiguration()
                 .WriteTo.Sink(new DelegatingSink(e => evt = e));
             logConf = conf(logConf);
@@ -599,8 +600,8 @@ namespace Serilog.Tests
             var evt = Some.InformationEvent();
             logger.Write(evt);
 
-            Assert.Same(evt, DummyWrappingSink.Emitted.Single());
-            Assert.Same(evt, sink.SingleEvent);
+            Assert.Equal(evt, DummyWrappingSink.Emitted.Single());
+            Assert.Equal(evt, sink.SingleEvent);
         }
 
         [Fact]
@@ -616,7 +617,7 @@ namespace Serilog.Tests
             var evt = Some.InformationEvent();
             logger.Write(evt);
 
-            Assert.Same(evt, sink.SingleEvent);
+            Assert.Equal(evt, sink.SingleEvent);
             Assert.False(evt.Properties.ContainsKey(propertyName));
         }
 
@@ -634,9 +635,9 @@ namespace Serilog.Tests
             var evt = Some.InformationEvent();
             logger.Write(evt);
 
-            Assert.Same(evt, DummyWrappingSink.Emitted.Single());
-            Assert.Same(evt, sink1.SingleEvent);
-            Assert.Same(evt, sink2.SingleEvent);
+            Assert.Equal(evt, DummyWrappingSink.Emitted.Single());
+            Assert.Equal(evt, sink1.SingleEvent);
+            Assert.Equal(evt, sink2.SingleEvent);
         }
 
         [Fact]
@@ -656,9 +657,9 @@ namespace Serilog.Tests
             var evt = Some.InformationEvent();
             logger.Write(evt);
 
-            Assert.Same(evt, DummyWrappingSink.Emitted.Single());
-            Assert.Same(evt, sink1.SingleEvent);
-            Assert.Same(evt, sink2.SingleEvent);
+            Assert.Equal(evt, DummyWrappingSink.Emitted.Single());
+            Assert.Equal(evt, sink1.SingleEvent);
+            Assert.Equal(evt, sink2.SingleEvent);
         }
 
         [Fact]
