@@ -24,13 +24,13 @@ namespace Serilog.Core.Enrichers
     {
         readonly ILogEventEnricher[] _enrichers;
 
-        public SafeAggregateEnricher(IEnumerable<ILogEventEnricher> enrichers)
+        public SafeAggregateEnricher(in IEnumerable<ILogEventEnricher> enrichers)
         {
             if (enrichers == null) throw new ArgumentNullException(nameof(enrichers));
             _enrichers = enrichers.ToArray();
         }
 
-        public void Enrich(in LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
+        public void Enrich(in LogEvent logEvent, in ILogEventPropertyFactory propertyFactory)
         {
             foreach (var enricher in _enrichers)
             {

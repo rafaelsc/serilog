@@ -20,7 +20,7 @@ namespace Serilog.Enrichers
 {
     sealed class LogContextEnricher : ILogEventEnricher
     {
-        public void Enrich(in LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
+        public void Enrich(in LogEvent logEvent, in ILogEventPropertyFactory propertyFactory)
         {
             LogContext.Enrich(logEvent, propertyFactory);
         }

@@ -18,7 +18,7 @@ namespace Serilog.Core.Enrichers
 {
     class EmptyEnricher : ILogEventEnricher
     {
-        public void Enrich(in LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
+        public void Enrich(in LogEvent logEvent, in ILogEventPropertyFactory propertyFactory)
         {
         }
     }

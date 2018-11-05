@@ -187,7 +187,7 @@ namespace Serilog.Context
             return enrichers;
         }
 
-        internal static void Enrich(in LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
+        internal static void Enrich(in LogEvent logEvent, in ILogEventPropertyFactory propertyFactory)
         {
             var enrichers = Enrichers;
             if (enrichers == null || enrichers == ImmutableStack<ILogEventEnricher>.Empty)
