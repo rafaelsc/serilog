@@ -19,7 +19,7 @@ namespace Serilog.Events
     /// <summary>
     /// A property associated with a <see cref="LogEvent"/>.
     /// </summary>
-    public class LogEventProperty
+    public struct LogEventProperty
     {
         /// <summary>
         /// Construct a <see cref="LogEventProperty"/> with the specified name and value.
@@ -56,6 +56,33 @@ namespace Serilog.Events
         public static bool IsValidName(string name)
         {
             return !string.IsNullOrWhiteSpace(name);
+        }
+        
+        /// <summary>Indicates whether this instance and a specified object are equal.</summary>
+        /// <returns>true if <paramref name="other" /> and this instance are the same type and represent the same value; otherwise, false. </returns>
+        /// <param name="other">The object to compare with the current instance. </param>
+        public bool Equals(LogEventProperty other)
+        {
+            return string.Equals(Name, other.Name) && Equals(Value, other.Value);
+        }
+
+        /// <summary>Indicates whether this instance and a specified object are equal.</summary>
+        /// <returns>true if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, false. </returns>
+        /// <param name="obj">The object to compare with the current instance. </param>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is LogEventProperty other && Equals(other);
+        }
+
+        /// <summary>Returns the hash code for this instance.</summary>
+        /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ (Value != null ? Value.GetHashCode() : 0);
+            }
         }
     }
 }
