@@ -27,7 +27,7 @@ namespace Serilog.Core.Filters
             _isEnabled = isEnabled;
         }
 
-        public bool IsEnabled(LogEvent logEvent)
+        public bool IsEnabled(in LogEvent logEvent)
         {
             return _isEnabled(logEvent);
         }

@@ -27,6 +27,6 @@ namespace Serilog.Core
         /// <param name="logEvent">The event to test.</param>
         /// <returns>True if the event is enabled by this filter. If false
         /// is returned, the event will not be emitted.</returns>
-        bool IsEnabled(LogEvent logEvent);
+        bool IsEnabled(in LogEvent logEvent);
     }
 }

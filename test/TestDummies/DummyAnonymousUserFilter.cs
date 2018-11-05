@@ -6,7 +6,7 @@ namespace TestDummies
 {
     public class DummyAnonymousUserFilter : ILogEventFilter
     {
-        public bool IsEnabled(LogEvent logEvent)
+        public bool IsEnabled(in LogEvent logEvent)
         {
             if (logEvent.Properties.ContainsKey("User"))
             {
