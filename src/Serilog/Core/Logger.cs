@@ -48,23 +48,23 @@ namespace Serilog.Core
         readonly LevelOverrideMap _overrideMap;
 
         internal Logger(
-            MessageTemplateProcessor messageTemplateProcessor,
-            LogEventLevel minimumLevel,
-            ILogEventSink sink,
-            ILogEventEnricher enricher,
-            Action dispose = null,
-            LevelOverrideMap overrideMap = null)
+            in MessageTemplateProcessor messageTemplateProcessor,
+            in LogEventLevel minimumLevel,
+            in ILogEventSink sink,
+            in ILogEventEnricher enricher,
+            in Action dispose = null,
+            in LevelOverrideMap overrideMap = null)
             : this(messageTemplateProcessor, minimumLevel, sink, enricher, dispose, null, overrideMap)
         {
         }
 
         internal Logger(
-            MessageTemplateProcessor messageTemplateProcessor,
-            LoggingLevelSwitch levelSwitch,
-            ILogEventSink sink,
-            ILogEventEnricher enricher,
-            Action dispose = null,
-            LevelOverrideMap overrideMap = null)
+            in MessageTemplateProcessor messageTemplateProcessor,
+            in LoggingLevelSwitch levelSwitch,
+            in ILogEventSink sink,
+            in ILogEventEnricher enricher,
+            in Action dispose = null,
+            in LevelOverrideMap overrideMap = null)
             : this(messageTemplateProcessor, LevelAlias.Minimum, sink, enricher, dispose, levelSwitch, overrideMap)
         {
         }
@@ -72,13 +72,13 @@ namespace Serilog.Core
         // The messageTemplateProcessor, sink and enricher are required. Argument checks are dropped because
         // throwing from here breaks the logger's no-throw contract, and callers are all in this file anyway.
         Logger(
-            MessageTemplateProcessor messageTemplateProcessor,
-            LogEventLevel minimumLevel,
-            ILogEventSink sink,
-            ILogEventEnricher enricher,
-            Action dispose = null,
-            LoggingLevelSwitch levelSwitch = null,
-            LevelOverrideMap overrideMap = null)
+            in MessageTemplateProcessor messageTemplateProcessor,
+            in LogEventLevel minimumLevel,
+            in ILogEventSink sink,
+            in ILogEventEnricher enricher,
+            in Action dispose = null,
+            in LoggingLevelSwitch levelSwitch = null,
+            in LevelOverrideMap overrideMap = null)
         {
             _messageTemplateProcessor = messageTemplateProcessor;
             _minimumLevel = minimumLevel;

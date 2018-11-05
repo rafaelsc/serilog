@@ -22,10 +22,10 @@ namespace Serilog
         /// <returns></returns>
         public static ILogger ForContext<TValue>(
             this ILogger logger,
-            LogEventLevel level,
-            string propertyName,
-            TValue value,
-            bool destructureObjects = false)
+            in LogEventLevel level,
+            in string propertyName,
+            in TValue value,
+            in bool destructureObjects = false)
         {
             if (logger == null)
                 throw new ArgumentNullException(nameof(logger));
