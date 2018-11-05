@@ -13,7 +13,7 @@ namespace Serilog.Tests.Support
 
         public LogEvent SingleEvent { get { return _events.Single(); } }
  
-        public void Emit(LogEvent logEvent)
+        public void Emit(in LogEvent logEvent)
         {
             _events.Add(logEvent);
         }

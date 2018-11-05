@@ -12,7 +12,7 @@ namespace TestDummies
 
         public static List<LogEvent> Emitted => _emitted ?? (_emitted = new List<LogEvent>());
 
-        public void Emit(LogEvent logEvent)
+        public void Emit(in LogEvent logEvent)
         {
             Emitted.Add(logEvent);
         }

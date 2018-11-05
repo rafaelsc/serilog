@@ -19,7 +19,7 @@ namespace Serilog.Tests.Support
             _formatter = new MessageTemplateTextFormatter(outputTemplate, CultureInfo.InvariantCulture);
         }
 
-        public void Emit(LogEvent logEvent)
+        public void Emit(in LogEvent logEvent)
         {
             _formatter.Format(logEvent, _sw);
         }

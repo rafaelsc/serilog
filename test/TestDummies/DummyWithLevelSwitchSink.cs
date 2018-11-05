@@ -20,7 +20,7 @@ namespace TestDummies
         public static List<LogEvent> Emitted = new List<LogEvent>();
         // ReSharper restore ThreadStaticFieldHasInitializer
 
-        public void Emit(LogEvent logEvent)
+        public void Emit(in LogEvent logEvent)
         {
             Emitted.Add(logEvent);
         }

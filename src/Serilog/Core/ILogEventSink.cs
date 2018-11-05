@@ -25,6 +25,6 @@ namespace Serilog.Core
         /// Emit the provided log event to the sink.
         /// </summary>
         /// <param name="logEvent">The log event to write.</param>
-        void Emit(LogEvent logEvent);
+        void Emit(in LogEvent logEvent);
     }
 }

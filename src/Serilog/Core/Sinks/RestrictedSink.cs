@@ -30,7 +30,7 @@ namespace Serilog.Core.Sinks
             _levelSwitch = levelSwitch;
         }
 
-        public void Emit(LogEvent logEvent)
+        public void Emit(in LogEvent logEvent)
         {
             if ((int)logEvent.Level < (int)_levelSwitch.MinimumLevel)
                 return;

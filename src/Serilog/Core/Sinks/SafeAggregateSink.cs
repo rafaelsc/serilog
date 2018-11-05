@@ -30,7 +30,7 @@ namespace Serilog.Core.Sinks
             _sinks = sinks.ToArray();
         }
 
-        public void Emit(LogEvent logEvent)
+        public void Emit(in LogEvent logEvent)
         {
             foreach (var sink in _sinks)
             {

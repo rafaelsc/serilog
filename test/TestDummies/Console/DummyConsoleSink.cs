@@ -15,7 +15,7 @@ namespace TestDummies.Console
         [ThreadStatic]
         public static ConsoleTheme Theme;
 
-        public void Emit(LogEvent logEvent)
+        public void Emit(in LogEvent logEvent)
         {
         }
     }

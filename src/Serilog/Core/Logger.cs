@@ -389,7 +389,7 @@ namespace Serilog.Core
             Dispatch(logEvent);
         }
 
-        void ILogEventSink.Emit(LogEvent logEvent)
+        void ILogEventSink.Emit(in LogEvent logEvent)
         {
             // Bypasses the level check so that child loggers
             // using this one as a sink can increase verbosity.

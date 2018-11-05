@@ -37,7 +37,7 @@ namespace Serilog.Core.Sinks
             _attemptDispose = attemptDispose;
         }
 
-        public void Emit(LogEvent logEvent)
+        public void Emit(in LogEvent logEvent)
         {
             var copy = new LogEvent(
                 logEvent.Timestamp,

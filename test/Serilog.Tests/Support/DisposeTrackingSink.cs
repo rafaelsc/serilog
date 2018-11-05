@@ -8,7 +8,7 @@ namespace Serilog.Tests.Support
     {
         public bool IsDisposed { get; set; }
 
-        public void Emit(LogEvent logEvent)
+        public void Emit(in LogEvent logEvent)
         {            
         }
 
