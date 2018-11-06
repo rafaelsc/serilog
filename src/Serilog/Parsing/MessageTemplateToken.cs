@@ -28,7 +28,7 @@ namespace Serilog.Parsing
         /// Construct a <see cref="MessageTemplateToken"/>.
         /// </summary>
         /// <param name="startIndex">The token's start index in the template.</param>
-        protected MessageTemplateToken(int startIndex)
+        protected MessageTemplateToken(in int startIndex)
         {
             StartIndex = startIndex;
         }
@@ -51,6 +51,6 @@ namespace Serilog.Parsing
         /// <param name="output">Output for the rendered string.</param>
         /// <param name="formatProvider">Supplies culture-specific formatting information, or null.</param>
         // ReSharper disable once UnusedMemberInSuper.Global
-        public abstract void Render(IReadOnlyDictionary<string, LogEventPropertyValue> properties, TextWriter output, IFormatProvider formatProvider = null);
+        public abstract void Render(in IReadOnlyDictionary<string, LogEventPropertyValue> properties, in TextWriter output, in IFormatProvider formatProvider = null);
     }
 }
