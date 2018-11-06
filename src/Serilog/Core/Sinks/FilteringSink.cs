@@ -33,7 +33,7 @@ namespace Serilog.Core.Sinks
 
             _sink = sink;
             _propagateExceptions = propagateExceptions;
-            _filters = filters as ILogEventFilter[] ?? filters.ToArray();}
+            _filters = filters as ILogEventFilter[] ?? filters.ToArray();
         }
 
         public void Emit(in LogEvent logEvent)
