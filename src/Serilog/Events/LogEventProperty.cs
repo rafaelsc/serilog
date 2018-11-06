@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Serilog.Events
 {
@@ -31,8 +32,7 @@ namespace Serilog.Events
         public LogEventProperty(in string name, in LogEventPropertyValue value)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
-            if (!IsValidName(name))
-                throw new ArgumentException("Property name is not valid.");
+            if (!IsValidName(name)) throw new ArgumentException("Property name is not valid.");
 
             Name = name;
             Value = value;
@@ -53,6 +53,7 @@ namespace Serilog.Events
         /// </summary>
         /// <param name="name">The name to check.</param>
         /// <returns>True if the name is valid; otherwise, false.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsValidName(string name)
         {
             return !string.IsNullOrWhiteSpace(name);
