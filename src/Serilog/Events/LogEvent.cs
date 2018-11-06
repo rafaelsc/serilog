@@ -21,7 +21,7 @@ namespace Serilog.Events
     /// <summary>
     /// A log event.
     /// </summary>
-    public struct LogEvent
+    public readonly struct LogEvent
     {
         readonly Dictionary<string, LogEventPropertyValue> _properties;
 
@@ -33,7 +33,7 @@ namespace Serilog.Events
         /// <param name="exception">An exception associated with the event, or null.</param>
         /// <param name="messageTemplate">The message template describing the event.</param>
         /// <param name="properties">Properties associated with the event, including those presented in <paramref name="messageTemplate"/>.</param>
-        public LogEvent(DateTimeOffset timestamp, LogEventLevel level, Exception exception, MessageTemplate messageTemplate, IEnumerable<LogEventProperty> properties)
+        public LogEvent(in DateTimeOffset timestamp, in LogEventLevel level, in Exception exception, in MessageTemplate messageTemplate, in IEnumerable<LogEventProperty> properties)
         {
             if (messageTemplate == null) throw new ArgumentNullException(nameof(messageTemplate));
             if (properties == null) throw new ArgumentNullException(nameof(properties));
@@ -68,7 +68,7 @@ namespace Serilog.Events
         /// </summary>
         /// <param name="output">The output.</param>
         /// <param name="formatProvider">Supplies culture-specific formatting information, or null.</param>
-        public void RenderMessage(TextWriter output, IFormatProvider formatProvider = null)
+        public void RenderMessage(in TextWriter output, in IFormatProvider formatProvider = null)
         {
             MessageTemplate.Render(Properties, output, formatProvider);
         }
@@ -78,7 +78,7 @@ namespace Serilog.Events
         /// with the event, and return the result.
         /// </summary>
         /// <param name="formatProvider">Supplies culture-specific formatting information, or null.</param>
-        public string RenderMessage(IFormatProvider formatProvider = null)
+        public string RenderMessage(in IFormatProvider formatProvider = null)
         {
             return MessageTemplate.Render(Properties, formatProvider);
         }
@@ -98,7 +98,7 @@ namespace Serilog.Events
         /// </summary>
         /// <param name="property">The property to add or update.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public void AddOrUpdateProperty(LogEventProperty property)
+        public void AddOrUpdateProperty(in LogEventProperty property)
         {
             _properties[property.Name] = property.Value;
         }
@@ -108,7 +108,7 @@ namespace Serilog.Events
         /// </summary>
         /// <param name="property">The property to add.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public void AddPropertyIfAbsent(LogEventProperty property)
+        public void AddPropertyIfAbsent(in LogEventProperty property)
         {
             if (!_properties.ContainsKey(property.Name))
                 _properties.Add(property.Name, property.Value);
@@ -119,7 +119,7 @@ namespace Serilog.Events
         /// is performed.
         /// </summary>
         /// <param name="propertyName">The name of the property to remove.</param>
-        public void RemovePropertyIfPresent(string propertyName)
+        public void RemovePropertyIfPresent(in string propertyName)
         {
             _properties.Remove(propertyName);
         }

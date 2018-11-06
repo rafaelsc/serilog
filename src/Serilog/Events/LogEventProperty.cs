@@ -19,7 +19,7 @@ namespace Serilog.Events
     /// <summary>
     /// A property associated with a <see cref="LogEvent"/>.
     /// </summary>
-    public struct LogEventProperty
+    public readonly struct LogEventProperty
     {
         /// <summary>
         /// Construct a <see cref="LogEventProperty"/> with the specified name and value.
@@ -28,7 +28,7 @@ namespace Serilog.Events
         /// <param name="value">The value of the property.</param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public LogEventProperty(string name, LogEventPropertyValue value)
+        public LogEventProperty(in string name, in LogEventPropertyValue value)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
             if (!IsValidName(name))
