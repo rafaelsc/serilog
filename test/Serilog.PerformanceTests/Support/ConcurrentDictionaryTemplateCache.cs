@@ -14,13 +14,13 @@ namespace Serilog.PerformanceTests.Support
         const int MaxCacheItems = 1000;
         const int MaxCachedTemplateLength = 1024;
 
-        public ConcurrentDictionaryMessageTemplateCache(IMessageTemplateParser innerParser)
+        public ConcurrentDictionaryMessageTemplateCache(in IMessageTemplateParser innerParser)
         {
             if (innerParser == null) throw new ArgumentNullException(nameof(innerParser));
             _innerParser = innerParser;
         }
 
-        public MessageTemplate Parse(string messageTemplate)
+        public MessageTemplate Parse(in string messageTemplate)
         {
             if (messageTemplate == null) throw new ArgumentNullException(nameof(messageTemplate));
 

@@ -11,6 +11,6 @@ namespace Serilog.PerformanceTests.Support
 
         static readonly MessageTemplate ConstTemplate = new MessageTemplate("text", Enumerable.Empty<MessageTemplateToken>());
 
-        public MessageTemplate Parse(string messageTemplate) => ConstTemplate;
+        public MessageTemplate Parse(in string messageTemplate) => ConstTemplate;
     }
 }
