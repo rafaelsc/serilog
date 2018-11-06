@@ -7,10 +7,11 @@ using System.Linq;
 using System.Collections.Generic;
 
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 
 namespace Serilog.PerformanceTests
 {
-    [MemoryDiagnoser]
+    [MemoryDiagnoser, InliningDiagnoser, TailCallDiagnoser]
     [MinColumn, MaxColumn]
     public class AllocationsBenchmark
     {
