@@ -26,13 +26,14 @@ namespace Serilog.Core.Sinks
         readonly bool _propagateExceptions;
         readonly ILogEventFilter[] _filters;
 
-        public FilteringSink(ILogEventSink sink, IEnumerable<ILogEventFilter> filters, bool propagateExceptions)
+        public FilteringSink(in ILogEventSink sink, in IEnumerable<ILogEventFilter> filters, in bool propagateExceptions)
         {
             if (sink == null) throw new ArgumentNullException(nameof(sink));
             if (filters == null) throw new ArgumentNullException(nameof(filters));
+
             _sink = sink;
             _propagateExceptions = propagateExceptions;
-            _filters = filters.ToArray();
+            _filters = filters as ILogEventFilter[] ?? filters.ToArray();}
         }
 
         public void Emit(in LogEvent logEvent)

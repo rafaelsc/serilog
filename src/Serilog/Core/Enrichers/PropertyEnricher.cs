@@ -20,7 +20,7 @@ namespace Serilog.Core.Enrichers
     /// <summary>
     /// Adds a new property encricher to the log event.
     /// </summary>
-    public class PropertyEnricher : ILogEventEnricher
+    public readonly struct PropertyEnricher : ILogEventEnricher
     {
         readonly string _name;
         readonly object _value;
@@ -40,6 +40,7 @@ namespace Serilog.Core.Enrichers
         public PropertyEnricher(in string name, in object value, in bool destructureObjects = false)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Property name must not be null or empty.", nameof(name));
+
             _name = name;
             _value = value;
             _destructureObjects = destructureObjects;
@@ -53,6 +54,7 @@ namespace Serilog.Core.Enrichers
         public void Enrich(in LogEvent logEvent, in ILogEventPropertyFactory propertyFactory)
         {
             if (propertyFactory == null) throw new ArgumentNullException(nameof(propertyFactory));
+
             var property = propertyFactory.CreateProperty(_name, _value, _destructureObjects);
             logEvent.AddPropertyIfAbsent(property);
         }

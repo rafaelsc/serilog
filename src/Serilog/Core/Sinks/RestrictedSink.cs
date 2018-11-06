@@ -17,15 +17,16 @@ using Serilog.Events;
 
 namespace Serilog.Core.Sinks
 {
-    class RestrictedSink : ILogEventSink, IDisposable
+    readonly struct RestrictedSink : ILogEventSink, IDisposable
     {
         readonly ILogEventSink _sink;
         readonly LoggingLevelSwitch _levelSwitch;
 
-        public RestrictedSink(ILogEventSink sink, LoggingLevelSwitch levelSwitch)
+        public RestrictedSink(in ILogEventSink sink, in LoggingLevelSwitch levelSwitch)
         {
             if (sink == null) throw new ArgumentNullException(nameof(sink));
             if (levelSwitch == null) throw new ArgumentNullException(nameof(levelSwitch));
+
             _sink = sink;
             _levelSwitch = levelSwitch;
         }

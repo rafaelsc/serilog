@@ -20,14 +20,15 @@ using Serilog.Events;
 
 namespace Serilog.Core.Sinks
 {
-    class AggregateSink : ILogEventSink
+    readonly struct AggregateSink : ILogEventSink
     {
         readonly ILogEventSink[] _sinks;
 
-        public AggregateSink(IEnumerable<ILogEventSink> sinks)
+        public AggregateSink(in IEnumerable<ILogEventSink> sinks)
         {
             if (sinks == null) throw new ArgumentNullException(nameof(sinks));
-            _sinks = sinks.ToArray();
+
+            _sinks = sinks as ILogEventSink[] ?? sinks.ToArray();
         }
 
         public void Emit(in LogEvent logEvent)

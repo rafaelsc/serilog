@@ -17,7 +17,7 @@ using Serilog.Events;
 
 namespace Serilog.Core.Enrichers
 {
-    class FixedPropertyEnricher : ILogEventEnricher
+    readonly struct FixedPropertyEnricher : ILogEventEnricher
     {
         readonly LogEventProperty _logEventProperty;
 
