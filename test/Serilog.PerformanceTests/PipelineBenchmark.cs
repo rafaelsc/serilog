@@ -28,8 +28,7 @@ namespace Serilog.PerformanceTests
         ILogger _log;
         Exception _exception;
         
-        [Setup]
-        public void Setup()
+        public PipelineBenchmark()
         { 
             _exception = new Exception("An Error");
             _log = new LoggerConfiguration()
@@ -47,4 +46,3 @@ namespace Serilog.PerformanceTests
         }
     }
 }
-  

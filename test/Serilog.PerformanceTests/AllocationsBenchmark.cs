@@ -11,6 +11,7 @@ using BenchmarkDotNet.Attributes;
 namespace Serilog.PerformanceTests
 {
     [MemoryDiagnoser]
+    [MinColumn, MaxColumn]
     public class AllocationsBenchmark
     {
         readonly ILogger _logger;

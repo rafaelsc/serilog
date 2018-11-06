@@ -12,8 +12,7 @@ namespace Serilog.PerformanceTests
         ILogger _log, _nested;
         readonly LogEvent _event = Some.InformationEvent();
 
-        [Setup]
-        public void Setup()
+        public NestedLoggerLatencyBenchmark()
         {
             _log = new LoggerConfiguration()
                 .WriteTo.Sink(new NullSink())
@@ -35,4 +34,3 @@ namespace Serilog.PerformanceTests
         }
     }
 }
-  
