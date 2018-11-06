@@ -82,6 +82,13 @@ namespace Serilog.PerformanceTests
             _enrichedLogger.Write(_emptyEvent);
         }
 
+        
+        [Benchmark]
+        public void LogMsg()
+        {
+            _logger.Information("Template:");
+        }
+
         [Benchmark]
         public void LogScalar()
         {

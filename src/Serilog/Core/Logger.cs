@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Serilog.Capturing;
 using Serilog.Core.Enrichers;
 using Serilog.Core.Pipeline;
@@ -365,17 +366,20 @@ namespace Serilog.Core
         {
             WriteInternal(level, exception, messageTemplate, propertyValues);
         }
-        
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void WriteInternal(in LogEventLevel level, in string messageTemplate)
         {
             WriteInternal(level, null, messageTemplate, NoPropertyValues);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void WriteInternal(in LogEventLevel level, in Exception exception, in string messageTemplate)
         {
             WriteInternal(level, exception, messageTemplate, NoPropertyValues);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void WriteInternal(in LogEventLevel level, in Exception exception, in string messageTemplate, in object[] propertyValues)
         {
             if (!IsEnabled(level)) return;
