@@ -28,7 +28,7 @@ namespace Serilog.Capturing
 
         static readonly LogEventProperty[] NoProperties = new LogEventProperty[0];
 
-        public PropertyBinder(PropertyValueConverter valueConverter)
+        public PropertyBinder(in PropertyValueConverter valueConverter)
         {
             _valueConverter = valueConverter;
         }

@@ -40,7 +40,7 @@ namespace Serilog.Events
         /// Construct a message template using manually-defined text and property tokens.
         /// </summary>
         /// <param name="tokens">The text and property tokens defining the template.</param>
-        public MessageTemplate(IEnumerable<MessageTemplateToken> tokens)
+        public MessageTemplate(in IEnumerable<MessageTemplateToken> tokens)
             // ReSharper disable PossibleMultipleEnumeration
             : this(string.Join("", tokens), tokens)
             // ReSharper enable PossibleMultipleEnumeration
@@ -53,7 +53,7 @@ namespace Serilog.Events
         /// <param name="text">The full text of the template; used by Serilog internally to avoid unneeded
         /// string concatenation.</param>
         /// <param name="tokens">The text and property tokens defining the template.</param>
-        public MessageTemplate(string text, IEnumerable<MessageTemplateToken> tokens)
+        public MessageTemplate(in string text, in IEnumerable<MessageTemplateToken> tokens)
         {
             if (text == null) throw new ArgumentNullException(nameof(text));
             if (tokens == null) throw new ArgumentNullException(nameof(tokens));
@@ -91,7 +91,7 @@ namespace Serilog.Events
         /// <summary>
         /// Similar to <see cref="Enumerable.OfType{TResult}"/>, but faster.
         /// </summary>
-        static TResult[] GetElementsOfTypeToArray<TResult>(MessageTemplateToken[] tokens)
+        static TResult[] GetElementsOfTypeToArray<TResult>(in MessageTemplateToken[] tokens)
             where TResult: class
         {
             var result = new List<TResult>(tokens.Length / 2);
@@ -140,7 +140,7 @@ namespace Serilog.Events
         /// <returns>The message created from the template and properties. If the
         /// properties are mismatched with the template, the template will be
         /// returned with incomplete substitution.</returns>
-        public string Render(IReadOnlyDictionary<string, LogEventPropertyValue> properties, IFormatProvider formatProvider = null)
+        public string Render(in IReadOnlyDictionary<string, LogEventPropertyValue> properties, in IFormatProvider formatProvider = null)
         {
             var writer = new StringWriter(formatProvider);
             Render(properties, writer, formatProvider);
@@ -156,7 +156,7 @@ namespace Serilog.Events
         /// properties are mismatched with the template, the template will be
         /// returned with incomplete substitution.</param>
         /// <param name="formatProvider">Supplies culture-specific formatting information, or null.</param>
-        public void Render(IReadOnlyDictionary<string, LogEventPropertyValue> properties, TextWriter output, IFormatProvider formatProvider = null)
+        public void Render(in IReadOnlyDictionary<string, LogEventPropertyValue> properties, in TextWriter output, in IFormatProvider formatProvider = null)
         {
             if (properties == null) throw new ArgumentNullException(nameof(properties));
             if (output == null) throw new ArgumentNullException(nameof(output));

@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Serilog.Core;
 using Serilog.Events;
@@ -41,6 +42,7 @@ namespace Serilog.Parsing
             return new MessageTemplate(messageTemplate, Tokenize(messageTemplate));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static IEnumerable<MessageTemplateToken> Tokenize(string messageTemplate)
         {
             if (messageTemplate.Length == 0)
@@ -70,6 +72,7 @@ namespace Serilog.Parsing
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static MessageTemplateToken ParsePropertyToken(int startAt, string messageTemplate, out int next)
         {
             var first = startAt;
@@ -153,6 +156,7 @@ namespace Serilog.Parsing
                 first);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool TrySplitTagContent(string tagContent, out string propertyNameAndDestructuring, out string format, out string alignment)
         {
             var formatDelim = tagContent.IndexOf(':');
@@ -206,6 +210,7 @@ namespace Serilog.Parsing
             return true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInPropertyTag(char c)
         {
             return IsValidInDestructuringHint(c) ||
@@ -214,11 +219,13 @@ namespace Serilog.Parsing
                 c == ':';
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInPropertyName(char c)
         {
             return char.IsLetterOrDigit(c) || c == '_';
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool TryGetDestructuringHint(char c, out Destructuring destructuring)
         {
             switch (c)
@@ -241,18 +248,21 @@ namespace Serilog.Parsing
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInDestructuringHint(char c)
         {
             return c == '@' ||
                    c == '$';
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInAlignment(char c)
         {
             return char.IsDigit(c) ||
                    c == '-';
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInFormat(char c)
         {
             return c != '}' &&
@@ -261,6 +271,7 @@ namespace Serilog.Parsing
                  c == ' ');
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static TextToken ParseTextToken(int startAt, string messageTemplate, out int next)
         {
             var first = startAt;

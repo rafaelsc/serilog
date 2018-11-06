@@ -39,7 +39,7 @@ namespace Serilog.Parsing
         /// <param name="destructuringObsolete">The destructuring strategy applied to the property, if any.</param>
         /// <exception cref="ArgumentNullException"></exception>
         [Obsolete("Use named arguments with this method to guarantee forwards-compatibility."), EditorBrowsable(EditorBrowsableState.Never)]
-        public PropertyToken(string propertyName, string rawText, string formatObsolete, Destructuring destructuringObsolete)
+        public PropertyToken(in string propertyName, in string rawText, in string formatObsolete, in Destructuring destructuringObsolete)
             : this(propertyName, rawText, formatObsolete, null, destructuringObsolete)
         {
         }
@@ -54,7 +54,7 @@ namespace Serilog.Parsing
         /// <param name="destructuring">The destructuring strategy applied to the property, if any.</param>
         /// <param name="startIndex">The token's start index in the template.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public PropertyToken(string propertyName, string rawText, string format = null, Alignment? alignment = null, Destructuring destructuring = Destructuring.Default, int startIndex = -1)
+        public PropertyToken(in string propertyName, in string rawText, in string format = null, in Alignment? alignment = null, in Destructuring destructuring = Destructuring.Default, in int startIndex = -1)
             : base(startIndex)
         {
             PropertyName = propertyName ?? throw new ArgumentNullException(nameof(propertyName));
@@ -82,7 +82,7 @@ namespace Serilog.Parsing
         /// <param name="properties">Properties that may be represented by the token.</param>
         /// <param name="output">Output for the rendered string.</param>
         /// <param name="formatProvider">Supplies culture-specific formatting information, or null.</param>
-        public override void Render(IReadOnlyDictionary<string, LogEventPropertyValue> properties, TextWriter output, IFormatProvider formatProvider = null)
+        public override void Render(in IReadOnlyDictionary<string, LogEventPropertyValue> properties, in TextWriter output, in IFormatProvider formatProvider = null)
         {
             if (properties == null) throw new ArgumentNullException(nameof(properties));
             if (output == null) throw new ArgumentNullException(nameof(output));

@@ -92,7 +92,7 @@ namespace Serilog.Debugging
         /// The name is historical; because this is used from third-party sink packages, removing the "Line"
         /// suffix as would seem sensible isn't worth the breakage.
         /// </remarks>
-        public static void WriteLine(string format, object arg0 = null, object arg1 = null, object arg2 = null)
+        public static void WriteLine(in string format, in object arg0 = null, in object arg1 = null, in object arg2 = null)
         {
             var o = _output;
 
