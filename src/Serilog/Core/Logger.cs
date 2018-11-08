@@ -1378,7 +1378,7 @@ namespace Serilog.Core
         {
             if (!LogEventProperty.IsValidName(propertyName))
             {
-                property = default;
+                property = null;
                 return false;
             }
 
