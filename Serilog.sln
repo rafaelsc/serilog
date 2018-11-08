@@ -31,7 +31,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serilog.Tests", "test\Seril
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serilog.PerformanceTests", "test\Serilog.PerformanceTests\Serilog.PerformanceTests.csproj", "{B4AC7ED9-517B-47E9-BB49-15F8A8478E62}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsole", "TestConsole\TestConsole.csproj", "{09E388C6-2841-4D1B-BD2A-DADCF3EAD629}"
+EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -89,6 +94,18 @@ Global
 		{B4AC7ED9-517B-47E9-BB49-15F8A8478E62}.Release|x64.Build.0 = Release|Any CPU
 		{B4AC7ED9-517B-47E9-BB49-15F8A8478E62}.Release|x86.ActiveCfg = Release|Any CPU
 		{B4AC7ED9-517B-47E9-BB49-15F8A8478E62}.Release|x86.Build.0 = Release|Any CPU
+		{09E388C6-2841-4D1B-BD2A-DADCF3EAD629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09E388C6-2841-4D1B-BD2A-DADCF3EAD629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09E388C6-2841-4D1B-BD2A-DADCF3EAD629}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{09E388C6-2841-4D1B-BD2A-DADCF3EAD629}.Debug|x64.Build.0 = Debug|Any CPU
+		{09E388C6-2841-4D1B-BD2A-DADCF3EAD629}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{09E388C6-2841-4D1B-BD2A-DADCF3EAD629}.Debug|x86.Build.0 = Debug|Any CPU
+		{09E388C6-2841-4D1B-BD2A-DADCF3EAD629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09E388C6-2841-4D1B-BD2A-DADCF3EAD629}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09E388C6-2841-4D1B-BD2A-DADCF3EAD629}.Release|x64.ActiveCfg = Release|Any CPU
+		{09E388C6-2841-4D1B-BD2A-DADCF3EAD629}.Release|x64.Build.0 = Release|Any CPU
+		{09E388C6-2841-4D1B-BD2A-DADCF3EAD629}.Release|x86.ActiveCfg = Release|Any CPU
+		{09E388C6-2841-4D1B-BD2A-DADCF3EAD629}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +115,7 @@ Global
 		{37EF0B5E-0363-4A47-AF3E-51FA6E79E3CF} = {290A2775-7CA0-4F81-9DDC-32E28C3A7565}
 		{B11B911D-977A-42CE-900A-596CF59F6FFA} = {290A2775-7CA0-4F81-9DDC-32E28C3A7565}
 		{B4AC7ED9-517B-47E9-BB49-15F8A8478E62} = {290A2775-7CA0-4F81-9DDC-32E28C3A7565}
+		{09E388C6-2841-4D1B-BD2A-DADCF3EAD629} = {290A2775-7CA0-4F81-9DDC-32E28C3A7565}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {268F5761-DAC2-4ECA-9AEC-59663B84854C}
