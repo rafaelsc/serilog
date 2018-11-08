@@ -20,7 +20,7 @@ using Serilog.Events;
 
 namespace Serilog.Core.Sinks
 {
-    readonly struct SafeAggregateSink : ILogEventSink
+    class SafeAggregateSink : ILogEventSink
     {
         readonly ILogEventSink[] _sinks;
 

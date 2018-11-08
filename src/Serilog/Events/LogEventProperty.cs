@@ -20,7 +20,7 @@ namespace Serilog.Events
     /// <summary>
     /// A property associated with a <see cref="LogEvent"/>.
     /// </summary>
-    public readonly struct LogEventProperty
+    public class LogEventProperty
     {
         /// <summary>
         /// Construct a <see cref="LogEventProperty"/> with the specified name and value.

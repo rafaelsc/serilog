@@ -20,7 +20,7 @@ namespace Serilog.Core.Enrichers
     /// <summary>
     /// Adds a new property encricher to the log event.
     /// </summary>
-    public readonly struct PropertyEnricher : ILogEventEnricher
+    public class PropertyEnricher : ILogEventEnricher
     {
         readonly string _name;
         readonly object _value;

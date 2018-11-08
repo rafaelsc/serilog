@@ -16,7 +16,7 @@ using Serilog.Events;
 
 namespace Serilog.Core.Enrichers
 {
-    readonly struct EmptyEnricher : ILogEventEnricher
+    class EmptyEnricher : ILogEventEnricher
     {
         public void Enrich(in LogEvent logEvent, in ILogEventPropertyFactory propertyFactory)
         {

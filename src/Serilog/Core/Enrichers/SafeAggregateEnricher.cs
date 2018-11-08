@@ -20,7 +20,7 @@ using Serilog.Events;
 
 namespace Serilog.Core.Enrichers
 {
-    readonly struct SafeAggregateEnricher : ILogEventEnricher
+    class SafeAggregateEnricher : ILogEventEnricher
     {
         readonly ILogEventEnricher[] _enrichers;
 

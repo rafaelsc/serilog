@@ -17,7 +17,7 @@ using Serilog.Events;
 
 namespace Serilog.Core.Filters
 {
-    readonly struct DelegateFilter : ILogEventFilter
+    class DelegateFilter : ILogEventFilter
     {
         readonly Func<LogEvent, bool> _isEnabled;
 

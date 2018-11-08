@@ -17,7 +17,7 @@ using Serilog.Events;
 
 namespace Serilog.Core.Sinks
 {
-    readonly struct RestrictedSink : ILogEventSink, IDisposable
+    class RestrictedSink : ILogEventSink, IDisposable
     {
         readonly ILogEventSink _sink;
         readonly LoggingLevelSwitch _levelSwitch;
