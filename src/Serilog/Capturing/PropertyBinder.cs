@@ -80,7 +80,7 @@ namespace Serilog.Capturing
             var next = 0;
             for (var i = 0; i < result.Length; ++i)
             {
-                if (!EqualityComparer<LogEventProperty>.Default.Equals(result[i], default))
+                if (result[i] != null)
                 {
                     result[next] = result[i];
                     ++next;
