@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Serilog.Capturing;
 using Serilog.Core.Enrichers;
 using Serilog.Core.Pipeline;
@@ -201,7 +202,7 @@ namespace Serilog.Core
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
             if (IsEnabled(level))
             {
-                Write(level, messageTemplate, NoPropertyValues);
+                WriteInternal(level, null, messageTemplate, NoPropertyValues);
             }
         }
 
@@ -217,7 +218,7 @@ namespace Serilog.Core
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
             if (IsEnabled(level))
             {
-                Write(level, messageTemplate, new object[] { propertyValue });
+                WriteInternal(level, null, messageTemplate, new object[] { propertyValue });
             }
         }
 
@@ -234,7 +235,7 @@ namespace Serilog.Core
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
             if (IsEnabled(level))
             {
-                Write(level, messageTemplate, new object[] { propertyValue0, propertyValue1 });
+                WriteInternal(level, null, messageTemplate, new object[] { propertyValue0, propertyValue1 });
             }
         }
 
@@ -252,7 +253,7 @@ namespace Serilog.Core
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
             if (IsEnabled(level))
             {
-                Write(level, messageTemplate, new object[] { propertyValue0, propertyValue1, propertyValue2 });
+                WriteInternal(level, null, messageTemplate, new object[] { propertyValue0, propertyValue1, propertyValue2 });
             }
         }
 
@@ -265,7 +266,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Write(LogEventLevel level, string messageTemplate, params object[] propertyValues)
         {
-            Write(level, (Exception)null, messageTemplate, propertyValues);
+            WriteInternal(level, null, messageTemplate, propertyValues);
         }
 
         /// <summary>
@@ -295,7 +296,7 @@ namespace Serilog.Core
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
             if (IsEnabled(level))
             {
-                Write(level, exception, messageTemplate, NoPropertyValues);
+                WriteInternal(level, exception, messageTemplate, NoPropertyValues);
             }
         }
 
@@ -312,7 +313,7 @@ namespace Serilog.Core
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
             if (IsEnabled(level))
             {
-                Write(level, exception, messageTemplate, new object[] { propertyValue });
+                WriteInternal(level, exception, messageTemplate, new object[] { propertyValue });
             }
         }
 
@@ -330,7 +331,7 @@ namespace Serilog.Core
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
             if (IsEnabled(level))
             {
-                Write(level, exception, messageTemplate, new object[] { propertyValue0, propertyValue1 });
+                WriteInternal(level, exception, messageTemplate, new object[] { propertyValue0, propertyValue1 });
             }
         }
 
@@ -349,7 +350,7 @@ namespace Serilog.Core
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
             if (IsEnabled(level))
             {
-                Write(level, exception, messageTemplate, new object[] { propertyValue0, propertyValue1, propertyValue2 });
+                WriteInternal(level, exception, messageTemplate, new object[] { propertyValue0, propertyValue1, propertyValue2 });
             }
         }
 
@@ -362,6 +363,24 @@ namespace Serilog.Core
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Write(LogEventLevel level, Exception exception, string messageTemplate, params object[] propertyValues)
+        {
+            WriteInternal(level, exception, messageTemplate, propertyValues);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        void WriteInternal(LogEventLevel level, string messageTemplate)
+        {
+            WriteInternal(level, null, messageTemplate, NoPropertyValues);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        void WriteInternal(LogEventLevel level, Exception exception, string messageTemplate)
+        {
+            WriteInternal(level, exception, messageTemplate, NoPropertyValues);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        void WriteInternal(LogEventLevel level, Exception exception, string messageTemplate, object[] propertyValues)
         {
             if (!IsEnabled(level)) return;
             if (messageTemplate == null) return;
@@ -377,6 +396,7 @@ namespace Serilog.Core
 
             var logEvent = new LogEvent(DateTimeOffset.Now, level, exception, parsedTemplate, boundProperties);
             Dispatch(logEvent);
+
         }
 
         /// <summary>
@@ -425,7 +445,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Verbose(string messageTemplate)
         {
-            Write(LogEventLevel.Verbose, messageTemplate, NoPropertyValues);
+            WriteInternal(LogEventLevel.Verbose, messageTemplate);
         }
 
         /// <summary>
@@ -484,7 +504,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Verbose(string messageTemplate, params object[] propertyValues)
         {
-            Verbose((Exception)null, messageTemplate, propertyValues);
+            Write(LogEventLevel.Verbose, (Exception)null, messageTemplate, propertyValues);
         }
 
         /// <summary>
@@ -498,7 +518,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Verbose(Exception exception, string messageTemplate)
         {
-            Write(LogEventLevel.Verbose, exception, messageTemplate, NoPropertyValues);
+            WriteInternal(LogEventLevel.Verbose, exception, messageTemplate);
         }
 
         /// <summary>
@@ -574,7 +594,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Debug(string messageTemplate)
         {
-            Write(LogEventLevel.Debug, messageTemplate, NoPropertyValues);
+            WriteInternal(LogEventLevel.Debug, messageTemplate);
         }
 
         /// <summary>
@@ -633,7 +653,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Debug(string messageTemplate, params object[] propertyValues)
         {
-            Debug((Exception)null, messageTemplate, propertyValues);
+            Write(LogEventLevel.Debug,(Exception)null, messageTemplate, propertyValues);
         }
 
         /// <summary>
@@ -647,7 +667,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Debug(Exception exception, string messageTemplate)
         {
-            Write(LogEventLevel.Debug, exception, messageTemplate, NoPropertyValues);
+            WriteInternal(LogEventLevel.Debug, exception, messageTemplate);
         }
 
         /// <summary>
@@ -723,7 +743,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Information(string messageTemplate)
         {
-            Write(LogEventLevel.Information, messageTemplate, NoPropertyValues);
+            WriteInternal(LogEventLevel.Information, messageTemplate);
         }
 
         /// <summary>
@@ -782,7 +802,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Information(string messageTemplate, params object[] propertyValues)
         {
-            Information((Exception)null, messageTemplate, propertyValues);
+            Write(LogEventLevel.Information, (Exception)null, messageTemplate, propertyValues);
         }
 
         /// <summary>
@@ -796,7 +816,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Information(Exception exception, string messageTemplate)
         {
-            Write(LogEventLevel.Information, exception, messageTemplate, NoPropertyValues);
+            WriteInternal(LogEventLevel.Information, exception, messageTemplate);
         }
 
         /// <summary>
@@ -872,7 +892,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Warning(string messageTemplate)
         {
-            Write(LogEventLevel.Warning, messageTemplate, NoPropertyValues);
+            WriteInternal(LogEventLevel.Warning, messageTemplate);
         }
 
         /// <summary>
@@ -931,7 +951,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Warning(string messageTemplate, params object[] propertyValues)
         {
-            Warning((Exception)null, messageTemplate, propertyValues);
+            Write(LogEventLevel.Warning, (Exception)null, messageTemplate, propertyValues);
         }
 
         /// <summary>
@@ -945,7 +965,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Warning(Exception exception, string messageTemplate)
         {
-            Write(LogEventLevel.Warning, exception, messageTemplate, NoPropertyValues);
+            WriteInternal(LogEventLevel.Warning, exception, messageTemplate);
         }
 
         /// <summary>
@@ -1021,7 +1041,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Error(string messageTemplate)
         {
-            Write(LogEventLevel.Error, messageTemplate, NoPropertyValues);
+            WriteInternal(LogEventLevel.Error, messageTemplate);
         }
 
         /// <summary>
@@ -1080,7 +1100,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Error(string messageTemplate, params object[] propertyValues)
         {
-            Error((Exception)null, messageTemplate, propertyValues);
+            Write(LogEventLevel.Error, (Exception)null, messageTemplate, propertyValues);
         }
 
         /// <summary>
@@ -1094,7 +1114,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Error(Exception exception, string messageTemplate)
         {
-            Write(LogEventLevel.Error, exception, messageTemplate, NoPropertyValues);
+            WriteInternal(LogEventLevel.Error, exception, messageTemplate);
         }
 
         /// <summary>
@@ -1170,7 +1190,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Fatal(string messageTemplate)
         {
-            Write(LogEventLevel.Fatal, messageTemplate, NoPropertyValues);
+            WriteInternal(LogEventLevel.Fatal, messageTemplate);
         }
 
         /// <summary>
@@ -1229,7 +1249,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Fatal(string messageTemplate, params object[] propertyValues)
         {
-            Fatal((Exception)null, messageTemplate, propertyValues);
+            Write(LogEventLevel.Fatal, (Exception)null, messageTemplate, propertyValues);
         }
 
         /// <summary>
@@ -1243,7 +1263,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Fatal(Exception exception, string messageTemplate)
         {
-            Write(LogEventLevel.Fatal, exception, messageTemplate, NoPropertyValues);
+            WriteInternal(LogEventLevel.Fatal, exception, messageTemplate);
         }
 
         /// <summary>
