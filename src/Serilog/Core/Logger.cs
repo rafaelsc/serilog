@@ -200,7 +200,7 @@ namespace Serilog.Core
         public void Write(LogEventLevel level, string messageTemplate)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, null, messageTemplate, NoPropertyValues);
             }
@@ -216,7 +216,7 @@ namespace Serilog.Core
         public void Write<T>(LogEventLevel level, string messageTemplate, T propertyValue)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, null, messageTemplate, new object[] { propertyValue });
             }
@@ -233,7 +233,7 @@ namespace Serilog.Core
         public void Write<T0, T1>(LogEventLevel level, string messageTemplate, T0 propertyValue0, T1 propertyValue1)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, null, messageTemplate, new object[] { propertyValue0, propertyValue1 });
             }
@@ -251,7 +251,7 @@ namespace Serilog.Core
         public void Write<T0, T1, T2>(LogEventLevel level, string messageTemplate, T0 propertyValue0, T1 propertyValue1, T2 propertyValue2)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, null, messageTemplate, new object[] { propertyValue0, propertyValue1, propertyValue2 });
             }
@@ -269,6 +269,16 @@ namespace Serilog.Core
             WriteInternal(level, null, messageTemplate, propertyValues);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        bool IsEnabledInternal(LogEventLevel level)
+        {
+            if ((int)level < (int)_minimumLevel)
+                return false;
+
+            return _levelSwitch == null ||
+                   (int)level >= (int)_levelSwitch.MinimumLevel;
+        }
+
         /// <summary>
         /// Determine if events at the specified level will be passed through
         /// to the log sinks.
@@ -277,11 +287,7 @@ namespace Serilog.Core
         /// <returns>True if the level is enabled; otherwise, false.</returns>
         public bool IsEnabled(LogEventLevel level)
         {
-            if ((int)level < (int)_minimumLevel)
-                return false;
-
-            return _levelSwitch == null ||
-                   (int)level >= (int)_levelSwitch.MinimumLevel;
+            return IsEnabledInternal(level);
         }
 
         /// <summary>
@@ -294,7 +300,7 @@ namespace Serilog.Core
         public void Write(LogEventLevel level, Exception exception, string messageTemplate)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, exception, messageTemplate, NoPropertyValues);
             }
@@ -311,7 +317,7 @@ namespace Serilog.Core
         public void Write<T>(LogEventLevel level, Exception exception, string messageTemplate, T propertyValue)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, exception, messageTemplate, new object[] { propertyValue });
             }
@@ -329,7 +335,7 @@ namespace Serilog.Core
         public void Write<T0, T1>(LogEventLevel level, Exception exception, string messageTemplate, T0 propertyValue0, T1 propertyValue1)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, exception, messageTemplate, new object[] { propertyValue0, propertyValue1 });
             }
@@ -348,7 +354,7 @@ namespace Serilog.Core
         public void Write<T0, T1, T2>(LogEventLevel level, Exception exception, string messageTemplate, T0 propertyValue0, T1 propertyValue1, T2 propertyValue2)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, exception, messageTemplate, new object[] { propertyValue0, propertyValue1, propertyValue2 });
             }
@@ -382,7 +388,7 @@ namespace Serilog.Core
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void WriteInternal(LogEventLevel level, Exception exception, string messageTemplate, object[] propertyValues)
         {
-            if (!IsEnabled(level)) return;
+            if (!IsEnabledInternal(level)) return;
             if (messageTemplate == null) return;
 
             // Catch a common pitfall when a single non-object array is cast to object[]
@@ -406,7 +412,7 @@ namespace Serilog.Core
         public void Write(LogEvent logEvent)
         {
             if (logEvent == null) return;
-            if (!IsEnabled(logEvent.Level)) return;
+            if (!IsEnabledInternal(logEvent.Level)) return;
             Dispatch(logEvent);
         }
 
