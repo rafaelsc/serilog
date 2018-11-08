@@ -40,6 +40,8 @@ namespace Serilog.Core.Sinks
 
         public void Emit(in LogEvent logEvent)
         {
+            if (logEvent == null) throw new ArgumentNullException(nameof(logEvent));
+
             var copy = new LogEvent(
                 logEvent.Timestamp,
                 logEvent.Level,

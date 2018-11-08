@@ -100,6 +100,8 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException"></exception>
         public void AddOrUpdateProperty(in LogEventProperty property)
         {
+            if (property == null) throw new ArgumentNullException(nameof(property));
+
             _properties[property.Name] = property.Value;
         }
 

@@ -36,7 +36,7 @@ namespace Serilog.Core.Enrichers
             {
                 try
                 {
-                    enricher.Enrich(in logEvent, propertyFactory);
+                    enricher.Enrich(logEvent, propertyFactory);
                 }
                 catch (Exception ex)
                 {

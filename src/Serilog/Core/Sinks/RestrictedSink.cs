@@ -33,6 +33,8 @@ namespace Serilog.Core.Sinks
 
         public void Emit(in LogEvent logEvent)
         {
+            if (logEvent == null) throw new ArgumentNullException(nameof(logEvent));
+
             if ((int)logEvent.Level < (int)_levelSwitch.MinimumLevel)
                 return;
 

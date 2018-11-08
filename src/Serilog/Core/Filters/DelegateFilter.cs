@@ -29,6 +29,7 @@ namespace Serilog.Core.Filters
 
         public bool IsEnabled(in LogEvent logEvent)
         {
+            if (logEvent == null) throw new ArgumentNullException(nameof(logEvent));
             return _isEnabled(logEvent);
         }
     }
