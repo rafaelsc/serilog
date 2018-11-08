@@ -402,7 +402,6 @@ namespace Serilog.Core
 
             var logEvent = new LogEvent(DateTimeOffset.Now, level, exception, parsedTemplate, boundProperties);
             Dispatch(logEvent);
-
         }
 
         /// <summary>
