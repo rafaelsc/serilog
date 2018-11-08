@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace Serilog.Events
@@ -58,7 +59,7 @@ namespace Serilog.Events
         {
             return !string.IsNullOrWhiteSpace(name);
         }
-        
+
         /// <summary>Indicates whether this instance and a specified object are equal.</summary>
         /// <returns>true if <paramref name="other" /> and this instance are the same type and represent the same value; otherwise, false. </returns>
         /// <param name="other">The object to compare with the current instance. </param>
@@ -67,17 +68,19 @@ namespace Serilog.Events
             return string.Equals(Name, other.Name) && Equals(Value, other.Value);
         }
 
-        /// <summary>Indicates whether this instance and a specified object are equal.</summary>
-        /// <returns>true if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, false. </returns>
-        /// <param name="obj">The object to compare with the current instance. </param>
+        /// <summary>Determines whether the specified object is equal to the current object.</summary>
+        /// <returns>true if the specified object  is equal to the current object; otherwise, false.</returns>
+        /// <param name="obj">The object to compare with the current object. </param>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            return obj is LogEventProperty other && Equals(other);
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((LogEventProperty) obj);
         }
 
-        /// <summary>Returns the hash code for this instance.</summary>
-        /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+        /// <summary>Serves as the default hash function. </summary>
+        /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
             unchecked
