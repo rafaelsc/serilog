@@ -82,7 +82,7 @@ namespace Serilog.Tests.Core
             var sinkRestrictedToMinimumLevel = eventLevel + sinkRestrictedToIncrement ?? Verbose;
             var childMinimumLevel = eventLevel + childMinimumLevelIncrement ?? Information;
 
-            LogEvent evt = null;
+            LogEvent evt = default;
             var sink = new DelegatingSink(e => evt = e);
 
             var logger = new LoggerConfiguration()
@@ -118,7 +118,7 @@ namespace Serilog.Tests.Core
             var sinkRestrictedToMinimumLevel = eventLevel + sinkRestrictedToIncrement ?? Verbose;
             var childMinimumLevel = eventLevel + childMinimumLevelIncrement ?? Information;
 
-            LogEvent evt = null;
+            LogEvent evt = default;
             var sink = new DelegatingSink(e => evt = e);
 
             var childLogger = new LoggerConfiguration()
@@ -202,7 +202,7 @@ namespace Serilog.Tests.Core
             var rootOverrideLevel = incomingEventLevel + rootOverrideLevelIncrement;
             var childOverrideLevel = incomingEventLevel + childOverrideLevelIncrement;
 
-            LogEvent evt = null;
+            LogEvent evt = default;
             var sink = new DelegatingSink(e => evt = e);
 
             var rootLoggerConfig = new LoggerConfiguration()
@@ -252,7 +252,7 @@ namespace Serilog.Tests.Core
             var rootOverrideLevel = incomingEventLevel + rootOverrideLevelIncrement;
             var childOverrideLevel = incomingEventLevel + childOverrideLevelIncrement;
 
-            LogEvent evt = null;
+            LogEvent evt = default;
             var sink = new DelegatingSink(e => evt = e);
 
             var childLoggerConfig = new LoggerConfiguration()

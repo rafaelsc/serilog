@@ -431,7 +431,7 @@ namespace Serilog.Tests
 
         private string LogAndGetAsString(object x, Func<LoggerConfiguration, LoggerConfiguration> conf, string destructuringSymbol = "")
         {
-            LogEvent evt = null;
+            LogEvent evt = default;
             var logConf = new LoggerConfiguration()
                 .WriteTo.Sink(new DelegatingSink(e => evt = e));
             logConf = conf(logConf);

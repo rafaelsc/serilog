@@ -21,7 +21,7 @@ namespace Serilog.Events
     /// <summary>
     /// A log event.
     /// </summary>
-    public class LogEvent
+    public readonly struct LogEvent
     {
         readonly Dictionary<string, LogEventPropertyValue> _properties;
 
@@ -99,7 +99,7 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException"></exception>
         public void AddOrUpdateProperty(LogEventProperty property)
         {
-            if (property == null) throw new ArgumentNullException(nameof(property));
+            //if (property == null) throw new ArgumentNullException(nameof(property));
             _properties[property.Name] = property.Value;
         }
 
@@ -110,7 +110,7 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException"></exception>
         public void AddPropertyIfAbsent(LogEventProperty property)
         {
-            if (property == null) throw new ArgumentNullException(nameof(property));
+            //if (property == null) throw new ArgumentNullException(nameof(property));
             if (!_properties.ContainsKey(property.Name))
                 _properties.Add(property.Name, property.Value);
         }
@@ -123,6 +123,66 @@ namespace Serilog.Events
         public void RemovePropertyIfPresent(string propertyName)
         {
             _properties.Remove(propertyName);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(LogEvent other)
+        {
+            return Timestamp.Equals(other.Timestamp) && Level == other.Level && Equals(MessageTemplate, other.MessageTemplate) && Equals(Exception, other.Exception) && Equals(_properties, other._properties);
+        }
+
+        /// <summary>
+        /// X
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is LogEvent other && Equals(other);
+        }
+
+        /// <summary>
+        /// X
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Timestamp.GetHashCode();
+                hashCode = (hashCode * 397) ^ (int) Level;
+                hashCode = (hashCode * 397) ^ (MessageTemplate != null ? MessageTemplate.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Exception != null ? Exception.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (_properties != null ? _properties.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
+
+        /// <summary>
+        /// X
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator ==(LogEvent left, LogEvent right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// X
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator !=(LogEvent left, LogEvent right)
+        {
+            return !left.Equals(right);
         }
     }
 }

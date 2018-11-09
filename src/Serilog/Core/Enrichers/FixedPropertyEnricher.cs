@@ -23,12 +23,12 @@ namespace Serilog.Core.Enrichers
 
         public FixedPropertyEnricher(LogEventProperty logEventProperty)
         {
-            _logEventProperty = logEventProperty ?? throw new ArgumentNullException(nameof(logEventProperty));
+            _logEventProperty = logEventProperty;// ?? throw new ArgumentNullException(nameof(logEventProperty));
         }
 
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
-            if (logEvent == null) throw new ArgumentNullException(nameof(logEvent));
+            //if (logEvent == null) throw new ArgumentNullException(nameof(logEvent));
             logEvent.AddPropertyIfAbsent(_logEventProperty);
         }
     }

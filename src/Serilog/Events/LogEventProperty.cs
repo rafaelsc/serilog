@@ -19,7 +19,7 @@ namespace Serilog.Events
     /// <summary>
     /// A property associated with a <see cref="LogEvent"/>.
     /// </summary>
-    public class LogEventProperty
+    public readonly struct LogEventProperty
     {
         /// <summary>
         /// Construct a <see cref="LogEventProperty"/> with the specified name and value.
@@ -56,6 +56,59 @@ namespace Serilog.Events
         public static bool IsValidName(string name)
         {
             return !string.IsNullOrWhiteSpace(name);
+        }
+
+        /// <summary>
+        /// x
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(LogEventProperty other)
+        {
+            return string.Equals(Name, other.Name) && Equals(Value, other.Value);
+        }
+
+        /// <summary>
+        /// x
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is LogEventProperty other && Equals(other);
+        }
+
+        /// <summary>Returns the hash code for this instance.</summary>
+        /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ (Value != null ? Value.GetHashCode() : 0);
+            }
+        }
+
+        /// <summary>
+        /// x
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator ==(LogEventProperty left, LogEventProperty right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// x
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator !=(LogEventProperty left, LogEventProperty right)
+        {
+            return !left.Equals(right);
         }
     }
 }

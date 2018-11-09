@@ -21,7 +21,7 @@ namespace Serilog.Tests.Support
 
         public static LogEvent GetLogEvent(Action<ILogger> writeAction)
         {
-            LogEvent result = null;
+            LogEvent result = default;
             var l = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
                 .WriteTo.Sink(new DelegatingSink(le => result = le))
