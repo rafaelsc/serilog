@@ -522,7 +522,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Verbose(string messageTemplate, params object[] propertyValues)
         {
-            WriteInternal(LogEventLevel.Verbose, (Exception)null, messageTemplate, propertyValues);
+            Write(LogEventLevel.Verbose, (Exception)null, messageTemplate, propertyValues);
         }
 
         /// <summary>
