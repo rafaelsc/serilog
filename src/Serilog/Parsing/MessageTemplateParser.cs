@@ -47,7 +47,8 @@ namespace Serilog.Parsing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static IEnumerable<MessageTemplateToken> Tokenize(string messageTemplate)
         {
-            if (messageTemplate.Length == 0)
+            var messageMemory = messageTemplate.AsMemory();
+            if (messageMemory.Length == 0)
             {
                 yield return new TextToken("", 0);
                 yield break;
@@ -57,25 +58,25 @@ namespace Serilog.Parsing
             while (true)
             {
                 var beforeText = nextIndex;
-                var tt = ParseTextToken(nextIndex, messageTemplate, out nextIndex);
+                var tt = ParseTextToken(nextIndex, messageMemory.Span, out nextIndex);
                 if (nextIndex > beforeText)
                     yield return tt;
 
-                if (nextIndex == messageTemplate.Length)
+                if (nextIndex == messageMemory.Length)
                     yield break;
 
                 var beforeProp = nextIndex;
-                var pt = ParsePropertyToken(nextIndex, messageTemplate, out nextIndex);
+                var pt = ParsePropertyToken(nextIndex, messageMemory.Span, out nextIndex);
                 if (beforeProp < nextIndex)
                     yield return pt;
 
-                if (nextIndex == messageTemplate.Length)
+                if (nextIndex == messageMemory.Length)
                     yield break;
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static MessageTemplateToken ParsePropertyToken(int startAt, string messageTemplate, out int next)
+        static MessageTemplateToken ParsePropertyToken(int startAt, ReadOnlySpan<char> messageTemplate, out int next)
         {
             var first = startAt;
             startAt++;
@@ -85,19 +86,19 @@ namespace Serilog.Parsing
             if (startAt == messageTemplate.Length || messageTemplate[startAt] != '}')
             {
                 next = startAt;
-                return new TextToken(messageTemplate.Substring(first, next - first), first);
+                return new TextToken(messageTemplate.Slice(first, next - first).ToString(), first);
             }
 
             next = startAt + 1;
 
-            var rawText = messageTemplate.Substring(first, next - first);
-            var tagContent = rawText.Substring(1, next - (first + 2));
+            var rawText = messageTemplate.Slice(first, next - first);
+            var tagContent = rawText.Slice(1, next - (first + 2));
             if (tagContent.Length == 0)
-                return new TextToken(rawText, first);
+                return new TextToken(rawText.ToString(), first);
 
             string propertyNameAndDestructuring, format, alignment;
             if (!TrySplitTagContent(tagContent, out propertyNameAndDestructuring, out format, out alignment))
-                return new TextToken(rawText, first);
+                return new TextToken(rawText.ToString(), first);
 
             var propertyName = propertyNameAndDestructuring;
             var destructuring = Destructuring.Default;
@@ -105,13 +106,13 @@ namespace Serilog.Parsing
                 propertyName = propertyName.Substring(1);
 
             if (propertyName.Length == 0)
-                return new TextToken(rawText, first);
+                return new TextToken(rawText.ToString(), first);
 
             for (var i = 0; i < propertyName.Length; ++i)
             {
                 var c = propertyName[i];
                 if (!IsValidInPropertyName(c))
-                    return new TextToken(rawText, first);
+                    return new TextToken(rawText.ToString(), first);
             }
 
             if (format != null)
@@ -120,7 +121,7 @@ namespace Serilog.Parsing
                 {
                     var c = format[i];
                     if (!IsValidInFormat(c))
-                        return new TextToken(rawText, first);
+                        return new TextToken(rawText.ToString(), first);
                 }
             }
 
@@ -131,16 +132,16 @@ namespace Serilog.Parsing
                 {
                     var c = alignment[i];
                     if (!IsValidInAlignment(c))
-                        return new TextToken(rawText, first);
+                        return new TextToken(rawText.ToString(), first);
                 }
 
                 var lastDash = alignment.LastIndexOf('-');
                 if (lastDash > 0)
-                    return new TextToken(rawText, first);
+                    return new TextToken(rawText.ToString(), first);
 
                 var width = 0;
                 if (!int.TryParse(lastDash == -1 ? alignment : alignment.Substring(1), out width) || width == 0)
-                    return new TextToken(rawText, first);
+                    return new TextToken(rawText.ToString(), first);
 
                 var direction = lastDash == -1 ?
                     AlignmentDirection.Right :
@@ -151,7 +152,7 @@ namespace Serilog.Parsing
 
             return new PropertyToken(
                 propertyName,
-                rawText,
+                rawText.ToString(),
                 format,
                 alignmentValue,
                 destructuring,
@@ -159,13 +160,13 @@ namespace Serilog.Parsing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static bool TrySplitTagContent(string tagContent, out string propertyNameAndDestructuring, out string format, out string alignment)
+        static bool TrySplitTagContent(ReadOnlySpan<char> tagContent, out string propertyNameAndDestructuring, out string format, out string alignment)
         {
             var formatDelim = tagContent.IndexOf(':');
             var alignmentDelim = tagContent.IndexOf(',');
             if (formatDelim == -1 && alignmentDelim == -1)
             {
-                propertyNameAndDestructuring = tagContent;
+                propertyNameAndDestructuring = tagContent.ToString();
                 format = null;
                 alignment = null;
             }
@@ -173,15 +174,15 @@ namespace Serilog.Parsing
             {
                 if (alignmentDelim == -1 || (formatDelim != -1 && alignmentDelim > formatDelim))
                 {
-                    propertyNameAndDestructuring = tagContent.Substring(0, formatDelim);
+                    propertyNameAndDestructuring = tagContent.Slice(0, formatDelim).ToString();
                     format = formatDelim == tagContent.Length - 1 ?
                         null :
-                        tagContent.Substring(formatDelim + 1);
+                        tagContent.Slice(formatDelim + 1).ToString();
                     alignment = null;
                 }
                 else
                 {
-                    propertyNameAndDestructuring = tagContent.Substring(0, alignmentDelim);
+                    propertyNameAndDestructuring = tagContent.Slice(0, alignmentDelim).ToString();
                     if (formatDelim == -1)
                     {
                         if (alignmentDelim == tagContent.Length - 1)
@@ -191,7 +192,7 @@ namespace Serilog.Parsing
                         }
 
                         format = null;
-                        alignment = tagContent.Substring(alignmentDelim + 1);
+                        alignment = tagContent.Slice(alignmentDelim + 1).ToString();
                     }
                     else
                     {
@@ -201,10 +202,10 @@ namespace Serilog.Parsing
                             return false;
                         }
 
-                        alignment = tagContent.Substring(alignmentDelim + 1, formatDelim - alignmentDelim - 1);
+                        alignment = tagContent.Slice(alignmentDelim + 1, formatDelim - alignmentDelim - 1).ToString();
                         format = formatDelim == tagContent.Length - 1 ?
                             null :
-                            tagContent.Substring(formatDelim + 1);
+                            tagContent.Slice(formatDelim + 1).ToString();
                     }
                 }
             }
@@ -274,7 +275,7 @@ namespace Serilog.Parsing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static TextToken ParseTextToken(int startAt, string messageTemplate, out int next)
+        static TextToken ParseTextToken(int startAt, ReadOnlySpan<char> messageTemplate, out int next)
         {
             var first = startAt;
 
