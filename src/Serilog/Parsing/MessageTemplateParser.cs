@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Serilog.Core;
@@ -37,9 +38,10 @@ namespace Serilog.Parsing
         /// presence of parsing issues.</returns>
         public MessageTemplate Parse(string messageTemplate)
         {
-            if (messageTemplate == null)
-                throw new ArgumentNullException(nameof(messageTemplate));
-            return new MessageTemplate(messageTemplate, Tokenize(messageTemplate));
+            if (messageTemplate == null) throw new ArgumentNullException(nameof(messageTemplate));
+
+            var tokens = Tokenize(messageTemplate).ToArray();
+            return new MessageTemplate(messageTemplate, tokens);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
