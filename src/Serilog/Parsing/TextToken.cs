@@ -50,6 +50,7 @@ namespace Serilog.Parsing
         public override void Render(IReadOnlyDictionary<string, LogEventPropertyValue> properties, TextWriter output, IFormatProvider formatProvider = null)
         {
             if (output == null) throw new ArgumentNullException(nameof(output));
+
             MessageTemplateRenderer.RenderTextToken(this, output);
         }
 
