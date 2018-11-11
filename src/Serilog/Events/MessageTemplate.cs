@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Serilog.Debugging;
 using Serilog.Parsing;
 using Serilog.Rendering;
@@ -91,6 +92,7 @@ namespace Serilog.Events
         /// <summary>
         /// Similar to <see cref="Enumerable.OfType{TResult}"/>, but faster.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static TResult[] GetElementsOfTypeToArray<TResult>(MessageTemplateToken[] tokens)
             where TResult: class
         {
