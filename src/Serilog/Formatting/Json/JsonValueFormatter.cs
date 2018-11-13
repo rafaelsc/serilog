@@ -15,6 +15,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Runtime.CompilerServices;
 using Serilog.Data;
 using Serilog.Events;
 
@@ -222,11 +223,13 @@ namespace Serilog.Formatting.Json
             FormatLiteralObjectValue(value, output);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void FormatBooleanValue(bool value, TextWriter output)
         {
             output.Write(value ? "true" : "false");
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
 		static void FormatFloatValue(float value, TextWriter output)
 		{
 			if (float.IsNaN(value) || float.IsInfinity(value))
@@ -238,6 +241,7 @@ namespace Serilog.Formatting.Json
 			output.Write(value.ToString("R", CultureInfo.InvariantCulture));
 		}
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
 		static void FormatDoubleValue(double value, TextWriter output)
 		{
 			if (double.IsNaN(value) || double.IsInfinity(value))
@@ -249,11 +253,13 @@ namespace Serilog.Formatting.Json
 			output.Write(value.ToString("R", CultureInfo.InvariantCulture));
 		}
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void FormatExactNumericValue(IFormattable value, TextWriter output)
         {
             output.Write(value.ToString(null, CultureInfo.InvariantCulture));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void FormatDateTimeValue(IFormattable value, TextWriter output)
         {
             output.Write('\"');
@@ -261,6 +267,7 @@ namespace Serilog.Formatting.Json
             output.Write('\"');
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void FormatTimeSpanValue(TimeSpan value, TextWriter output)
         {
             output.Write('\"');
@@ -268,17 +275,20 @@ namespace Serilog.Formatting.Json
             output.Write('\"');
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void FormatLiteralObjectValue(object value, TextWriter output)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
             FormatStringValue(value.ToString(), output);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void FormatStringValue(string str, TextWriter output)
         {
             WriteQuotedJsonString(str, output);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void FormatNullValue(TextWriter output)
         {
             output.Write("null");

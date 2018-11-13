@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Serilog.Events;
 using Serilog.Formatting.Json;
 
@@ -58,6 +59,7 @@ namespace Serilog.Formatting.Display
             output.Write(" }");
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool TemplateContainsPropertyName(MessageTemplate template, string propertyName)
         {
             if (template.PositionalProperties != null)

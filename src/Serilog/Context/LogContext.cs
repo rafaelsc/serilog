@@ -15,6 +15,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Serilog.Core;
 using Serilog.Core.Enrichers;
 using Serilog.Events;
@@ -176,6 +177,7 @@ namespace Serilog.Context
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static ImmutableStack<ILogEventEnricher> GetOrCreateEnricherStack()
         {
             var enrichers = Enrichers;

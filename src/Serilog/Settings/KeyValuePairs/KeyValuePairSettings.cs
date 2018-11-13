@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Serilog.Configuration;
 using Serilog.Core;
@@ -166,11 +167,13 @@ namespace Serilog.Settings.KeyValuePairs
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool IsValidSwitchName(string input)
         {
             return Regex.IsMatch(input, LevelSwitchNameRegex);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static IReadOnlyDictionary<string, LoggingLevelSwitch> ParseNamedLevelSwitchDeclarationDirectives(IReadOnlyDictionary<string, string> directives)
         {
             var matchLevelSwitchDeclarations = new Regex(LevelSwitchDeclarationDirectiveRegex);
@@ -209,6 +212,7 @@ namespace Serilog.Settings.KeyValuePairs
             return namedSwitches;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static LoggingLevelSwitch LookUpSwitchByName(string switchName, IReadOnlyDictionary<string, LoggingLevelSwitch> declaredLevelSwitches)
         {
             if (declaredLevelSwitches.TryGetValue(switchName, out var levelSwitch))
@@ -219,6 +223,7 @@ namespace Serilog.Settings.KeyValuePairs
             throw new InvalidOperationException($"No LoggingLevelSwitch has been declared with name \"{switchName}\". You might be missing a key \"{LevelSwitchDirective}:{switchName}\"");
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static object ConvertOrLookupByName(string valueOrSwitchName, Type type, IReadOnlyDictionary<string, LoggingLevelSwitch> declaredSwitches)
         {
             if (type == typeof(LoggingLevelSwitch))
@@ -228,6 +233,7 @@ namespace Serilog.Settings.KeyValuePairs
             return SettingValueConversions.ConvertToType(valueOrSwitchName, type);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void ApplyDirectives(List<IGrouping<string, ConfigurationMethodCall>> directives, IList<MethodInfo> configurationMethods, object loggerConfigMethod, IReadOnlyDictionary<string, LoggingLevelSwitch> declaredSwitches)
         {
             foreach (var directiveInfo in directives)
@@ -248,6 +254,7 @@ namespace Serilog.Settings.KeyValuePairs
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static MethodInfo SelectConfigurationMethod(IEnumerable<MethodInfo> candidateMethods, string name, IEnumerable<ConfigurationMethodCall> suppliedArgumentValues)
         {
             return candidateMethods
@@ -257,6 +264,7 @@ namespace Serilog.Settings.KeyValuePairs
                 .FirstOrDefault();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static IEnumerable<Assembly> LoadConfigurationAssemblies(IReadOnlyDictionary<string, string> directives)
         {
             var configurationAssemblies = new List<Assembly> { typeof(ILogger).GetTypeInfo().Assembly };

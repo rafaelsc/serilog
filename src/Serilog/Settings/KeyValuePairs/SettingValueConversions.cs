@@ -16,11 +16,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace Serilog.Settings.KeyValuePairs
 {
-    class SettingValueConversions
+    static class SettingValueConversions
     {
         // should match "The.NameSpace.TypeName::MemberName" optionnally followed by
         // usual assembly qualifiers like : 
@@ -34,6 +35,7 @@ namespace Serilog.Settings.KeyValuePairs
                 { typeof(Type), s => Type.GetType(s, throwOnError:true) },
             };
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static object ConvertToType(string value, Type toType)
         {
             var toTypeInfo = toType.GetTypeInfo();
@@ -113,6 +115,7 @@ namespace Serilog.Settings.KeyValuePairs
             return Convert.ChangeType(value, toType);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryParseStaticMemberAccessor(string input, out string accessorTypeName, out string memberName)
         {
             if (input == null)
