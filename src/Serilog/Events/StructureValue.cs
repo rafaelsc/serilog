@@ -16,6 +16,7 @@ using System.Collections.Generic;
 
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Serilog.Events
 {
@@ -88,6 +89,7 @@ namespace Serilog.Events
             output.Write(" }");
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void Render(TextWriter output, LogEventProperty property, IFormatProvider formatProvider = null)
         {
             output.Write(property.Name);

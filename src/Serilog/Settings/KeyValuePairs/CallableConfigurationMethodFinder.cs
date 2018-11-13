@@ -23,6 +23,7 @@ namespace Serilog.Settings.KeyValuePairs
 {
     static class CallableConfigurationMethodFinder
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static IList<MethodInfo> FindConfigurationMethods(IEnumerable<Assembly> configurationAssemblies, Type configType)
         {
             var methods = configurationAssemblies

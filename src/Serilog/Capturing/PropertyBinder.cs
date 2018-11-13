@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Serilog.Debugging;
 using Serilog.Events;
 using Serilog.Parsing;
@@ -57,6 +58,7 @@ namespace Serilog.Capturing
             return ConstructNamedProperties(messageTemplate, messageTemplateParameters);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         IEnumerable<LogEventProperty> ConstructPositionalProperties(MessageTemplate template, object[] messageTemplateParameters)
         {
             var positionalProperties = template.PositionalProperties;
@@ -93,6 +95,7 @@ namespace Serilog.Capturing
             return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         IEnumerable<LogEventProperty> ConstructNamedProperties(MessageTemplate template, object[] messageTemplateParameters)
         {
             var namedProperties = template.NamedProperties;
@@ -122,6 +125,7 @@ namespace Serilog.Capturing
             return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         LogEventProperty ConstructProperty(PropertyToken propertyToken, object value)
         {
             return new LogEventProperty(
