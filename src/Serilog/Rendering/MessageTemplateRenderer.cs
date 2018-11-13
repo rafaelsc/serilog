@@ -57,11 +57,13 @@ namespace Serilog.Rendering
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void RenderTextToken(TextToken tt, TextWriter output)
         {
             output.Write(tt.Text);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void RenderPropertyToken(PropertyToken pt, IReadOnlyDictionary<string, LogEventPropertyValue> properties, TextWriter output, IFormatProvider formatProvider, bool isLiteral, bool isJson)
         {
             LogEventPropertyValue propertyValue;
@@ -90,6 +92,7 @@ namespace Serilog.Rendering
             Padding.Apply(output, value, pt.Alignment.Value);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void RenderValue(LogEventPropertyValue propertyValue, bool literal, bool json, TextWriter output, string format, IFormatProvider formatProvider)
         {
             if (literal && propertyValue is ScalarValue sv && sv.Value is string str)

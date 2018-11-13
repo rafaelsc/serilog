@@ -19,6 +19,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Serilog.Events;
 using Serilog.Parsing;
 using Serilog.Rendering;
@@ -366,6 +367,7 @@ namespace Serilog.Formatting.Json
             WriteString(value.ToString(), output);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void WriteLiteral(object value, TextWriter output, bool forceQuotation = false)
         {
             if (value == null)
@@ -384,6 +386,7 @@ namespace Serilog.Formatting.Json
             WriteLiteralValue(value, output);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void WriteToString(object number, bool quote, TextWriter output)
         {
             if (quote) output.Write('"');
@@ -397,21 +400,25 @@ namespace Serilog.Formatting.Json
             if (quote) output.Write('"');
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void WriteBoolean(bool value, TextWriter output)
         {
             output.Write(value ? "true" : "false");
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void WriteSingle(float value, TextWriter output)
         {
             output.Write(value.ToString("R", CultureInfo.InvariantCulture));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void WriteDouble(double value, TextWriter output)
         {
             output.Write(value.ToString("R", CultureInfo.InvariantCulture));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void WriteOffset(DateTimeOffset value, TextWriter output)
         {
             output.Write("\"");
@@ -419,6 +426,7 @@ namespace Serilog.Formatting.Json
             output.Write("\"");
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void WriteDateTime(DateTime value, TextWriter output)
         {
             output.Write("\"");
@@ -426,6 +434,7 @@ namespace Serilog.Formatting.Json
             output.Write("\"");
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void WriteString(string value, TextWriter output)
         {
             JsonValueFormatter.WriteQuotedJsonString(value, output);

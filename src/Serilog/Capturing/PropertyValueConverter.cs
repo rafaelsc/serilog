@@ -113,6 +113,7 @@ namespace Serilog.Capturing
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         LogEventPropertyValue CreatePropertyValue(object value, bool destructureObjects, int depth)
         {
             return CreatePropertyValue(
@@ -123,6 +124,7 @@ namespace Serilog.Capturing
                 depth);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         LogEventPropertyValue CreatePropertyValue(object value, Destructuring destructuring, int depth)
         {
             if (value == null)
@@ -230,6 +232,7 @@ namespace Serilog.Capturing
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         bool TryConvertValueTuple(object value, Destructuring destructuring, Type valueType, out LogEventPropertyValue result)
         {
             if (!(value is IStructuralEquatable && valueType.IsConstructedGenericType))
@@ -274,6 +277,7 @@ namespace Serilog.Capturing
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         bool TryConvertCompilerGeneratedType(object value, Destructuring destructuring, Type valueType, out LogEventPropertyValue result)
         {
             if (destructuring == Destructuring.Destructure)
@@ -292,6 +296,7 @@ namespace Serilog.Capturing
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         LogEventPropertyValue Stringify(object value)
         {
             var stringified = value.ToString();
@@ -299,6 +304,7 @@ namespace Serilog.Capturing
             return new ScalarValue(truncated);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         string TruncateIfNecessary(string text)
         {
             if (text.Length > _maximumStringLength)
@@ -309,6 +315,7 @@ namespace Serilog.Capturing
             return text;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         bool TryGetDictionary(object value, Type valueType, out IDictionary dictionary)
         {
             if (valueType.IsConstructedGenericType &&
@@ -323,12 +330,14 @@ namespace Serilog.Capturing
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         bool IsValidDictionaryKeyType(Type valueType)
         {
             return BuiltInScalarTypes.Contains(valueType) ||
                    valueType.GetTypeInfo().IsEnum;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         IEnumerable<LogEventProperty> GetProperties(object value)
         {
             foreach (var prop in value.GetType().GetPropertiesRecursive())

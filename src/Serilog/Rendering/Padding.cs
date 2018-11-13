@@ -14,6 +14,7 @@
 
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Serilog.Parsing;
 
 namespace Serilog.Rendering
@@ -25,6 +26,7 @@ namespace Serilog.Rendering
         /// <summary>
         /// Writes the provided value to the output, applying direction-based padding when <paramref name="alignment"/> is provided.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Apply(TextWriter output, string value, Alignment? alignment)
         {
             if (!alignment.HasValue || value.Length >= alignment.Value.Width)

@@ -15,6 +15,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace Serilog.Events
 {
@@ -50,6 +51,7 @@ namespace Serilog.Events
             Render(Value, output, format, formatProvider);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Render(object value, TextWriter output, string format = null, IFormatProvider formatProvider = null)
         {
             if (output == null) throw new ArgumentNullException(nameof(output));
