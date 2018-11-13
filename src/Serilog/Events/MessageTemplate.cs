@@ -60,7 +60,7 @@ namespace Serilog.Events
             if (tokens == null) throw new ArgumentNullException(nameof(tokens));
 
             Text = text;
-            _tokens = tokens.ToArray();
+            _tokens = tokens as MessageTemplateToken[] ?? tokens.ToArray();
 
             var propertyTokens = GetElementsOfTypeToArray<PropertyToken>(_tokens);
             if (propertyTokens.Length != 0)
