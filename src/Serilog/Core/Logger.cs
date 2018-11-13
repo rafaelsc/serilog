@@ -965,7 +965,7 @@ namespace Serilog.Core
         [MessageTemplateFormatMethod("messageTemplate")]
         public void Warning(string messageTemplate, params object[] propertyValues)
         {
-            WriteInternal(LogEventLevel.Warning, (Exception)null, messageTemplate, propertyValues);
+            WriteInternal(LogEventLevel.Warning, null, messageTemplate, propertyValues);
         }
 
         /// <summary>
