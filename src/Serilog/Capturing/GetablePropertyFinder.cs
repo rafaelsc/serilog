@@ -16,11 +16,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Serilog.Capturing
 {
     static class GetablePropertyFinder
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static IEnumerable<PropertyInfo> GetPropertiesRecursive(this Type type)
         {
             var seenNames = new HashSet<string>();

@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Serilog.Configuration;
 using Serilog.Core;
 using Serilog.Events;
@@ -44,6 +45,7 @@ namespace Serilog.Settings.KeyValuePairs
         internal static readonly MethodInfo[] Destructure = SurrogateMethodCandidates[typeof(LoggerDestructuringConfiguration)];
         internal static readonly MethodInfo[] Filter = SurrogateMethodCandidates[typeof(LoggerFilterConfiguration)];
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static LoggerConfiguration Sink(
             LoggerSinkConfiguration loggerSinkConfiguration,
             ILogEventSink sink,
@@ -53,6 +55,7 @@ namespace Serilog.Settings.KeyValuePairs
             return loggerSinkConfiguration.Sink(sink, restrictedToMinimumLevel, levelSwitch);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static LoggerConfiguration Sink(
             LoggerAuditSinkConfiguration auditSinkConfiguration,
             ILogEventSink sink,
@@ -62,46 +65,54 @@ namespace Serilog.Settings.KeyValuePairs
             return auditSinkConfiguration.Sink(sink, restrictedToMinimumLevel, levelSwitch);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static LoggerConfiguration With(LoggerEnrichmentConfiguration loggerEnrichmentConfiguration, ILogEventEnricher enricher)
         {
             return loggerEnrichmentConfiguration.With(enricher);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static LoggerConfiguration FromLogContext(LoggerEnrichmentConfiguration loggerEnrichmentConfiguration)
         {
             return loggerEnrichmentConfiguration.FromLogContext();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static LoggerConfiguration With(LoggerDestructuringConfiguration loggerDestructuringConfiguration,
             IDestructuringPolicy policy)
         {
             return loggerDestructuringConfiguration.With(policy);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static LoggerConfiguration AsScalar(LoggerDestructuringConfiguration loggerDestructuringConfiguration,
             Type scalarType)
         {
             return loggerDestructuringConfiguration.AsScalar(scalarType);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static LoggerConfiguration ToMaximumCollectionCount(LoggerDestructuringConfiguration loggerDestructuringConfiguration,
             int maximumCollectionCount)
         {
             return loggerDestructuringConfiguration.ToMaximumCollectionCount(maximumCollectionCount);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static LoggerConfiguration ToMaximumDepth(LoggerDestructuringConfiguration loggerDestructuringConfiguration,
             int maximumDestructuringDepth)
         {
             return loggerDestructuringConfiguration.ToMaximumDepth(maximumDestructuringDepth);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static LoggerConfiguration ToMaximumStringLength(LoggerDestructuringConfiguration loggerDestructuringConfiguration,
             int maximumStringLength)
         {
             return loggerDestructuringConfiguration.ToMaximumStringLength(maximumStringLength);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static LoggerConfiguration With(LoggerFilterConfiguration loggerFilterConfiguration,
             ILogEventFilter filter)
         {

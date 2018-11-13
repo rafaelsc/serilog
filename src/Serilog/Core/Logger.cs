@@ -197,10 +197,11 @@ namespace Serilog.Core
         /// <param name="level">The level of the event.</param>
         /// <param name="messageTemplate">Message template describing the event.</param>
         [MessageTemplateFormatMethod("messageTemplate")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write(in LogEventLevel level, in string messageTemplate)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, null, messageTemplate, NoPropertyValues);
             }
@@ -213,10 +214,11 @@ namespace Serilog.Core
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValue">Object positionally formatted into the message template.</param>
         [MessageTemplateFormatMethod("messageTemplate")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write<T>(in LogEventLevel level, in string messageTemplate, in T propertyValue)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, null, messageTemplate, new object[] { propertyValue });
             }
@@ -230,10 +232,11 @@ namespace Serilog.Core
         /// <param name="propertyValue0">Object positionally formatted into the message template.</param>
         /// <param name="propertyValue1">Object positionally formatted into the message template.</param>
         [MessageTemplateFormatMethod("messageTemplate")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write<T0, T1>(in LogEventLevel level, in string messageTemplate, in T0 propertyValue0, in T1 propertyValue1)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, null, messageTemplate, new object[] { propertyValue0, propertyValue1 });
             }
@@ -248,10 +251,11 @@ namespace Serilog.Core
         /// <param name="propertyValue1">Object positionally formatted into the message template.</param>
         /// <param name="propertyValue2">Object positionally formatted into the message template.</param>
         [MessageTemplateFormatMethod("messageTemplate")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write<T0, T1, T2>(in LogEventLevel level, in string messageTemplate, in T0 propertyValue0, in T1 propertyValue1, in T2 propertyValue2)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, null, messageTemplate, new object[] { propertyValue0, propertyValue1, propertyValue2 });
             }
@@ -264,9 +268,20 @@ namespace Serilog.Core
         /// <param name="messageTemplate"></param>
         /// <param name="propertyValues"></param>
         [MessageTemplateFormatMethod("messageTemplate")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write(in LogEventLevel level, in string messageTemplate, params object[] propertyValues)
         {
             WriteInternal(level, null, messageTemplate, propertyValues);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        bool IsEnabledInternal(LogEventLevel level)
+        {
+            if ((int)level < (int)_minimumLevel)
+                return false;
+
+            return _levelSwitch == null ||
+                   (int)level >= (int)_levelSwitch.MinimumLevel;
         }
 
         /// <summary>
@@ -277,11 +292,7 @@ namespace Serilog.Core
         /// <returns>True if the level is enabled; otherwise, false.</returns>
         public bool IsEnabled(in LogEventLevel level)
         {
-            if ((int)level < (int)_minimumLevel)
-                return false;
-
-            return _levelSwitch == null ||
-                   (int)level >= (int)_levelSwitch.MinimumLevel;
+            return IsEnabledInternal(level);
         }
 
         /// <summary>
@@ -291,10 +302,11 @@ namespace Serilog.Core
         /// <param name="exception">Exception related to the event.</param>
         /// <param name="messageTemplate">Message template describing the event.</param>
         [MessageTemplateFormatMethod("messageTemplate")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write(in LogEventLevel level, in Exception exception, in string messageTemplate)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, exception, messageTemplate, NoPropertyValues);
             }
@@ -308,10 +320,11 @@ namespace Serilog.Core
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValue">Object positionally formatted into the message template.</param>
         [MessageTemplateFormatMethod("messageTemplate")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write<T>(in LogEventLevel level, in Exception exception, in string messageTemplate, in T propertyValue)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, exception, messageTemplate, new object[] { propertyValue });
             }
@@ -326,10 +339,11 @@ namespace Serilog.Core
         /// <param name="propertyValue0">Object positionally formatted into the message template.</param>
         /// <param name="propertyValue1">Object positionally formatted into the message template.</param>
         [MessageTemplateFormatMethod("messageTemplate")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write<T0, T1>(in LogEventLevel level, in Exception exception, in string messageTemplate, in T0 propertyValue0, in T1 propertyValue1)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, exception, messageTemplate, new object[] { propertyValue0, propertyValue1 });
             }
@@ -344,11 +358,13 @@ namespace Serilog.Core
         /// <param name="propertyValue0">Object positionally formatted into the message template.</param>
         /// <param name="propertyValue1">Object positionally formatted into the message template.</param>
         /// <param name="propertyValue2">Object positionally formatted into the message template.</param>
+        /// 
         [MessageTemplateFormatMethod("messageTemplate")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write<T0, T1, T2>(in LogEventLevel level, in Exception exception, in string messageTemplate, in T0 propertyValue0, in T1 propertyValue1, in T2 propertyValue2)
         {
             // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabled(level))
+            if (IsEnabledInternal(level))
             {
                 WriteInternal(level, exception, messageTemplate, new object[] { propertyValue0, propertyValue1, propertyValue2 });
             }
@@ -362,27 +378,28 @@ namespace Serilog.Core
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
         [MessageTemplateFormatMethod("messageTemplate")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write(in LogEventLevel level, in Exception exception, in string messageTemplate, params object[] propertyValues)
         {
             WriteInternal(level, exception, messageTemplate, propertyValues);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        void WriteInternal(in LogEventLevel level, in string messageTemplate)
+        void WriteInternal(LogEventLevel level, string messageTemplate)
         {
             WriteInternal(level, null, messageTemplate, NoPropertyValues);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        void WriteInternal(in LogEventLevel level, in Exception exception, in string messageTemplate)
+        void WriteInternal(LogEventLevel level, Exception exception, string messageTemplate)
         {
             WriteInternal(level, exception, messageTemplate, NoPropertyValues);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        void WriteInternal(in LogEventLevel level, in Exception exception, in string messageTemplate, in object[] propertyValues)
+        void WriteInternal(LogEventLevel level, Exception exception, string messageTemplate, object[] propertyValues)
         {
-            if (!IsEnabled(level)) return;
+            if (!IsEnabledInternal(level)) return;
             if (messageTemplate == null) return;
 
             object[] propertyValuesInternal;
@@ -406,7 +423,8 @@ namespace Serilog.Core
         /// <param name="logEvent">The event to write.</param>
         public void Write(in LogEvent logEvent)
         {
-            if (!IsEnabled(logEvent.Level)) return;
+            if (!IsEnabledInternal(logEvent.Level)) return;
+
             Dispatch(logEvent);
         }
 
@@ -417,6 +435,7 @@ namespace Serilog.Core
             Dispatch(logEvent);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void Dispatch(in LogEvent logEvent)
         {
             // The enricher may be a "safe" aggregate one, but is most commonly bare and so

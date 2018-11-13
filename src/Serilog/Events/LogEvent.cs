@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace Serilog.Events
 {
@@ -44,7 +45,7 @@ namespace Serilog.Events
             MessageTemplate = messageTemplate;
             _properties = new Dictionary<string, LogEventPropertyValue>();
             foreach (var p in properties)
-                AddOrUpdateProperty(p);
+                AddOrUpdatePropertyInternal(p);
         }
 
         /// <summary>
@@ -100,6 +101,13 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException"></exception>
         public void AddOrUpdateProperty(in LogEventProperty property)
         {
+            AddOrUpdatePropertyInternal(property);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        void AddOrUpdatePropertyInternal(LogEventProperty property)
+        {
+            //if (property == null) throw new ArgumentNullException(nameof(property));
             _properties[property.Name] = property.Value;
         }
 

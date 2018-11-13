@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Serilog.Settings.KeyValuePairs;
 
 namespace Serilog.Configuration
@@ -61,6 +62,7 @@ namespace Serilog.Configuration
             return KeyValuePairs(uniqueSettings);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         LoggerConfiguration KeyValuePairs(IReadOnlyDictionary<string, string> settings)
         {
             return Settings(new KeyValuePairSettings(settings));

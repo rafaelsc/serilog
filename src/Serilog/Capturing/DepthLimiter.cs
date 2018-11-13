@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using System;
-
+using System.Runtime.CompilerServices;
 using Serilog.Core;
 using Serilog.Debugging;
 using Serilog.Events;
@@ -66,6 +66,7 @@ namespace Serilog.Capturing
                 return result;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             LogEventPropertyValue DefaultIfMaximumDepth(in int depth)
             {
                 if (depth == _maximumDestructuringDepth)
