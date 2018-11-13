@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Serilog.Events;
 using Serilog.Formatting.Display.Obsolete;
 
@@ -77,6 +78,7 @@ namespace Serilog.Formatting.Display
         /// <param name="logEvent">The log event.</param>
         /// <param name="outputTemplate">The output template.</param>
         /// <returns>A dictionary with properties representing the log event.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static IReadOnlyDictionary<string, LogEventPropertyValue> GetOutputProperties(LogEvent logEvent, MessageTemplate outputTemplate)
         {
             var result = logEvent.Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
