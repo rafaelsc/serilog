@@ -26,9 +26,7 @@ namespace Serilog.Core.Sinks
 
         public SafeAggregateSink(in IEnumerable<ILogEventSink> sinks)
         {
-            if (sinks == null) throw new ArgumentNullException(nameof(sinks));
-
-            _sinks = sinks as ILogEventSink[] ?? sinks.ToArray();
+            _sinks = sinks as ILogEventSink[] ?? sinks?.ToArray() ?? throw new ArgumentNullException(nameof(sinks));
         }
 
         public void Emit(in LogEvent logEvent)
