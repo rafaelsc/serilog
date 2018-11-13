@@ -226,7 +226,6 @@ namespace Serilog.Context
 
 #elif REMOTING
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static ImmutableStack<ILogEventEnricher> Enrichers
         {
             get
