@@ -305,11 +305,7 @@ namespace Serilog.Core
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write(LogEventLevel level, Exception exception, string messageTemplate)
         {
-            // Avoid the array allocation and any boxing allocations when the level isn't enabled
-            if (IsEnabledInternal(level))
-            {
-                WriteInternal(level, exception, messageTemplate, NoPropertyValues);
-            }
+            WriteInternal(level, exception, messageTemplate, NoPropertyValues);
         }
 
         /// <summary>
