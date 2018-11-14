@@ -8,14 +8,18 @@ namespace TestConsole
         {
             Console.WriteLine("Start");
 
-            var test = new Test();
+            //var test = new Test();
 
-            for (int i = 0; i < 100000; i++)
-            {
-                test.LogAll();
-            }
+            //for (int i = 0; i < 100000; i++)
+            //{
+            //    test.LogAll();
+            //}
+
+            var x = new AlmostRealWorldBenchmark();
+            x.LogLikeAApp();
 
             Console.WriteLine("End");
+            Console.ReadLine();
         }
     }
 }
