@@ -36,19 +36,25 @@ namespace Serilog.PerformanceTests
         public void LogLikeAApp()
         {
             var log = CreateLog();
-            log.Debug("App - Start...");
+            try
+            {
+                log.Debug("App - Start...");
 
-            log.Information("Arguments: {@Args}", new[] { "test", "performance", "-q" });
-            log.Debug("Parsing args.");
-            var execType = ExecutionType.Test;
+                log.Information("Arguments: {@Args}", new[] { "test", "performance", "-q" });
+                log.Debug("Parsing args.");
+                var execType = ExecutionType.Test;
 
-            var log2 = log.ForContext("Type", execType);
-            log2.Information("Running in {Type} mode", execType);
+                var log2 = log.ForContext("Type", execType);
+                log2.Information("Running in {Type} mode", execType);
 
-            RunTest(log2);
+                RunTest(log2);
 
-            log.Debug("App - Ending...");
-            Log.CloseAndFlush();
+                log.Debug("App - Ending...");
+            }
+            finally
+            {
+                (log as IDisposable)?.Dispose();
+            }
         }
 
         static void RunTest(ILogger log)
