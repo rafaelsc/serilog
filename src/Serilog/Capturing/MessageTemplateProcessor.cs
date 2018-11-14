@@ -32,7 +32,7 @@ namespace Serilog.Capturing
             _propertyBinder = new PropertyBinder(_propertyValueConverter);
         }
 
-        public void Process(string messageTemplate, object[] messageTemplateParameters, out MessageTemplate parsedTemplate, out IEnumerable<LogEventProperty> properties)
+        public void Process<T>(string messageTemplate, T[] messageTemplateParameters, out MessageTemplate parsedTemplate, out IEnumerable<LogEventProperty> properties)
         {
             parsedTemplate = _parser.Parse(messageTemplate);
             properties = _propertyBinder.ConstructProperties(parsedTemplate, messageTemplateParameters);
