@@ -123,9 +123,21 @@ namespace Serilog.PerformanceTests
         }
 
         [Benchmark]
+        public void LogScalarMany()
+        {
+            _logger.Information("Template: {ScalarValue1},{ScalarValue2},{ScalarValue3}", "42", "7", "108");
+        }
+
+        [Benchmark]
         public void LogScalarStruct()
         {
             _logger.Information("Template: {ScalarStructValue}", 42);
+        }
+
+        [Benchmark]
+        public void LogScalarStructMany()
+        {
+            _logger.Information("Template: {ScalarStructValue1},{ScalarStructValue2},{ScalarStructValue3}", 42, 7, 108);
         }
 
         [Benchmark]
@@ -159,8 +171,10 @@ namespace Serilog.PerformanceTests
             _logger.Write(_emptyEvent);
             _logger.Information("Template:");
             _logger.Information("Template: {ScalarStructValue}", 42);
+            _logger.Information("Template: {ScalarStructValue1},{ScalarStructValue2},{ScalarStructValue3}", 42, 7, 108);
             _logger.Information("Template: {ScalarBigStructValue}", _bigStruct);
             _logger.Information("Template: {ScalarValue}", "42");
+            _logger.Information("Template: {ScalarValue1},{ScalarValue2},{ScalarValue3}", "42", "7", "108");
             _logger.Information("Template: {DictionaryValue}", _dictionaryValue);
             _logger.Information("Template: {SequenceValue}", _sequence);
             _logger.Information("Template: {@AnonymousObject}.", _anonymousObject);
@@ -170,8 +184,10 @@ namespace Serilog.PerformanceTests
             _enrichedLogger.Write(_emptyEvent);
             _enrichedLogger.Information("Template:");
             _enrichedLogger.Information("Template: {ScalarStructValue}", 42);
+            _enrichedLogger.Information("Template: {ScalarStructValue1},{ScalarStructValue2},{ScalarStructValue3}", 42, 7, 108);
             _enrichedLogger.Information("Template: {ScalarBigStructValue}", _bigStruct);
             _enrichedLogger.Information("Template: {ScalarValue}", "42");
+            _enrichedLogger.Information("Template: {ScalarValue1},{ScalarValue2},{ScalarValue3}", "42", "7", "108");
             _enrichedLogger.Information("Template: {DictionaryValue}", _dictionaryValue);
             _enrichedLogger.Information("Template: {SequenceValue}", _sequence);
             _enrichedLogger.Information("Template: {@AnonymousObject}.", _anonymousObject);
