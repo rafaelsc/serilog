@@ -27,8 +27,8 @@ namespace Serilog.PerformanceTests
                 .MinimumLevel.ControlledBy(LoggingLevelSwitch)
                 .WriteTo.Logger(l => l
                     .Filter.ByExcluding(ev => ev.Properties.ContainsKey("ProgressEntry"))
-                    .WriteTo.Sink(new NullSink())) //To Simulate a Console Sink that don't show some LogEvents
-                .WriteTo.Sink(new NullSink()) //To Simulate a File Sink that 'records' all LogEvents
+                    .WriteTo.Sink(new NullSink())) //To Simulate a FileSink that don't  'records' some LogEvents
+                .WriteTo.Sink(new NullSink()) //To Simulate a Console  Sink that show all LogEvents
                 .CreateLogger();
         }
 
