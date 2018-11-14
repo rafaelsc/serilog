@@ -25,7 +25,7 @@ namespace TestConsole
                 .WriteTo.Logger(l => l
                     .Filter.ByExcluding(ev => ev.Properties.ContainsKey("ProgressEntry"))
                     .WriteTo.Sink(new NullSink())) //To Simulate a Console Sink that don't show some LogEvents
-                .WriteTo.Sink(new ConsoleSink()) //To Simulate a File Sink that 'records' all LogEvents
+                .WriteTo.Sink(new NullSink()) //To Simulate a File Sink that 'records' all LogEvents
                 .CreateLogger();
         }
 
@@ -54,7 +54,7 @@ namespace TestConsole
 
             using (LogContext.PushProperty("Operation", "Testing"))
             {
-                var todo = Enumerable.Range(0, 1_000).ToList();
+                var todo = Enumerable.Range(0, 10_000).ToList();
                 var passed = 0;
                 var fail = 0;
 

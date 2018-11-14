@@ -16,10 +16,13 @@ namespace TestConsole
             //}
 
             var x = new AlmostRealWorldBenchmark();
-            x.LogLikeAApp();
+            for (int i = 0; i < 100; i++)
+            {
+                x.LogLikeAApp();
+            }
 
             Console.WriteLine("End");
-            Console.ReadLine();
+            //Console.ReadLine();
         }
     }
 }
