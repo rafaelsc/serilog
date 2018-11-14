@@ -47,7 +47,7 @@ namespace Serilog.Events
                 AddOrUpdatePropertyInternal(p);
         }
 
-        private LogEvent(DateTimeOffset timestamp, LogEventLevel level, Exception exception, MessageTemplate messageTemplate, Dictionary<string, LogEventPropertyValue> propertiesDictionary)
+        LogEvent(DateTimeOffset timestamp, LogEventLevel level, Exception exception, MessageTemplate messageTemplate, Dictionary<string, LogEventPropertyValue> propertiesDictionary)
         {
             Timestamp = timestamp;
             Level = level;
@@ -146,11 +146,11 @@ namespace Serilog.Events
         internal LogEvent Clone()
         {
             return new LogEvent(
-                this.Timestamp,
-                this.Level,
-                this.Exception,
-                this.MessageTemplate,
-                this._propertiesInternal == null ? null : new Dictionary<string, LogEventPropertyValue>(this._propertiesInternal));
+                Timestamp,
+                Level,
+                Exception,
+                MessageTemplate,
+                _propertiesInternal == null ? null : new Dictionary<string, LogEventPropertyValue>(this._propertiesInternal));
         }
     }
 }
