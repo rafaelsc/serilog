@@ -36,15 +36,25 @@ namespace Serilog.Events
         /// <param name="properties">Properties associated with the event, including those presented in <paramref name="messageTemplate"/>.</param>
         public LogEvent(DateTimeOffset timestamp, LogEventLevel level, Exception exception, MessageTemplate messageTemplate, IEnumerable<LogEventProperty> properties)
         {
-            if (messageTemplate == null) throw new ArgumentNullException(nameof(messageTemplate));
-            if (properties == null) throw new ArgumentNullException(nameof(properties));
             Timestamp = timestamp;
             Level = level;
             Exception = exception;
-            MessageTemplate = messageTemplate;
+            MessageTemplate = messageTemplate ?? throw new ArgumentNullException(nameof(messageTemplate));
+
+            if (properties == null) throw new ArgumentNullException(nameof(properties));
+
             _properties = new Dictionary<string, LogEventPropertyValue>();
             foreach (var p in properties)
                 AddOrUpdatePropertyInternal(p);
+        }
+
+        private LogEvent(DateTimeOffset timestamp, LogEventLevel level, Exception exception, MessageTemplate messageTemplate, Dictionary<string, LogEventPropertyValue> propertiesDictionary)
+        {
+            Timestamp = timestamp;
+            Level = level;
+            Exception = exception;
+            MessageTemplate = messageTemplate ?? throw new ArgumentNullException(nameof(messageTemplate));
+            _properties = propertiesDictionary ?? throw new ArgumentNullException(nameof(propertiesDictionary));
         }
 
         /// <summary>
@@ -130,6 +140,16 @@ namespace Serilog.Events
         public void RemovePropertyIfPresent(string propertyName)
         {
             _properties.Remove(propertyName);
+        }
+
+        internal LogEvent Clone()
+        {
+            return new LogEvent(
+                this.Timestamp,
+                this.Level,
+                this.Exception,
+                this.MessageTemplate,
+                new Dictionary<string, LogEventPropertyValue>(this._properties));
         }
     }
 }
