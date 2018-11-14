@@ -24,7 +24,8 @@ namespace Serilog.Events
     /// </summary>
     public class LogEvent
     {
-        readonly Dictionary<string, LogEventPropertyValue> _properties;
+        Dictionary<string, LogEventPropertyValue> _properties => _propertiesInternal ?? (_propertiesInternal = new Dictionary<string, LogEventPropertyValue>());
+        Dictionary<string, LogEventPropertyValue> _propertiesInternal = null;
 
         /// <summary>
         /// Construct a new <seealso cref="LogEvent"/>.
@@ -42,8 +43,6 @@ namespace Serilog.Events
             MessageTemplate = messageTemplate ?? throw new ArgumentNullException(nameof(messageTemplate));
 
             if (properties == null) throw new ArgumentNullException(nameof(properties));
-
-            _properties = new Dictionary<string, LogEventPropertyValue>();
             foreach (var p in properties)
                 AddOrUpdatePropertyInternal(p);
         }
@@ -54,7 +53,7 @@ namespace Serilog.Events
             Level = level;
             Exception = exception;
             MessageTemplate = messageTemplate ?? throw new ArgumentNullException(nameof(messageTemplate));
-            _properties = propertiesDictionary ?? throw new ArgumentNullException(nameof(propertiesDictionary));
+            _propertiesInternal = propertiesDictionary;
         }
 
         /// <summary>
@@ -151,7 +150,7 @@ namespace Serilog.Events
                 this.Level,
                 this.Exception,
                 this.MessageTemplate,
-                new Dictionary<string, LogEventPropertyValue>(this._properties));
+                this._propertiesInternal == null ? null : new Dictionary<string, LogEventPropertyValue>(this._propertiesInternal));
         }
     }
 }
