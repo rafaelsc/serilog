@@ -117,6 +117,7 @@ namespace Serilog.Events
         void AddOrUpdatePropertyInternal(LogEventProperty property)
         {
             if (property == null) throw new ArgumentNullException(nameof(property));
+
             _properties[property.Name] = property.Value;
         }
 
@@ -128,6 +129,7 @@ namespace Serilog.Events
         public void AddPropertyIfAbsent(LogEventProperty property)
         {
             if (property == null) throw new ArgumentNullException(nameof(property));
+
             if (!_properties.ContainsKey(property.Name))
                 _properties.Add(property.Name, property.Value);
         }
