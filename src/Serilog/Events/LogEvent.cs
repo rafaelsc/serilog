@@ -24,7 +24,8 @@ namespace Serilog.Events
     /// </summary>
     public class LogEvent
     {
-        readonly Dictionary<string, LogEventPropertyValue> _properties;
+        Dictionary<string, LogEventPropertyValue> _properties => _propertiesInternal ?? (_propertiesInternal = new Dictionary<string, LogEventPropertyValue>());
+        Dictionary<string, LogEventPropertyValue> _propertiesInternal = null;
 
         /// <summary>
         /// Construct a new <seealso cref="LogEvent"/>.
@@ -36,15 +37,23 @@ namespace Serilog.Events
         /// <param name="properties">Properties associated with the event, including those presented in <paramref name="messageTemplate"/>.</param>
         public LogEvent(DateTimeOffset timestamp, LogEventLevel level, Exception exception, MessageTemplate messageTemplate, IEnumerable<LogEventProperty> properties)
         {
-            if (messageTemplate == null) throw new ArgumentNullException(nameof(messageTemplate));
-            if (properties == null) throw new ArgumentNullException(nameof(properties));
             Timestamp = timestamp;
             Level = level;
             Exception = exception;
-            MessageTemplate = messageTemplate;
-            _properties = new Dictionary<string, LogEventPropertyValue>();
+            MessageTemplate = messageTemplate ?? throw new ArgumentNullException(nameof(messageTemplate));
+
+            if (properties == null) throw new ArgumentNullException(nameof(properties));
             foreach (var p in properties)
                 AddOrUpdatePropertyInternal(p);
+        }
+
+        LogEvent(DateTimeOffset timestamp, LogEventLevel level, Exception exception, MessageTemplate messageTemplate, Dictionary<string, LogEventPropertyValue> propertiesDictionary)
+        {
+            Timestamp = timestamp;
+            Level = level;
+            Exception = exception;
+            MessageTemplate = messageTemplate ?? throw new ArgumentNullException(nameof(messageTemplate));
+            _propertiesInternal = propertiesDictionary;
         }
 
         /// <summary>
@@ -107,6 +116,7 @@ namespace Serilog.Events
         void AddOrUpdatePropertyInternal(LogEventProperty property)
         {
             if (property == null) throw new ArgumentNullException(nameof(property));
+
             _properties[property.Name] = property.Value;
         }
 
@@ -118,6 +128,7 @@ namespace Serilog.Events
         public void AddPropertyIfAbsent(LogEventProperty property)
         {
             if (property == null) throw new ArgumentNullException(nameof(property));
+
             if (!_properties.ContainsKey(property.Name))
                 _properties.Add(property.Name, property.Value);
         }
@@ -130,6 +141,16 @@ namespace Serilog.Events
         public void RemovePropertyIfPresent(string propertyName)
         {
             _properties.Remove(propertyName);
+        }
+
+        internal LogEvent Clone()
+        {
+            return new LogEvent(
+                Timestamp,
+                Level,
+                Exception,
+                MessageTemplate,
+                _propertiesInternal == null ? null : new Dictionary<string, LogEventPropertyValue>(this._propertiesInternal));
         }
     }
 }
