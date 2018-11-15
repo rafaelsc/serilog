@@ -99,6 +99,10 @@ namespace Serilog.Core.Pipeline
         {
         }
 
+        public void Write<T>(LogEventLevel level, Exception exception, string messageTemplate, params T[] propertyValues)
+        {
+        }
+
         public bool IsEnabled(LogEventLevel level)
         {
             return false;
@@ -148,6 +152,10 @@ namespace Serilog.Core.Pipeline
         {
         }
 
+        public void Verbose<T>(Exception exception, string messageTemplate, params T[] propertyValues)
+        {
+        }
+
         public void Debug(string messageTemplate)
         {
         }
@@ -189,6 +197,10 @@ namespace Serilog.Core.Pipeline
         }
 
         public void Debug(Exception exception, string messageTemplate, params object[] propertyValues)
+        {
+        }
+
+        public void Debug<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
         }
 
@@ -236,6 +248,10 @@ namespace Serilog.Core.Pipeline
         {
         }
 
+        public void Information<T>(Exception exception, string messageTemplate, params T[] propertyValues)
+        {
+        }
+
         public void Warning(string messageTemplate)
         {
         }
@@ -253,6 +269,10 @@ namespace Serilog.Core.Pipeline
         }
 
         public void Warning(string messageTemplate, params object[] propertyValues)
+        {
+        }
+
+        public void Warning<T>(string messageTemplate, params T[] propertyValues)
         {
         }
 
@@ -324,6 +344,10 @@ namespace Serilog.Core.Pipeline
         {
         }
 
+        public void Error<T>(Exception exception, string messageTemplate, params T[] propertyValues)
+        {
+        }
+
         public void Fatal(string messageTemplate)
         {
         }
@@ -365,6 +389,10 @@ namespace Serilog.Core.Pipeline
         }
 
         public void Fatal(Exception exception, string messageTemplate, params object[] propertyValues)
+        {
+        }
+
+        public void Fatal<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
         }
 
