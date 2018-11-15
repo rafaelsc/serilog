@@ -658,7 +658,7 @@ namespace Serilog.Core
         /// <example>
         /// Log.Verbose(ex, "Staring into space, wondering where this comet came from.");
         /// </example>
-        /// [MessageTemplateFormatMethod("messageTemplate")]
+        [MessageTemplateFormatMethod("messageTemplate")]
         public void Verbose<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
             WriteInternal(LogEventLevel.Verbose, exception, messageTemplate, propertyValues);
@@ -1004,7 +1004,7 @@ namespace Serilog.Core
         {
             WriteInternal(LogEventLevel.Information, exception, messageTemplate, propertyValues);
         }
-
+        
         /// <summary>
         /// Write a log event with the <see cref="LogEventLevel.Information"/> level and associated exception.
         /// </summary>
@@ -1548,7 +1548,7 @@ namespace Serilog.Core
         /// <example>
         /// Log.Fatal(ex, "Process terminating.");
         /// </example>
-        /// [MessageTemplateFormatMethod("messageTemplate")]
+        [MessageTemplateFormatMethod("messageTemplate")]
         public void Fatal<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
             WriteInternal(LogEventLevel.Fatal, exception, messageTemplate, propertyValues);

@@ -6,12 +6,12 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Numerics;
+
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Diagnostics.Windows.Configs;
 
 namespace Serilog.PerformanceTests
 {
-    [MemoryDiagnoser, InliningDiagnoser, TailCallDiagnoser]
+    [MemoryDiagnoser]
     [MinColumn, MaxColumn]
     public class AllocationsBenchmark
     {
@@ -102,42 +102,68 @@ namespace Serilog.PerformanceTests
         {
             _logger.Write(_emptyEvent);
         }
-
         [Benchmark]
         public void LogEmptyWithEnricher()
         {
             _enrichedLogger.Write(_emptyEvent);
         }
 
+
         [Benchmark]
         public void LogMsg()
         {
             _logger.Information("Template:");
         }
+        [Benchmark]
+        public void LogMsgWithEx()
+        {
+            _logger.Information(_exception, "Template:");
+        }
+
 
         [Benchmark]
-        public void LogScalar()
+        public void LogScalar1()
         {
             _logger.Information("Template: {ScalarValue}", "42");
         }
-
         [Benchmark]
-        public void LogScalarMany()
+        public void LogScalar2()
+        {
+            _logger.Information("Template: {ScalarValue1},{ScalarValue2}", "42", "7");
+        }
+        [Benchmark]
+        public void LogScalar3()
         {
             _logger.Information("Template: {ScalarValue1},{ScalarValue2},{ScalarValue3}", "42", "7", "108");
         }
+        [Benchmark]
+        public void LogScalarMany()
+        {
+            _logger.Information("Template: {ScalarValue1},{ScalarValue2},{ScalarValue3},{ScalarValue4}", "42", "7", "108", "1024");
+        }
+
 
         [Benchmark]
-        public void LogScalarStruct()
+        public void LogScalarStruct1()
         {
             _logger.Information("Template: {ScalarStructValue}", 42);
         }
-
         [Benchmark]
-        public void LogScalarStructMany()
+        public void LogScalarStruct2()
+        {
+            _logger.Information("Template: {ScalarStructValue1},{ScalarStructValue2}", 42, 7);
+        }
+        [Benchmark]
+        public void LogScalarStruct3()
         {
             _logger.Information("Template: {ScalarStructValue1},{ScalarStructValue2},{ScalarStructValue3}", 42, 7, 108);
         }
+        [Benchmark]
+        public void LogScalarStructMany()
+        {
+            _logger.Information("Template: {ScalarStructValue1},{ScalarStructValue2},{ScalarStructValue3},{ScalarStructValue4}", 42, 7, 108, 1024);
+        }
+
 
         [Benchmark]
         public void LogScalarBigStruct()
@@ -161,6 +187,33 @@ namespace Serilog.PerformanceTests
         public void LogAnonymous()
         {
             _logger.Information("Template: {@AnonymousObject}.", _anonymousObject);
+        }
+
+
+        [Benchmark]
+        public void LogMix2()
+        {
+            _logger.Information("Template: {Value1},{Value2}", "42", 7);
+        }
+        [Benchmark]
+        public void LogMix3()
+        {
+            _logger.Information("Template: {Value1},{Value2},{Value3}", "42", 7, 108L);
+        }
+        [Benchmark]
+        public void LogMix4()
+        {
+            _logger.Information("Template: {Value1},{Value2},{Value3},{Value4}", "42", 7, 108L, 1024M);
+        }
+        [Benchmark]
+        public void LogMix5()
+        {
+            _logger.Information("Template: {Value1},{Value2},{Value3},{Value4},{Value5}", "42", 7, 108L, 1024M, (short?) -11);
+        }
+        [Benchmark]
+        public void LogMixMany()
+        {
+            _logger.Information("Template: {Value1},{Value2},{Value3},{Value4},{Value5},{Value6},{Value7},{Value8},{@Value9}", "42", 7, 108L, 1024M, (short?) -11, _bigStruct, _dictionaryValue, _sequence, _anonymousObject);
         }
 
         [Benchmark]
