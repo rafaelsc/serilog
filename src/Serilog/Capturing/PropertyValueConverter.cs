@@ -90,13 +90,21 @@ namespace Serilog.Capturing
         {
             return new LogEventProperty(name, CreatePropertyValue(value, destructureObjects));
         }
+        public LogEventProperty CreateProperty<T>(string name, T value, bool destructureObjects = false)
+        {
+            return new LogEventProperty(name, CreatePropertyValue(value, destructureObjects));
+        }
 
         public LogEventPropertyValue CreatePropertyValue(object value, bool destructureObjects = false)
         {
             return CreatePropertyValue(value, destructureObjects, 1);
         }
+        public LogEventPropertyValue CreatePropertyValue<T>(T value, bool destructureObjects = false)
+        {
+            return CreatePropertyValue(value, destructureObjects, 1);
+        }
 
-        public LogEventPropertyValue CreatePropertyValue(object value, Destructuring destructuring)
+        public LogEventPropertyValue CreatePropertyValue<T>(T value, Destructuring destructuring)
         {
             try
             {
@@ -114,7 +122,7 @@ namespace Serilog.Capturing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        LogEventPropertyValue CreatePropertyValue(object value, bool destructureObjects, int depth)
+        LogEventPropertyValue CreatePropertyValue<T>(T value, bool destructureObjects, int depth)
         {
             return CreatePropertyValue(
                 value,
