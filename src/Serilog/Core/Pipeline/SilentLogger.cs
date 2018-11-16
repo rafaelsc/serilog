@@ -75,10 +75,6 @@ namespace Serilog.Core.Pipeline
         {
         }
 
-        public void Write<T>(LogEventLevel level, string messageTemplate, params T[] propertyValues)
-        {
-        }
-
         public void Write(LogEventLevel level, Exception exception, string messageTemplate)
         {
         }
@@ -96,10 +92,6 @@ namespace Serilog.Core.Pipeline
         }
 
         public void Write(LogEventLevel level, Exception exception, string messageTemplate, params object[] propertyValues)
-        {
-        }
-
-        public void Write<T>(LogEventLevel level, Exception exception, string messageTemplate, params T[] propertyValues)
         {
         }
 
@@ -128,10 +120,6 @@ namespace Serilog.Core.Pipeline
         {
         }
 
-        public void Verbose<T>(string messageTemplate, params T[] propertyValues)
-        {
-        }
-
         public void Verbose(Exception exception, string messageTemplate)
         {
         }
@@ -149,10 +137,6 @@ namespace Serilog.Core.Pipeline
         }
 
         public void Verbose(Exception exception, string messageTemplate, params object[] propertyValues)
-        {
-        }
-
-        public void Verbose<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
         }
 
@@ -176,10 +160,6 @@ namespace Serilog.Core.Pipeline
         {
         }
 
-        public void Debug<T>(string messageTemplate, params T[] propertyValues)
-        {
-        }
-
         public void Debug(Exception exception, string messageTemplate)
         {
         }
@@ -197,10 +177,6 @@ namespace Serilog.Core.Pipeline
         }
 
         public void Debug(Exception exception, string messageTemplate, params object[] propertyValues)
-        {
-        }
-
-        public void Debug<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
         }
 
@@ -224,10 +200,6 @@ namespace Serilog.Core.Pipeline
         {
         }
 
-        public void Information<T>(string messageTemplate, params T[] propertyValues)
-        {
-        }
-
         public void Information(Exception exception, string messageTemplate)
         {
         }
@@ -245,10 +217,6 @@ namespace Serilog.Core.Pipeline
         }
 
         public void Information(Exception exception, string messageTemplate, params object[] propertyValues)
-        {
-        }
-
-        public void Information<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
         }
 
@@ -272,10 +240,6 @@ namespace Serilog.Core.Pipeline
         {
         }
 
-        public void Warning<T>(string messageTemplate, params T[] propertyValues)
-        {
-        }
-
         public void Warning(Exception exception, string messageTemplate)
         {
         }
@@ -293,10 +257,6 @@ namespace Serilog.Core.Pipeline
         }
 
         public void Warning(Exception exception, string messageTemplate, params object[] propertyValues)
-        {
-        }
-
-        public void Warning<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
         }
 
@@ -320,10 +280,6 @@ namespace Serilog.Core.Pipeline
         {
         }
 
-        public void Error<T>(string messageTemplate, params T[] propertyValues)
-        {
-        }
-
         public void Error(Exception exception, string messageTemplate)
         {
         }
@@ -341,10 +297,6 @@ namespace Serilog.Core.Pipeline
         }
 
         public void Error(Exception exception, string messageTemplate, params object[] propertyValues)
-        {
-        }
-
-        public void Error<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
         }
 
@@ -368,10 +320,6 @@ namespace Serilog.Core.Pipeline
         {
         }
 
-        public void Fatal<T>(string messageTemplate, params T[] propertyValues)
-        {
-        }
-
         public void Fatal(Exception exception, string messageTemplate)
         {
         }
@@ -389,10 +337,6 @@ namespace Serilog.Core.Pipeline
         }
 
         public void Fatal(Exception exception, string messageTemplate, params object[] propertyValues)
-        {
-        }
-
-        public void Fatal<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
         }
 
