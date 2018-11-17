@@ -24,8 +24,14 @@ namespace Serilog.Events
     /// </summary>
     public class LogEvent
     {
+        //A cached and shared instance for a empty list of Properties
+        static readonly IReadOnlyDictionary<string, LogEventPropertyValue> NoProperties = new Dictionary<string, LogEventPropertyValue>();
+
+
+        //Lazy Load a Instance for the Properties List
         Dictionary<string, LogEventPropertyValue> _properties => _propertiesInternal ?? (_propertiesInternal = new Dictionary<string, LogEventPropertyValue>());
         Dictionary<string, LogEventPropertyValue> _propertiesInternal = null;
+        internal bool HaveProperty => _propertiesInternal?.Count > 0;
 
         /// <summary>
         /// Construct a new <seealso cref="LogEvent"/>.
@@ -95,7 +101,7 @@ namespace Serilog.Events
         /// <summary>
         /// Properties associated with the event, including those presented in <see cref="LogEvent.MessageTemplate"/>.
         /// </summary>
-        public IReadOnlyDictionary<string, LogEventPropertyValue> Properties => _properties;
+        public IReadOnlyDictionary<string, LogEventPropertyValue> Properties => HaveProperty ? _properties : NoProperties;
 
         /// <summary>
         /// An exception associated with the event, or null.
