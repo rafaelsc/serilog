@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -49,6 +50,11 @@ namespace Serilog.Events
             MessageTemplate = messageTemplate ?? throw new ArgumentNullException(nameof(messageTemplate));
 
             if (properties == null) throw new ArgumentNullException(nameof(properties));
+
+            var propertiesCount = TryToCountTheNumberOfProperties(properties);
+            if (propertiesCount != null)
+                _propertiesInternal = new Dictionary<string, LogEventPropertyValue>((int) propertiesCount);
+
             foreach (var p in properties)
                 AddOrUpdatePropertyInternal(p);
         }
@@ -157,6 +163,22 @@ namespace Serilog.Events
                 Exception,
                 MessageTemplate,
                 _propertiesInternal == null ? null : new Dictionary<string, LogEventPropertyValue>(this._propertiesInternal));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static int? TryToCountTheNumberOfProperties(IEnumerable<LogEventProperty> properties)
+        {
+            switch (properties)
+            {
+                case LogEventProperty[] array:
+                    return array.Length;
+                case ICollection<LogEventProperty> collectionOfT:
+                    return collectionOfT.Count;
+                case ICollection collection:
+                    return collection.Count;
+                default:
+                    return null;
+            }
         }
     }
 }
