@@ -54,22 +54,12 @@ namespace Serilog.Tests.Support
             throw new NotImplementedException();
         }
 
-        public void Write<T>(LogEventLevel level, string messageTemplate, params T[] propertyValues)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Write<T>(LogEventLevel level, Exception exception, string messageTemplate, T propertyValue0, T propertyValue1, T propertyValue2)
         {
             throw new NotImplementedException();
         }
 
         public void Write(LogEventLevel level, Exception exception, string messageTemplate, params object[] propertyValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Write<T>(LogEventLevel level, Exception exception, string messageTemplate, params T[] propertyValues)
         {
             throw new NotImplementedException();
         }
@@ -89,22 +79,12 @@ namespace Serilog.Tests.Support
             throw new NotImplementedException();
         }
 
-        public void Verbose<T>(string messageTemplate, params T[] propertyValues)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Verbose<T>(Exception exception, string messageTemplate, T propertyValue0, T propertyValue1, T propertyValue2)
         {
             throw new NotImplementedException();
         }
 
         public void Verbose(Exception exception, string messageTemplate, params object[] propertyValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Verbose<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
             throw new NotImplementedException();
         }
@@ -119,22 +99,12 @@ namespace Serilog.Tests.Support
             throw new NotImplementedException();
         }
 
-        public void Debug<T>(string messageTemplate, params T[] propertyValues)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Debug<T>(Exception exception, string messageTemplate, T propertyValue0, T propertyValue1, T propertyValue2)
         {
             throw new NotImplementedException();
         }
 
         public void Debug(Exception exception, string messageTemplate, params object[] propertyValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Debug<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
             throw new NotImplementedException();
         }
@@ -149,22 +119,12 @@ namespace Serilog.Tests.Support
             throw new NotImplementedException();
         }
 
-        public void Information<T>(string messageTemplate, params T[] propertyValues)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Information<T>(Exception exception, string messageTemplate, T propertyValue0, T propertyValue1, T propertyValue2)
         {
             throw new NotImplementedException();
         }
 
         public void Information(Exception exception, string messageTemplate, params object[] propertyValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Information<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
             throw new NotImplementedException();
         }
@@ -179,22 +139,12 @@ namespace Serilog.Tests.Support
             throw new NotImplementedException();
         }
 
-        public void Warning<T>(string messageTemplate, params T[] propertyValues)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Warning<T>(Exception exception, string messageTemplate, T propertyValue0, T propertyValue1, T propertyValue2)
         {
             throw new NotImplementedException();
         }
 
         public void Warning(Exception exception, string messageTemplate, params object[] propertyValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Warning<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
             throw new NotImplementedException();
         }
@@ -209,22 +159,12 @@ namespace Serilog.Tests.Support
             throw new NotImplementedException();
         }
 
-        public void Error<T>(string messageTemplate, params T[] propertyValues)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Error<T>(Exception exception, string messageTemplate, T propertyValue0, T propertyValue1, T propertyValue2)
         {
             throw new NotImplementedException();
         }
 
         public void Error(Exception exception, string messageTemplate, params object[] propertyValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Error<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
             throw new NotImplementedException();
         }
@@ -239,22 +179,12 @@ namespace Serilog.Tests.Support
             throw new NotImplementedException();
         }
 
-        public void Fatal<T>(string messageTemplate, params T[] propertyValues)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Fatal<T>(Exception exception, string messageTemplate, T propertyValue0, T propertyValue1, T propertyValue2)
         {
             throw new NotImplementedException();
         }
 
         public void Fatal(Exception exception, string messageTemplate, params object[] propertyValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Fatal<T>(Exception exception, string messageTemplate, params T[] propertyValues)
         {
             throw new NotImplementedException();
         }
