@@ -28,6 +28,12 @@ namespace Serilog.PerformanceTests
         }
 
         [Fact]
+        public void AlmostRealWorldBenchmark()
+        {
+            BenchmarkRunner.Run<AlmostRealWorldBenchmark>();
+        }
+
+        [Fact]
         public void MessageTemplateCacheBenchmark()
         {
             BenchmarkRunner.Run<MessageTemplateCacheBenchmark_Cached>();
