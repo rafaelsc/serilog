@@ -28,11 +28,9 @@ namespace Serilog.Events
         //A cached and shared instance for a empty list of Properties
         static readonly IReadOnlyDictionary<string, LogEventPropertyValue> NoProperties = new Dictionary<string, LogEventPropertyValue>();
 
-
         //Lazy Load a Instance for the Properties List
         Dictionary<string, LogEventPropertyValue> _properties => _propertiesInternal ?? (_propertiesInternal = new Dictionary<string, LogEventPropertyValue>());
         Dictionary<string, LogEventPropertyValue> _propertiesInternal = null;
-        internal bool HaveProperty => _propertiesInternal?.Count > 0;
 
         /// <summary>
         /// Construct a new <seealso cref="LogEvent"/>.
@@ -51,9 +49,10 @@ namespace Serilog.Events
 
             if (properties == null) throw new ArgumentNullException(nameof(properties));
 
-            var propertiesCount = TryToCountTheNumberOfProperties(properties);
-            if (propertiesCount != null)
-                _propertiesInternal = new Dictionary<string, LogEventPropertyValue>((int) propertiesCount);
+            //Try to allocate the correct Dictionary size.
+            var propertiesCount = TryToGetTheNumberOfProperties(properties);
+            if (propertiesCount > 0)
+                _propertiesInternal = new Dictionary<string, LogEventPropertyValue>(propertiesCount);
 
             foreach (var p in properties)
                 AddOrUpdatePropertyInternal(p);
@@ -64,7 +63,7 @@ namespace Serilog.Events
             Timestamp = timestamp;
             Level = level;
             Exception = exception;
-            MessageTemplate = messageTemplate ?? throw new ArgumentNullException(nameof(messageTemplate));
+            MessageTemplate = messageTemplate;
             _propertiesInternal = propertiesDictionary;
         }
 
@@ -107,8 +106,8 @@ namespace Serilog.Events
         /// <summary>
         /// Properties associated with the event, including those presented in <see cref="LogEvent.MessageTemplate"/>.
         /// </summary>
-        public IReadOnlyDictionary<string, LogEventPropertyValue> Properties => HaveProperty ? _properties : NoProperties;
-
+        public IReadOnlyDictionary<string, LogEventPropertyValue> Properties => _propertiesInternal ?? NoProperties;
+        
         /// <summary>
         /// An exception associated with the event, or null.
         /// </summary>
@@ -162,11 +161,11 @@ namespace Serilog.Events
                 Level,
                 Exception,
                 MessageTemplate,
-                _propertiesInternal == null ? null : new Dictionary<string, LogEventPropertyValue>(this._propertiesInternal));
+                _propertiesInternal == null ? null : new Dictionary<string, LogEventPropertyValue>(this._propertiesInternal)); //Clone the Dictionary Instance, but we don't need to clone the LogEventPropertyValue because his a immutable class.
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static int? TryToCountTheNumberOfProperties(IEnumerable<LogEventProperty> properties)
+        static int TryToGetTheNumberOfProperties(IEnumerable<LogEventProperty> properties)
         {
             switch (properties)
             {
@@ -177,7 +176,7 @@ namespace Serilog.Events
                 case ICollection collection:
                     return collection.Count;
                 default:
-                    return null;
+                    return -1;
             }
         }
     }
