@@ -79,7 +79,6 @@ namespace TestConsole
         {
             _enrichedLogger.Write(_emptyEvent);
         }
-
         
         public void LogMsg()
         {
