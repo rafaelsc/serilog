@@ -12,6 +12,7 @@ namespace Serilog.PerformanceTests
     /// like the console or a text file.
     /// </summary>
     [MemoryDiagnoser]
+    [MinColumn, MaxColumn]
     public class OutputTemplateRenderingBenchmark
     {
         const string DefaultFileOutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}";

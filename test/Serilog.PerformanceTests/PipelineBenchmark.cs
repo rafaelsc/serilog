@@ -23,6 +23,7 @@ namespace Serilog.PerformanceTests
     /// Tests the cost of writing through the logging pipeline.
     /// </summary>
     [MemoryDiagnoser]
+    [MinColumn, MaxColumn]
     public class PipelineBenchmark
     {
         ILogger _log;

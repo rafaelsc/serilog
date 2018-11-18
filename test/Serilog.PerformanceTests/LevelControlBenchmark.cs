@@ -8,6 +8,7 @@ namespace Serilog.PerformanceTests
     /// <summary>
     /// Tests the overhead of determining the active logging level.
     /// </summary>
+    [MinColumn, MaxColumn]
     public class LevelControlBenchmark
     {
         ILogger _off, _levelSwitchOff, _minLevel, _levelSwitch;

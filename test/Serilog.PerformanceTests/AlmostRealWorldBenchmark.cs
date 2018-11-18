@@ -9,7 +9,7 @@ using Serilog.PerformanceTests.Support;
 
 namespace Serilog.PerformanceTests
 {
-    [MemoryDiagnoser, InliningDiagnoser, TailCallDiagnoser]
+    [MemoryDiagnoser]
     [MinColumn, MaxColumn]
     public class AlmostRealWorldBenchmark
     {

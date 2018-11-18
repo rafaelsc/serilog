@@ -9,6 +9,7 @@ namespace Serilog.PerformanceTests
     /// Determines the cost of rendering a message template.
     /// </summary>
     [MemoryDiagnoser]
+    [MinColumn, MaxColumn]
     public class MessageTemplateRenderingBenchmark
     {
         static readonly LogEvent NoProperties =
