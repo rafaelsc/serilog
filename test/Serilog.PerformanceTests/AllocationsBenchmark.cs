@@ -18,84 +18,76 @@ namespace Serilog.PerformanceTests
     {
         readonly ILogger _logger;
         readonly ILogger _enrichedLogger;
-        readonly LogEvent _emptyEvent;
 
-        readonly object _dictionaryValue;
-        readonly object _anonymousObject;
-        readonly object _sequence;
-        readonly BigTestStruct _bigStruct;
-        readonly Exception _exception;
+        readonly LogEvent _emptyEvent = new LogEvent(
+            DateTimeOffset.Now, 
+            LogEventLevel.Information, 
+            null, 
+            new MessageTemplate(Enumerable.Empty<MessageTemplateToken>()),
+            Enumerable.Empty<LogEventProperty>());
+
+        readonly object _dictionaryValue = new Dictionary<string, object>
+        {
+            { "Level11", "Val1" },
+            { "Level12", new Dictionary<string, object>() {
+                    { "Level21", (int?)42 },
+                    { "Level22", new Dictionary<string, object>() {
+                            { "Level31", System.Reflection.BindingFlags.FlattenHierarchy },
+                            { "Level32", new { X = 3, Y = "4", Z = (short?)5 } }
+                        }
+                    }
+                }
+            }
+        };
+        readonly object _anonymousObject = new
+        {
+            Level11 = "Val1",
+            Level12 = new
+            {
+                Level21 = (int?)42,
+                Level22 = new
+                {
+                    Level31 = System.Reflection.BindingFlags.FlattenHierarchy,
+                    Level32 = new
+                    {
+                        X = 3,
+                        Y = "4",
+                        Z = (short?)5
+                    }
+                }
+            }
+        };
+
+        readonly object _sequence = new List<object> { "1", 2, (int?)3, "4", (short)5 };
+
+        readonly BigTestStruct _bigStruct = new BigTestStruct()
+        {
+            Active = true,
+            Count = 918217217261726172L,
+            Lat = -42,
+            Long = 42,
+            Points = new float[10][]
+            {
+                new float[10] {0,1,2,3,4,5,6,7,8,9,},
+                new float[10] {1,2,3,4,5,6,7,8,9,0,},
+                new float[10] {2,3,4,5,6,7,8,9,0,1,},
+                new float[10] {3,4,5,6,7,8,9,0,1,2,},
+                new float[10] {4,5,6,7,8,9,0,1,2,3,},
+                new float[10] {5,6,7,8,9,0,1,2,3,4,},
+                new float[10] {6,7,8,9,0,1,2,3,4,5,},
+                new float[10] {7,8,9,0,1,2,3,4,5,6,},
+                new float[10] {8,9,0,1,2,3,4,5,6,7,},
+                new float[10] {9,0,1,2,3,4,5,6,7,8,},
+            },
+        };
+
+        readonly Exception _exception = new Exception("An Error");
 
         public AllocationsBenchmark()
         {
-            _exception = new Exception("An Error");
-
             _logger = new LoggerConfiguration().CreateLogger();
 
             _enrichedLogger = _logger.ForContext(new PropertyEnricher("Prop", "Value"));
-
-            _emptyEvent = new LogEvent(
-                DateTimeOffset.Now, 
-                LogEventLevel.Information, 
-                null, 
-                new MessageTemplate(Enumerable.Empty<MessageTemplateToken>()),
-                Enumerable.Empty<LogEventProperty>());
-
-            _anonymousObject = new
-            {
-                Level11 = "Val1",
-                Level12 = new
-                {
-                    Level21 = (int?)42,
-                    Level22 = new
-                    {
-                        Level31 = System.Reflection.BindingFlags.FlattenHierarchy,
-                        Level32 = new
-                        {
-                            X = 3,
-                            Y = "4",
-                            Z = (short?)5
-                        }
-                    }
-                }
-            };
-
-            _dictionaryValue = new Dictionary<string, object> {
-                { "Level11", "Val1" },
-                { "Level12", new Dictionary<string, object>() {
-                        { "Level21", (int?)42 },
-                        { "Level22", new Dictionary<string, object>() {
-                                { "Level31", System.Reflection.BindingFlags.FlattenHierarchy },
-                                { "Level32", new { X = 3, Y = "4", Z = (short?)5 } }
-                            }
-                        }
-                    }
-                }
-            };
-
-            _sequence = new List<object> { "1", 2, (int?)3, "4", (short)5 };
-
-            _bigStruct = new BigTestStruct()
-            {
-                Active = true,
-                Count = 918217217261726172L,
-                Lat = -42,
-                Long = 42,
-                Points = new float[10][]
-                {
-                    new float[10] {0,1,2,3,4,5,6,7,8,9,},
-                    new float[10] {1,2,3,4,5,6,7,8,9,0,},
-                    new float[10] {2,3,4,5,6,7,8,9,0,1,},
-                    new float[10] {3,4,5,6,7,8,9,0,1,2,},
-                    new float[10] {4,5,6,7,8,9,0,1,2,3,},
-                    new float[10] {5,6,7,8,9,0,1,2,3,4,},
-                    new float[10] {6,7,8,9,0,1,2,3,4,5,},
-                    new float[10] {7,8,9,0,1,2,3,4,5,6,},
-                    new float[10] {8,9,0,1,2,3,4,5,6,7,},
-                    new float[10] {9,0,1,2,3,4,5,6,7,8,},
-                },
-            };
-            
         }
 
         [Benchmark(Baseline = true)]
@@ -108,7 +100,7 @@ namespace Serilog.PerformanceTests
         {
             _enrichedLogger.Write(_emptyEvent);
         }
-
+        
 
         [Benchmark]
         public void LogMsg()
