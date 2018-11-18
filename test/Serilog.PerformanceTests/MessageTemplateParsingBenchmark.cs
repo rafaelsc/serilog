@@ -8,6 +8,7 @@ namespace Serilog.PerformanceTests
     /// </summary>
     [MemoryDiagnoser]
     [MinColumn, MaxColumn]
+    [ClrJob, CoreJob]
     public class MessageTemplateParsingBenchmark
     {  
         MessageTemplateParser _parser; 

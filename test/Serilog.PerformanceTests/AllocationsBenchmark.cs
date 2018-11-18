@@ -13,6 +13,7 @@ namespace Serilog.PerformanceTests
 {
     [MemoryDiagnoser]
     [MinColumn, MaxColumn]
+    [ClrJob, CoreJob]
     public class AllocationsBenchmark
     {
         readonly ILogger _logger;

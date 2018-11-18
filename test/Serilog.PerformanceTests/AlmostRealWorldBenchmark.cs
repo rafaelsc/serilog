@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using Serilog.Context;
 using Serilog.Core;
 using Serilog.Events;
@@ -11,6 +10,7 @@ namespace Serilog.PerformanceTests
 {
     [MemoryDiagnoser]
     [MinColumn, MaxColumn]
+    [ClrJob, CoreJob]
     public class AlmostRealWorldBenchmark
     {
         static readonly LoggingLevelSwitch LoggingLevelSwitch = new LoggingLevelSwitch(LogEventLevel.Verbose);
