@@ -14,10 +14,10 @@ namespace Serilog.PerformanceTests
     [MemoryDiagnoser]
     [MinColumn, MaxColumn]
     [ClrJob, CoreJob]
-    public class AllocationsBenchmark
+    public abstract class AllocationsBaseBenchmark
     {
-        readonly ILogger _logger;
-        readonly ILogger _enrichedLogger;
+        protected ILogger _logger;
+        protected ILogger _enrichedLogger;
 
         readonly LogEvent _emptyEvent = new LogEvent(
             DateTimeOffset.Now, 
@@ -83,12 +83,7 @@ namespace Serilog.PerformanceTests
 
         readonly Exception _exception = new Exception("An Error");
 
-        public AllocationsBenchmark()
-        {
-            _logger = new LoggerConfiguration().CreateLogger();
 
-            _enrichedLogger = _logger.ForContext(new PropertyEnricher("Prop", "Value"));
-        }
 
         [Benchmark(Baseline = true)]
         public void LogEmpty()
@@ -248,6 +243,29 @@ namespace Serilog.PerformanceTests
             public float[][] Points{ get; set; }
             public BigInteger Count { get; set; }
             public bool Active { get; set; }
+        }
+    }
+
+    public class AllocationsNormalBenchmark : AllocationsBaseBenchmark
+    {
+        public AllocationsNormalBenchmark()
+        {
+            _logger = new LoggerConfiguration()
+                .CreateLogger();
+
+            _enrichedLogger = _logger.ForContext(new PropertyEnricher("Prop", "Value"));
+        }
+    }
+
+    public class AllocationsIgnoringEventsBenchmark : AllocationsBaseBenchmark
+    {
+        public AllocationsIgnoringEventsBenchmark()
+        {
+            _logger = new LoggerConfiguration()
+                .MinimumLevel.Fatal()
+                .CreateLogger();
+
+            _enrichedLogger = _logger.ForContext(new PropertyEnricher("Prop", "Value"));
         }
     }
 }
