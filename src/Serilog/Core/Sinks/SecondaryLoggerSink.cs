@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using System.Linq;
 using Serilog.Events;
 
 namespace Serilog.Core.Sinks
@@ -32,21 +31,13 @@ namespace Serilog.Core.Sinks
 
         public SecondaryLoggerSink(in ILogger logger, in bool attemptDispose = false)
         {
-            if (logger == null) throw new ArgumentNullException(nameof(logger));
-
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _attemptDispose = attemptDispose;
         }
 
         public void Emit(in LogEvent logEvent)
         {
-            var copy = new LogEvent(
-                logEvent.Timestamp,
-                logEvent.Level,
-                logEvent.Exception,
-                logEvent.MessageTemplate,
-                logEvent.Properties.Select(p => new LogEventProperty(p.Key, p.Value)));
-
+            var copy = logEvent?.Clone() ?? throw new ArgumentNullException(nameof(logEvent));
             _logger.Write(copy);
         }
 

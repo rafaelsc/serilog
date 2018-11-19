@@ -20,11 +20,23 @@ namespace Serilog.PerformanceTests
 {
     public class Harness
     {
-        // dotnet test -c Release -f net46 --filter "FullyQualifiedName=Serilog.PerformanceTests.Harness.AllocationsBenchmark"
+        // dotnet test -c Release -f net46 --filter "FullyQualifiedName=Serilog.PerformanceTests.Harness.AllocationsNormalBenchmark"
+
         [Fact]
-        public void AllocationsBenchmark()
+        public void AllocationsNormalBenchmark()
         {
-            BenchmarkRunner.Run<AllocationsBenchmark>();
+            BenchmarkRunner.Run<AllocationsNormalBenchmark>();
+        }
+        [Fact]
+        public void AllocationsIgnoringEventsBenchmark()
+        {
+            BenchmarkRunner.Run<AllocationsIgnoringEventsBenchmark>();
+        }
+
+        [Fact]
+        public void AlmostRealWorldBenchmark()
+        {
+            BenchmarkRunner.Run<AlmostRealWorldBenchmark>();
         }
 
         [Fact]

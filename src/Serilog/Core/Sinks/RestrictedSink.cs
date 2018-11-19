@@ -24,11 +24,8 @@ namespace Serilog.Core.Sinks
 
         public RestrictedSink(in ILogEventSink sink, in LoggingLevelSwitch levelSwitch)
         {
-            if (sink == null) throw new ArgumentNullException(nameof(sink));
-            if (levelSwitch == null) throw new ArgumentNullException(nameof(levelSwitch));
-
-            _sink = sink;
-            _levelSwitch = levelSwitch;
+            _sink = sink ?? throw new ArgumentNullException(nameof(sink));
+            _levelSwitch = levelSwitch ?? throw new ArgumentNullException(nameof(levelSwitch));
         }
 
         public void Emit(in LogEvent logEvent)

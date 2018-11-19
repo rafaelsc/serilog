@@ -9,13 +9,19 @@ namespace TestConsole
             Console.WriteLine("Start");
 
             var test = new Test();
-
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1; i++)
             {
-                test.LogAll();
+                test.LogMsg();
             }
 
+            //var x = new AlmostRealWorldBenchmark();
+            //for (int i = 0; i < 100; i++)
+            //{
+            //    x.LogLikeAApp();
+            //}
+
             Console.WriteLine("End");
+            //Console.ReadLine();
         }
     }
 }
