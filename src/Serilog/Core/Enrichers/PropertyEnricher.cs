@@ -39,7 +39,9 @@ namespace Serilog.Core.Enrichers
         /// <exception cref="ArgumentNullException"></exception>
         public PropertyEnricher(string name, object value, bool destructureObjects = false)
         {
+            //TODO Use the Same Validation in others places
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Property name must not be null or empty.", nameof(name));
+
             _name = name;
             _value = value;
             _destructureObjects = destructureObjects;
@@ -54,6 +56,7 @@ namespace Serilog.Core.Enrichers
         {
             if (logEvent == null) throw new ArgumentNullException(nameof(logEvent));
             if (propertyFactory == null) throw new ArgumentNullException(nameof(propertyFactory));
+
             var property = propertyFactory.CreateProperty(_name, _value, _destructureObjects);
             logEvent.AddPropertyIfAbsent(property);
         }
