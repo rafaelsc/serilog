@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -28,11 +27,9 @@ namespace Serilog.Events
         //A cached and shared instance for a empty list of Properties
         static readonly IReadOnlyDictionary<string, LogEventPropertyValue> NoProperties = new Dictionary<string, LogEventPropertyValue>();
 
-
         //Lazy Load a Instance for the Properties List
         Dictionary<string, LogEventPropertyValue> _properties => _propertiesInternal ?? (_propertiesInternal = new Dictionary<string, LogEventPropertyValue>());
         Dictionary<string, LogEventPropertyValue> _propertiesInternal = null;
-        internal bool HaveProperty => _propertiesInternal?.Count > 0;
 
         /// <summary>
         /// Construct a new <seealso cref="LogEvent"/>.
@@ -50,13 +47,7 @@ namespace Serilog.Events
             MessageTemplate = messageTemplate ?? throw new ArgumentNullException(nameof(messageTemplate));
 
             if (properties == null) throw new ArgumentNullException(nameof(properties));
-
-            var propertiesCount = TryToCountTheNumberOfProperties(properties);
-            if (propertiesCount != null)
-                _propertiesInternal = new Dictionary<string, LogEventPropertyValue>((int) propertiesCount);
-
-            foreach (var p in properties)
-                AddOrUpdatePropertyInternal(p);
+            ProcessProperties(properties);
         }
 
         LogEvent(DateTimeOffset timestamp, LogEventLevel level, Exception exception, MessageTemplate messageTemplate, Dictionary<string, LogEventPropertyValue> propertiesDictionary)
@@ -64,7 +55,7 @@ namespace Serilog.Events
             Timestamp = timestamp;
             Level = level;
             Exception = exception;
-            MessageTemplate = messageTemplate ?? throw new ArgumentNullException(nameof(messageTemplate));
+            MessageTemplate = messageTemplate;
             _propertiesInternal = propertiesDictionary;
         }
 
@@ -107,8 +98,8 @@ namespace Serilog.Events
         /// <summary>
         /// Properties associated with the event, including those presented in <see cref="LogEvent.MessageTemplate"/>.
         /// </summary>
-        public IReadOnlyDictionary<string, LogEventPropertyValue> Properties => HaveProperty ? _properties : NoProperties;
-
+        public IReadOnlyDictionary<string, LogEventPropertyValue> Properties => _propertiesInternal ?? NoProperties;
+        
         /// <summary>
         /// An exception associated with the event, or null.
         /// </summary>
@@ -160,23 +151,82 @@ namespace Serilog.Events
                 Level,
                 Exception,
                 MessageTemplate,
-                _propertiesInternal == null ? null : new Dictionary<string, LogEventPropertyValue>(this._propertiesInternal));
+                _propertiesInternal == null ? null : new Dictionary<string, LogEventPropertyValue>(this._propertiesInternal)); //Clone the Dictionary Instance, but we don't need to clone the LogEventPropertyValue because his a immutable class.
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static int? TryToCountTheNumberOfProperties(IEnumerable<LogEventProperty> properties)
+        void ProcessProperties(IEnumerable<LogEventProperty> properties)
         {
+            //Try to allocate the correct Dictionary size and use the best for/foreach for the type.
             switch (properties)
             {
                 case LogEventProperty[] array:
-                    return array.Length;
+                    ProcessPropertiesInternal(array);
+                    return;
+                case IList<LogEventProperty> listOfT:
+                    ProcessPropertiesInternal(listOfT);
+                    return;
+                case IReadOnlyList<LogEventProperty> roListOfT:
+                    ProcessPropertiesInternal(roListOfT);
+                    return;
                 case ICollection<LogEventProperty> collectionOfT:
-                    return collectionOfT.Count;
-                case ICollection collection:
-                    return collection.Count;
-                default:
-                    return null;
+                    ProcessPropertiesInternal(collectionOfT);
+                    return;
+                case IReadOnlyCollection<LogEventProperty> roCollectionOfT:
+                    ProcessPropertiesInternal(roCollectionOfT);
+                    return;
             }
+
+            foreach (var p in properties)
+                AddOrUpdatePropertyInternal(p);
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        void ProcessPropertiesInternal(LogEventProperty[] array)
+        {
+            InitProperties(array.Length);
+            
+            for (int i = 0, length = array.Length; i < length; i++)
+                AddOrUpdatePropertyInternal(array[i]);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        void ProcessPropertiesInternal(IList<LogEventProperty> list)
+        {
+            InitProperties(list.Count);
+
+            for (int i = 0, length = list.Count; i < length; i++)
+                AddOrUpdatePropertyInternal(list[i]);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        void ProcessPropertiesInternal(IReadOnlyList<LogEventProperty> list)
+        {
+            InitProperties(list.Count);
+
+            for (int i = 0, length = list.Count; i < length; i++)
+                AddOrUpdatePropertyInternal(list[i]);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        void ProcessPropertiesInternal(ICollection<LogEventProperty> collection)
+        {
+            InitProperties(collection.Count);
+
+            foreach (var p in collection)
+                AddOrUpdatePropertyInternal(p);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        void ProcessPropertiesInternal(IReadOnlyCollection<LogEventProperty> collection)
+        {
+            InitProperties(collection.Count);
+
+            foreach (var p in collection)
+                AddOrUpdatePropertyInternal(p);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        void InitProperties(int itemCount)
+        {
+            if (itemCount > 0)
+                _propertiesInternal = new Dictionary<string, LogEventPropertyValue>(itemCount);
         }
     }
 }

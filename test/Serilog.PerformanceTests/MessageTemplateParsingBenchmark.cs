@@ -7,6 +7,8 @@ namespace Serilog.PerformanceTests
     /// Tests the cost of parsing various message templates.
     /// </summary>
     [MemoryDiagnoser]
+    [MinColumn, MaxColumn]
+    [ClrJob, CoreJob]
     public class MessageTemplateParsingBenchmark
     {  
         MessageTemplateParser _parser; 
