@@ -8,17 +8,17 @@ namespace TestConsole
         {
             Console.WriteLine("Start");
 
-            var test = new Test();
-            for (int i = 0; i < 1; i++)
-            {
-                test.LogMsg();
-            }
-
-            //var x = new AlmostRealWorldBenchmark();
-            //for (int i = 0; i < 100; i++)
+            //var test = new Test();
+            //for (int i = 0; i < 1; i++)
             //{
-            //    x.LogLikeAApp();
+            //    test.LogMsg();
             //}
+
+            var x = new AlmostRealWorldBenchmark();
+            for (int i = 0; i < 1000; i++)
+            {
+                x.LogLikeAApp();
+            }
 
             Console.WriteLine("End");
             //Console.ReadLine();

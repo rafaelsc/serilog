@@ -153,7 +153,7 @@ namespace Serilog.Events
                 Level,
                 Exception,
                 MessageTemplate,
-                _propertiesInternal == null ? null : new Dictionary<string, LogEventPropertyValue>(this._propertiesInternal)); //Clone the Dictionary Instance, but we don't need to clone the LogEventPropertyValue because his a immutable class.
+                _propertiesInternal == null ? null : new Dictionary<string, LogEventPropertyValue>(_propertiesInternal)); //Clone the Dictionary Instance, but we don't need to clone the LogEventPropertyValue because his a immutable class.
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
