@@ -5,6 +5,8 @@ using Serilog.Events;
 
 namespace Serilog.PerformanceTests
 { 
+    [MinColumn, MaxColumn]
+    [ClrJob, CoreJob]
     public class LogContextEnrichmentBenchmark
     {
         ILogger _bare, _enriched;
