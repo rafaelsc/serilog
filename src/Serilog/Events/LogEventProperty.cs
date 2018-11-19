@@ -30,12 +30,11 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException"></exception>
         public LogEventProperty(string name, LogEventPropertyValue value)
         {
-            if (value == null) throw new ArgumentNullException(nameof(value));
             if (!IsValidName(name))
                 throw new ArgumentException("Property name is not valid.");
 
             Name = name;
-            Value = value;
+            Value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
