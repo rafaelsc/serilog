@@ -62,8 +62,7 @@ namespace Serilog.Events
                 return;
             }
 
-            var s = value as string;
-            if (s != null)
+            if (value is string s)
             {
                 if (format != "l")
                 {
@@ -78,25 +77,21 @@ namespace Serilog.Events
                 return;
             }
 
-            if (formatProvider != null)
+            var custom = (ICustomFormatter) formatProvider?.GetFormat(typeof(ICustomFormatter));
+            if (custom != null)
             {
-                var custom = (ICustomFormatter)formatProvider.GetFormat(typeof(ICustomFormatter));
-                if (custom != null)
-                {
-                    output.Write(custom.Format(format, value, formatProvider));
-                    return;
-                }
+                output.Write(custom.Format(format, value, formatProvider));
+                return;
             }
 
-            var f = value as IFormattable;
-            if (f != null)
+            if (value is IFormattable f)
             {
                 output.Write(f.ToString(format, formatProvider ?? CultureInfo.InvariantCulture));
             }
             else
             {
                 output.Write(value.ToString());
-            }                        
+            }
         }
 
         /// <summary>
