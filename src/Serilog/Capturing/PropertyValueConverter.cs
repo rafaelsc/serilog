@@ -166,8 +166,9 @@ namespace Serilog.Capturing
                 return compilerGeneratedResult;
 
             return new ScalarValue(value.ToString());
-        }        
+        }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         bool TryConvertEnumerable(object value, Destructuring destructuring, Type valueType, out LogEventPropertyValue result)
         {
             if (value is IEnumerable enumerable)
@@ -307,7 +308,7 @@ namespace Serilog.Capturing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        bool TryGetDictionary(object value, Type valueType, out IDictionary dictionary)
+        static bool TryGetDictionary(object value, Type valueType, out IDictionary dictionary)
         {
             if (valueType.IsConstructedGenericType &&
                 valueType.GetGenericTypeDefinition() == typeof(Dictionary<,>) &&
@@ -322,7 +323,7 @@ namespace Serilog.Capturing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        bool IsValidDictionaryKeyType(Type valueType)
+        static bool IsValidDictionaryKeyType(Type valueType)
         {
             return BuiltInScalarTypes.Contains(valueType) ||
                    valueType.GetTypeInfo().IsEnum;
@@ -359,7 +360,7 @@ namespace Serilog.Capturing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool IsCompilerGeneratedType(Type type)
+        static bool IsCompilerGeneratedType(Type type)
         {
             var typeInfo = type.GetTypeInfo();
             var typeName = type.Name;
