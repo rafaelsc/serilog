@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Serilog.Core;
 using Serilog.Core.Pipeline;
 using Serilog.Events;
@@ -40,9 +41,16 @@ namespace Serilog.Capturing
 
         public LogEventProperty CreateProperty(string name, object value, bool destructureObjects = false)
         {
-            return _propertyValueConverter.CreateProperty(name, value, destructureObjects);
+            return CreatePropertyInternal(name, value, destructureObjects);
         }
+
         public LogEventProperty CreateProperty<T>(string name, T value, bool destructureObjects = false)
+        {
+            return CreatePropertyInternal(name, value, destructureObjects);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        LogEventProperty CreatePropertyInternal<T>(string name, T value, bool destructureObjects = false)
         {
             return _propertyValueConverter.CreateProperty(name, value, destructureObjects);
         }
