@@ -14,7 +14,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Serilog.Debugging;
 using Serilog.Events;
@@ -100,7 +99,7 @@ namespace Serilog.Capturing
         {
             var namedProperties = template.NamedProperties;
             if (namedProperties == null)
-                return Enumerable.Empty<LogEventProperty>();
+                return NoProperties;
 
             var matchedRun = namedProperties.Length;
             if (namedProperties.Length != messageTemplateParameters.Length)

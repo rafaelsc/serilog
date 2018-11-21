@@ -13,7 +13,7 @@ namespace Serilog.PerformanceTests
 {
     [MemoryDiagnoser]
     [MinColumn, MaxColumn]
-    [ClrJob, CoreJob]
+    [ClrJob(baseline: true), CoreJob]
     public abstract class AllocationsBaseBenchmark
     {
         protected ILogger _logger;
