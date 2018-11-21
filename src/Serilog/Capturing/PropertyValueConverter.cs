@@ -191,9 +191,7 @@ namespace Serilog.Capturing
                         foreach (DictionaryEntry entry in dictionaryEntries)
                         {
                             if (++count > _maximumCollectionCount)
-                            {
                                 yield break;
-                            }
 
                             var pair = new KeyValuePair<ScalarValue, LogEventPropertyValue>(
                                 (ScalarValue)_depthLimiter.CreatePropertyValue(entry.Key, destructure),
@@ -214,9 +212,7 @@ namespace Serilog.Capturing
                     foreach (var element in sequence)
                     {
                         if (++count > _maximumCollectionCount)
-                        {
                             yield break;
-                        }
 
                         yield return _depthLimiter.CreatePropertyValue(element, destructure);
                     }
