@@ -100,7 +100,7 @@ namespace Serilog.Capturing
         {
             var namedProperties = template.NamedProperties;
             if (namedProperties == null)
-                return Enumerable.Empty<LogEventProperty>();
+                return NoProperties;
 
             var matchedRun = namedProperties.Length;
             if (namedProperties.Length != messageTemplateParameters.Length)
@@ -114,7 +114,7 @@ namespace Serilog.Capturing
             {
                 var property = template.NamedProperties[i];
                 var value = messageTemplateParameters[i];
-                result[i] = ConstructProperty(property, value); 
+                result[i] = ConstructProperty(property, value);
             }
 
             for (var i = matchedRun; i < messageTemplateParameters.Length; ++i)
