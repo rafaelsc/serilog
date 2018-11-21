@@ -10,7 +10,7 @@ namespace Serilog.PerformanceTests
     /// </summary>
     [MemoryDiagnoser]
     [MinColumn, MaxColumn]
-    [ClrJob, CoreJob]
+    [ClrJob(baseline: true), CoreJob]
     public class MessageTemplateRenderingBenchmark
     {
         static readonly LogEvent NoProperties =

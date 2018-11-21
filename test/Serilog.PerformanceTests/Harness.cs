@@ -27,6 +27,7 @@ namespace Serilog.PerformanceTests
         {
             BenchmarkRunner.Run<AllocationsNormalBenchmark>();
         }
+
         [Fact]
         public void AllocationsIgnoringEventsBenchmark()
         {

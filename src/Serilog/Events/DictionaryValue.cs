@@ -31,8 +31,7 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException"></exception>
         public DictionaryValue(IEnumerable<KeyValuePair<ScalarValue, LogEventPropertyValue>> elements)
         {
-            if (elements == null) throw new ArgumentNullException(nameof(elements));
-            Elements = elements.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            Elements = elements?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value) ?? throw new ArgumentNullException(nameof(elements));
         }
 
         /// <summary>
