@@ -8,7 +8,7 @@ namespace Serilog.PerformanceTests
     /// Tests the overhead of writing through a nested logger.
     /// </summary>
     [MinColumn, MaxColumn]
-    [ClrJob, CoreJob]
+    [ClrJob(baseline: true), CoreJob]
     public class NestedLoggerLatencyBenchmark
     {
         ILogger _log, _nested;
