@@ -131,19 +131,14 @@ namespace Serilog.Capturing
                 return new ScalarValue(null);
 
             if (destructuring == Destructuring.Stringify)
-            {
                 return Stringify(value);
-            }
 
             var valueType = value.GetType();
             _depthLimiter.SetCurrentDepth(depth);
 
-            if (destructuring == Destructuring.Destructure)
+            if (destructuring == Destructuring.Destructure && value is string stringValue)
             {
-                if (value is string stringValue)
-                {
-                    value = TruncateIfNecessary(stringValue);
-                }
+                value = TruncateIfNecessary(stringValue);
             }
 
             foreach (var scalarConversionPolicy in _scalarConversionPolicies)
