@@ -7,7 +7,7 @@ namespace Serilog.PerformanceTests
     /// Tests the cost creating a nested logger.
     /// </summary>
     [MinColumn, MaxColumn]
-    [ClrJob, CoreJob]
+    [ClrJob(baseline: true), CoreJob]
     public class NestedLoggerCreationBenchmark
     {
         ILogger log;
