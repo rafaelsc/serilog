@@ -10,7 +10,7 @@ namespace Serilog.PerformanceTests
 {
     [MemoryDiagnoser]
     [MinColumn, MaxColumn]
-    [ClrJob, CoreJob]
+    [ClrJob(baseline: true), CoreJob]
     public class AlmostRealWorldBenchmark
     {
         static readonly LoggingLevelSwitch LoggingLevelSwitch = new LoggingLevelSwitch(LogEventLevel.Verbose);
