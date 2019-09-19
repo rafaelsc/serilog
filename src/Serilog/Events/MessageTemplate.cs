@@ -58,7 +58,7 @@ namespace Serilog.Events
             Text = text ?? throw new ArgumentNullException(nameof(text));
             _tokens = (tokens as MessageTemplateToken[] ?? tokens?.ToArray() ?? throw new ArgumentNullException(nameof(tokens)));
 
-            var propertyTokens = GetElementsOfTypeToArray<PropertyToken>(_tokens.AsSpan());
+            var propertyTokens = GetElementsOfTypeToArray<PropertyToken>(_tokens);
             if (propertyTokens.Length != 0)
             {
                 var allPositional = true;
@@ -89,7 +89,7 @@ namespace Serilog.Events
         /// <summary>
         /// Similar to <see cref="Enumerable.OfType{TResult}"/>, but faster.
         /// </summary>
-        static TResult[] GetElementsOfTypeToArray<TResult>(in Span<MessageTemplateToken> tokens)
+        static TResult[] GetElementsOfTypeToArray<TResult>(MessageTemplateToken[] tokens)
             where TResult : class
         {
             var result = new List<TResult>(tokens.Length / 2);
