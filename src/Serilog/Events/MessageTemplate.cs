@@ -56,7 +56,7 @@ namespace Serilog.Events
         public MessageTemplate(string text, IEnumerable<MessageTemplateToken> tokens)
         {
             Text = text ?? throw new ArgumentNullException(nameof(text));
-            _tokens = (tokens ?? throw new ArgumentNullException(nameof(tokens))).ToArray();
+            _tokens = (tokens as MessageTemplateToken[] ?? tokens?.ToArray() ?? throw new ArgumentNullException(nameof(tokens)));
 
             var propertyTokens = GetElementsOfTypeToArray<PropertyToken>(_tokens);
             if (propertyTokens.Length != 0)
