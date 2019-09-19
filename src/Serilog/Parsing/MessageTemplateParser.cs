@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Serilog.Core;
 using Serilog.Events;
@@ -207,6 +208,7 @@ namespace Serilog.Parsing
             return true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInPropertyTag(char c)
         {
             return IsValidInDestructuringHint(c) ||
@@ -215,8 +217,10 @@ namespace Serilog.Parsing
                 c == ':';
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInPropertyName(char c) => char.IsLetterOrDigit(c) || c == '_';
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool TryGetDestructuringHint(char c, out Destructuring destructuring)
         {
             switch (c)
@@ -239,10 +243,13 @@ namespace Serilog.Parsing
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInDestructuringHint(char c) => c == '@' || c == '$';
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInAlignment(char c) => char.IsDigit(c) ||c == '-';
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInFormat(char c) => c != '}' && (char.IsLetterOrDigit(c) || char.IsPunctuation(c) || c == ' ');
 
         static TextToken ParseTextToken(int startAt, in ReadOnlySpan<char> messageTemplate, out int next)
