@@ -38,39 +38,42 @@ namespace Serilog.Parsing
         {
             if (messageTemplate == null)
                 throw new ArgumentNullException(nameof(messageTemplate));
-            return new MessageTemplate(messageTemplate, Tokenize(messageTemplate.AsMemory()));
+
+            return new MessageTemplate(messageTemplate, Tokenize(messageTemplate.AsSpan()));
         }
 
-        static IEnumerable<MessageTemplateToken> Tokenize(ReadOnlyMemory<char> messageTemplate)
+        static IEnumerable<MessageTemplateToken> Tokenize(in ReadOnlySpan<char> messageTemplate)
         {
-            if (messageTemplate.Length == 0)
+            var tokens = new List<MessageTemplateToken>();
+
+            if (messageTemplate.IsEmpty)
             {
-                yield return new TextToken("", 0);
-                yield break;
+                tokens.Add(new TextToken("", 0));
+                return tokens;
             }
 
             var nextIndex = 0;
             while (true)
             {
                 var beforeText = nextIndex;
-                var tt = ParseTextToken(nextIndex, messageTemplate.Span, out nextIndex);
+                var tt = ParseTextToken(nextIndex, messageTemplate, out nextIndex);
                 if (nextIndex > beforeText)
-                    yield return tt;
+                    tokens.Add(tt);
 
                 if (nextIndex == messageTemplate.Length)
-                    yield break;
+                    return tokens;
 
                 var beforeProp = nextIndex;
-                var pt = ParsePropertyToken(nextIndex, messageTemplate.Span, out nextIndex);
+                var pt = ParsePropertyToken(nextIndex, messageTemplate, out nextIndex);
                 if (beforeProp < nextIndex)
-                    yield return pt;
+                    tokens.Add(pt);
 
                 if (nextIndex == messageTemplate.Length)
-                    yield break;
+                    return tokens;
             }
         }
 
-        static MessageTemplateToken ParsePropertyToken(int startAt, ReadOnlySpan<char> messageTemplate, out int next)
+        static MessageTemplateToken ParsePropertyToken(int startAt, in ReadOnlySpan<char> messageTemplate, out int next)
         {
             var first = startAt;
             startAt++;
@@ -151,7 +154,7 @@ namespace Serilog.Parsing
                 first);
         }
 
-        static bool TrySplitTagContent(ReadOnlySpan<char> tagContent, out ReadOnlySpan<char> propertyNameAndDestructuring, out ReadOnlySpan<char> format, out ReadOnlySpan<char> alignment)
+        static bool TrySplitTagContent(in ReadOnlySpan<char> tagContent, out ReadOnlySpan<char> propertyNameAndDestructuring, out ReadOnlySpan<char> format, out ReadOnlySpan<char> alignment)
         {
             var formatDelim = tagContent.IndexOf(':');
             var alignmentDelim = tagContent.IndexOf(',');
@@ -256,7 +259,7 @@ namespace Serilog.Parsing
                  c == ' ');
         }
 
-        static TextToken ParseTextToken(int startAt, ReadOnlySpan<char> messageTemplate, out int next)
+        static TextToken ParseTextToken(int startAt, in ReadOnlySpan<char> messageTemplate, out int next)
         {
             var first = startAt;
 
