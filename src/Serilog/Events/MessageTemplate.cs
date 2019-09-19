@@ -153,6 +153,7 @@ namespace Serilog.Events
         {
             if (properties == null) throw new ArgumentNullException(nameof(properties));
             if (output == null) throw new ArgumentNullException(nameof(output));
+
             MessageTemplateRenderer.Render(this, properties, output, null, formatProvider);
         }
     }
