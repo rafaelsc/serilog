@@ -45,13 +45,12 @@ namespace Serilog.Parsing
 
         static IEnumerable<MessageTemplateToken> Tokenize(in ReadOnlySpan<char> messageTemplate)
         {
-            var tokens = new List<MessageTemplateToken>();
-
             if (messageTemplate.IsEmpty)
             {
-                tokens.Add(new TextToken(string.Empty, 0));
-                return tokens;
+                return new [] { new TextToken(string.Empty, 0) };
             }
+
+            var tokens = new List<MessageTemplateToken>();
 
             var nextIndex = 0;
             while (true)
