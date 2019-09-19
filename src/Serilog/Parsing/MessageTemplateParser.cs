@@ -39,7 +39,7 @@ namespace Serilog.Parsing
             if (messageTemplate == null)
                 throw new ArgumentNullException(nameof(messageTemplate));
 
-            return new MessageTemplate(messageTemplate, Tokenize(messageTemplate.AsSpan()));
+            return new MessageTemplate(messageTemplate, Tokenize(messageTemplate.AsSpan()) );
         }
 
         static IEnumerable<MessageTemplateToken> Tokenize(in ReadOnlySpan<char> messageTemplate)
@@ -48,7 +48,7 @@ namespace Serilog.Parsing
 
             if (messageTemplate.IsEmpty)
             {
-                tokens.Add(new TextToken("", 0));
+                tokens.Add(new TextToken(string.Empty, 0));
                 return tokens;
             }
 
@@ -239,25 +239,11 @@ namespace Serilog.Parsing
             }
         }
 
-        static bool IsValidInDestructuringHint(char c)
-        {
-            return c == '@' ||
-                   c == '$';
-        }
+        static bool IsValidInDestructuringHint(char c) => c == '@' || c == '$';
 
-        static bool IsValidInAlignment(char c)
-        {
-            return char.IsDigit(c) ||
-                   c == '-';
-        }
+        static bool IsValidInAlignment(char c) => char.IsDigit(c) ||c == '-';
 
-        static bool IsValidInFormat(char c)
-        {
-            return c != '}' &&
-                (char.IsLetterOrDigit(c) ||
-                 char.IsPunctuation(c) ||
-                 c == ' ');
-        }
+        static bool IsValidInFormat(char c) => c != '}' && (char.IsLetterOrDigit(c) || char.IsPunctuation(c) || c == ' ');
 
         static TextToken ParseTextToken(int startAt, in ReadOnlySpan<char> messageTemplate, out int next)
         {
