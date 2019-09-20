@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Serilog.Core;
 using Serilog.Events;
@@ -38,39 +39,40 @@ namespace Serilog.Parsing
         {
             if (messageTemplate == null)
                 throw new ArgumentNullException(nameof(messageTemplate));
-            return new MessageTemplate(messageTemplate, Tokenize(messageTemplate.AsMemory()));
+
+            return new MessageTemplate(messageTemplate, Tokenize(messageTemplate.AsSpan()) );
         }
 
-        static IEnumerable<MessageTemplateToken> Tokenize(ReadOnlyMemory<char> messageTemplate)
+        static IEnumerable<MessageTemplateToken> Tokenize(in ReadOnlySpan<char> messageTemplate)
         {
-            if (messageTemplate.Length == 0)
-            {
-                yield return new TextToken("", 0);
-                yield break;
-            }
+            if (messageTemplate.IsEmpty)
+                return new[] {new TextToken(string.Empty, 0)};
+
+            var tokens = new List<MessageTemplateToken>();
 
             var nextIndex = 0;
             while (true)
             {
                 var beforeText = nextIndex;
-                var tt = ParseTextToken(nextIndex, messageTemplate.Span, out nextIndex);
+                var tt = ParseTextToken(nextIndex, messageTemplate, out nextIndex);
                 if (nextIndex > beforeText)
-                    yield return tt;
+                    tokens.Add(tt);
 
                 if (nextIndex == messageTemplate.Length)
-                    yield break;
+                    return tokens;
 
                 var beforeProp = nextIndex;
-                var pt = ParsePropertyToken(nextIndex, messageTemplate.Span, out nextIndex);
+                var pt = ParsePropertyToken(nextIndex, messageTemplate, out nextIndex);
                 if (beforeProp < nextIndex)
-                    yield return pt;
+                    tokens.Add(pt);
 
                 if (nextIndex == messageTemplate.Length)
-                    yield break;
+                    return tokens;
             }
         }
 
-        static MessageTemplateToken ParsePropertyToken(int startAt, ReadOnlySpan<char> messageTemplate, out int next)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static MessageTemplateToken ParsePropertyToken(int startAt, in ReadOnlySpan<char> messageTemplate, out int next)
         {
             var first = startAt;
             startAt++;
@@ -151,7 +153,8 @@ namespace Serilog.Parsing
                 first);
         }
 
-        static bool TrySplitTagContent(ReadOnlySpan<char> tagContent, out ReadOnlySpan<char> propertyNameAndDestructuring, out ReadOnlySpan<char> format, out ReadOnlySpan<char> alignment)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool TrySplitTagContent(in ReadOnlySpan<char> tagContent, out ReadOnlySpan<char> propertyNameAndDestructuring, out ReadOnlySpan<char> format, out ReadOnlySpan<char> alignment)
         {
             var formatDelim = tagContent.IndexOf(':');
             var alignmentDelim = tagContent.IndexOf(',');
@@ -204,6 +207,7 @@ namespace Serilog.Parsing
             return true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInPropertyTag(char c)
         {
             return IsValidInDestructuringHint(c) ||
@@ -212,8 +216,10 @@ namespace Serilog.Parsing
                 c == ':';
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInPropertyName(char c) => char.IsLetterOrDigit(c) || c == '_';
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool TryGetDestructuringHint(char c, out Destructuring destructuring)
         {
             switch (c)
@@ -236,27 +242,17 @@ namespace Serilog.Parsing
             }
         }
 
-        static bool IsValidInDestructuringHint(char c)
-        {
-            return c == '@' ||
-                   c == '$';
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool IsValidInDestructuringHint(char c) => c == '@' || c == '$';
 
-        static bool IsValidInAlignment(char c)
-        {
-            return char.IsDigit(c) ||
-                   c == '-';
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool IsValidInAlignment(char c) => char.IsDigit(c) ||c == '-';
 
-        static bool IsValidInFormat(char c)
-        {
-            return c != '}' &&
-                (char.IsLetterOrDigit(c) ||
-                 char.IsPunctuation(c) ||
-                 c == ' ');
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool IsValidInFormat(char c) => c != '}' && (char.IsLetterOrDigit(c) || char.IsPunctuation(c) || c == ' ');
 
-        static TextToken ParseTextToken(int startAt, ReadOnlySpan<char> messageTemplate, out int next)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static TextToken ParseTextToken(int startAt, in ReadOnlySpan<char> messageTemplate, out int next)
         {
             var first = startAt;
 
