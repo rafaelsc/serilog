@@ -46,9 +46,7 @@ namespace Serilog.Parsing
         static IEnumerable<MessageTemplateToken> Tokenize(in ReadOnlySpan<char> messageTemplate)
         {
             if (messageTemplate.IsEmpty)
-            {
-                return new [] { new TextToken(string.Empty, 0) };
-            }
+                return new[] {new TextToken(string.Empty, 0)};
 
             var tokens = new List<MessageTemplateToken>();
 
@@ -73,6 +71,7 @@ namespace Serilog.Parsing
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static MessageTemplateToken ParsePropertyToken(int startAt, in ReadOnlySpan<char> messageTemplate, out int next)
         {
             var first = startAt;
@@ -154,6 +153,7 @@ namespace Serilog.Parsing
                 first);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool TrySplitTagContent(in ReadOnlySpan<char> tagContent, out ReadOnlySpan<char> propertyNameAndDestructuring, out ReadOnlySpan<char> format, out ReadOnlySpan<char> alignment)
         {
             var formatDelim = tagContent.IndexOf(':');
@@ -251,6 +251,7 @@ namespace Serilog.Parsing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInFormat(char c) => c != '}' && (char.IsLetterOrDigit(c) || char.IsPunctuation(c) || c == ' ');
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static TextToken ParseTextToken(int startAt, in ReadOnlySpan<char> messageTemplate, out int next)
         {
             var first = startAt;
