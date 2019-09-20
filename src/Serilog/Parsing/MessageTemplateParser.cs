@@ -134,7 +134,7 @@ namespace Serilog.Parsing
                 if (lastDash > 0)
                     return new TextToken(rawText.ToString(), first);
 
-                if (!int.TryParse(lastDash == -1 ? alignment.ToString() : alignment.Slice(1).ToString(), out var width) || width == 0)
+                if (!TryParseIntInternal(lastDash == -1 ? alignment : alignment.Slice(1), out var width) || width == 0)
                     return new TextToken(rawText.ToString(), first);
 
                 var direction = lastDash == -1 ?
@@ -151,6 +151,16 @@ namespace Serilog.Parsing
                 alignmentValue,
                 destructuring,
                 first);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool TryParseIntInternal(in ReadOnlySpan<char> str, out int result)
+        {
+#if TRYPARSEWITHSPAN
+            return int.TryParse(str, out result);
+#else
+            return int.TryParse(str.ToString(), out result);
+#endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
