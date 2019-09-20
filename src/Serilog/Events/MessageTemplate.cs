@@ -58,6 +58,8 @@ namespace Serilog.Events
             Text = text ?? throw new ArgumentNullException(nameof(text));
             _tokens = (tokens as MessageTemplateToken[] ?? tokens?.ToArray() ?? throw new ArgumentNullException(nameof(tokens)));
 
+            if(_tokens.Length == 0)
+                return;
 
             //Process Tokens Array
             var allPositional = true;
