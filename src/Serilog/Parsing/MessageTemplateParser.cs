@@ -59,7 +59,7 @@ namespace Serilog.Parsing
                     tokens.Add(tt);
 
                 if (nextIndex == messageTemplate.Length)
-                    return tokens;
+                    return tokens.ToArray();
 
                 var beforeProp = nextIndex;
                 var pt = ParsePropertyToken(nextIndex, messageTemplate, out nextIndex);
@@ -67,7 +67,7 @@ namespace Serilog.Parsing
                     tokens.Add(pt);
 
                 if (nextIndex == messageTemplate.Length)
-                    return tokens;
+                    return tokens.ToArray();
             }
         }
 
