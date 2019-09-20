@@ -40,13 +40,13 @@ namespace Serilog.Parsing
             if (messageTemplate == null)
                 throw new ArgumentNullException(nameof(messageTemplate));
 
-            return new MessageTemplate(messageTemplate, Tokenize(messageTemplate.AsSpan()) );
+            return new MessageTemplate(messageTemplate, Tokenize(messageTemplate.AsSpan()));
         }
 
         static IEnumerable<MessageTemplateToken> Tokenize(in ReadOnlySpan<char> messageTemplate)
         {
             if (messageTemplate.IsEmpty)
-                return new[] {new TextToken(string.Empty, 0)};
+                return new[] { new TextToken(string.Empty, 0) };
 
             var tokens = new List<MessageTemplateToken>();
 
@@ -300,6 +300,10 @@ namespace Serilog.Parsing
             } while (startAt < messageTemplate.Length);
 
             next = startAt;
+
+            if (first == next)
+                return null;
+
             return new TextToken(accum.ToString(), first);
         }
     }
