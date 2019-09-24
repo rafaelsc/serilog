@@ -8,8 +8,8 @@ Intel Core i7-7700HQ CPU 2.80GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical co
 
 
 ```
-|           Method |     Mean |     Error |    StdDev |   Median |  Gen 0 | Gen 1 | Gen 2 | Allocated |
-|----------------- |---------:|----------:|----------:|---------:|-------:|------:|------:|----------:|
-|    ForContextInt | 89.81 ns | 0.6061 ns | 0.5669 ns | 89.94 ns | 0.0483 |     - |     - |     152 B |
-| ForContextString | 57.25 ns | 1.0671 ns | 1.6296 ns | 56.31 ns | 0.0407 |     - |     - |     128 B |
-|   ForContextType | 98.73 ns | 1.3182 ns | 1.1007 ns | 98.67 ns | 0.0407 |     - |     - |     128 B |
+|           Method |     Mean |     Error |    StdDev |  Gen 0 | Gen 1 | Gen 2 | Allocated |
+|----------------- |---------:|----------:|----------:|-------:|------:|------:|----------:|
+|    ForContextInt | 87.87 ns | 0.6029 ns | 0.5344 ns | 0.0483 |     - |     - |     152 B |
+| ForContextString | 55.78 ns | 1.1135 ns | 1.5242 ns | 0.0407 |     - |     - |     128 B |
+|   ForContextType | 98.35 ns | 1.0234 ns | 0.8546 ns | 0.0407 |     - |     - |     128 B |

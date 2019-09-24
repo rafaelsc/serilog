@@ -8,11 +8,11 @@ Intel Core i7-7700HQ CPU 2.80GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical co
 
 
 ```
-|                       Method |       Mean |     Error |     StdDev | Ratio | RatioSD |  Gen 0 | Gen 1 | Gen 2 | Allocated |
-|----------------------------- |-----------:|----------:|-----------:|------:|--------:|-------:|------:|------:|----------:|
-|                EmptyTemplate |   281.4 ns |  5.711 ns | 10.0025 ns |  1.00 |    0.00 | 0.0834 |     - |     - |     264 B |
-|           SimpleTextTemplate |   343.8 ns |  2.817 ns |  2.6348 ns |  1.18 |    0.04 | 0.1345 |     - |     - |     424 B |
-|  SinglePropertyTokenTemplate |   465.4 ns |  1.096 ns |  0.9153 ns |  1.59 |    0.05 | 0.1802 |     - |     - |     568 B |
-|    ManyPropertyTokenTemplate |   752.2 ns |  3.918 ns |  3.6647 ns |  2.59 |    0.09 | 0.3405 |     - |     - |    1072 B |
-|       MultipleTokensTemplate | 1,466.1 ns | 10.242 ns |  9.5805 ns |  5.04 |    0.17 | 0.5836 |     - |     - |    1840 B |
-| DefaultConsoleOutputTemplate | 1,941.6 ns | 16.359 ns | 15.3021 ns |  6.67 |    0.24 | 0.7286 |     - |     - |    2296 B |
+|                       Method |        Mean |      Error |     StdDev | Ratio | RatioSD |  Gen 0 | Gen 1 | Gen 2 | Allocated |
+|----------------------------- |------------:|-----------:|-----------:|------:|--------:|-------:|------:|------:|----------:|
+|                EmptyTemplate |    58.16 ns |  0.9536 ns |  0.8453 ns |  1.00 |    0.00 | 0.0483 |     - |     - |     152 B |
+|           SimpleTextTemplate |   146.39 ns |  0.6476 ns |  0.6058 ns |  2.52 |    0.04 | 0.1295 |     - |     - |     408 B |
+|  SinglePropertyTokenTemplate |   286.63 ns |  2.6850 ns |  2.0963 ns |  4.93 |    0.08 | 0.1779 |     - |     - |     560 B |
+|    ManyPropertyTokenTemplate |   585.01 ns |  2.4147 ns |  2.1405 ns | 10.06 |    0.14 | 0.3424 |     - |     - |    1080 B |
+|       MultipleTokensTemplate | 1,198.61 ns | 23.7210 ns | 34.0199 ns | 20.49 |    0.48 | 0.5817 |     - |     - |    1832 B |
+| DefaultConsoleOutputTemplate | 1,559.82 ns |  7.9583 ns |  7.4442 ns | 26.84 |    0.40 | 0.6657 |     - |     - |    2096 B |

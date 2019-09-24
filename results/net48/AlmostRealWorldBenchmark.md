@@ -9,8 +9,8 @@ Job=ShortRun  IterationCount=3  LaunchCount=1
 WarmupCount=3  
 
 ```
-|                     Method |        Mean |        Error |       StdDev |  Ratio | RatioSD |     Gen 0 | Gen 1 | Gen 2 |  Allocated |
-|--------------------------- |------------:|-------------:|-------------:|-------:|--------:|----------:|------:|------:|-----------:|
-| SimulateAAppWithoutSerilog |    280.4 us |     29.70 us |     1.628 us |   1.00 |    0.00 |   41.5039 |     - |     - |  128.27 KB |
-| SimulateAAppWithSerilogOff |  1,623.2 us |     93.29 us |     5.113 us |   5.79 |    0.04 |  349.6094 |     - |     - | 1077.13 KB |
-|  SimulateAAppWithSerilogOn | 98,093.9 us | 81,013.51 us | 4,440.624 us | 349.88 |   15.12 | 9166.6667 |     - |     - | 28348.8 KB |
+|                     Method |        Mean |        Error |     StdDev |  Ratio | RatioSD |     Gen 0 | Gen 1 | Gen 2 |   Allocated |
+|--------------------------- |------------:|-------------:|-----------:|-------:|--------:|----------:|------:|------:|------------:|
+| SimulateAAppWithoutSerilog |    279.2 us |     22.16 us |   1.215 us |   1.00 |    0.00 |   41.5039 |     - |     - |   128.27 KB |
+| SimulateAAppWithSerilogOff |  1,598.2 us |     43.74 us |   2.398 us |   5.72 |    0.02 |  347.6563 |     - |     - |  1071.64 KB |
+|  SimulateAAppWithSerilogOn | 93,080.9 us | 17,832.58 us | 977.464 us | 333.36 |    2.36 | 9166.6667 |     - |     - | 28336.94 KB |
