@@ -71,6 +71,7 @@ namespace Serilog.Parsing
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static MessageTemplateToken ParsePropertyToken(int startAt, in ReadOnlySpan<char> messageTemplate, out int next)
         {
             var first = startAt;
@@ -152,6 +153,7 @@ namespace Serilog.Parsing
                 first);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool TryParseIntInternal(in ReadOnlySpan<char> str, out int result)
         {
 #if TRYPARSEWITHSPAN
@@ -161,6 +163,7 @@ namespace Serilog.Parsing
 #endif
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool TrySplitTagContent(in ReadOnlySpan<char> tagContent, out ReadOnlySpan<char> propertyNameAndDestructuring, out ReadOnlySpan<char> format, out ReadOnlySpan<char> alignment)
         {
             var formatDelim = tagContent.IndexOf(':');
@@ -214,6 +217,7 @@ namespace Serilog.Parsing
             return true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInPropertyTag(char c)
         {
             return IsValidInDestructuringHint(c) ||
@@ -222,8 +226,10 @@ namespace Serilog.Parsing
                 c == ':';
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInPropertyName(char c) => char.IsLetterOrDigit(c) || c == '_';
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool TryGetDestructuringHint(char c, out Destructuring destructuring)
         {
             switch (c)
@@ -246,12 +252,16 @@ namespace Serilog.Parsing
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInDestructuringHint(char c) => c == '@' || c == '$';
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInAlignment(char c) => char.IsDigit(c) ||c == '-';
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool IsValidInFormat(char c) => c != '}' && (char.IsLetterOrDigit(c) || char.IsPunctuation(c) || c == ' ');
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static TextToken ParseTextToken(int startAt, in ReadOnlySpan<char> messageTemplate, out int next)
         {
             var first = startAt;
