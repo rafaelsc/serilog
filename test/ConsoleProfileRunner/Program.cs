@@ -9,7 +9,7 @@ namespace ConsoleProfileRunner
         {
             Console.WriteLine("Starting...");
 
-            for (int i = 0; i < 100_000; i++)
+            for (int i = 0; i < 1_000_000; i++)
             {
                 EmptyTemplate();
                 SimpleTextTemplate();
