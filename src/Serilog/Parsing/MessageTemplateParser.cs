@@ -208,18 +208,6 @@ namespace Serilog.Parsing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static bool IsValidInPropertyTag(char c)
-        {
-            return IsValidInDestructuringHint(c) ||
-                IsValidInPropertyName(c) ||
-                IsValidInFormat(c) ||
-                c == ':';
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static bool IsValidInPropertyName(char c) => char.IsLetterOrDigit(c) || c == '_';
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool TryGetDestructuringHint(char c, out Destructuring destructuring)
         {
             switch (c)
@@ -240,29 +228,6 @@ namespace Serilog.Parsing
                         return false;
                     }
             }
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static bool IsValidInDestructuringHint(char c)
-        {
-            return c == '@' ||
-                   c == '$';
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static bool IsValidInAlignment(char c)
-        {
-            return char.IsDigit(c) ||
-                   c == '-';
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static bool IsValidInFormat(char c)
-        {
-            return c != '}' &&
-                (char.IsLetterOrDigit(c) ||
-                 char.IsPunctuation(c) ||
-                 c == ' ');
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -310,6 +275,21 @@ namespace Serilog.Parsing
 
             return new TextToken(accum.ToString(), first);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool IsValidInPropertyTag(char c) => c == ':' || IsValidInDestructuringHint(c) || IsValidInPropertyName(c) || IsValidInFormat(c);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool IsValidInPropertyName(char c) => c == '_' || char.IsLetterOrDigit(c);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool IsValidInDestructuringHint(char c) => c == '@' || c == '$';
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool IsValidInAlignment(char c) => c == '-' || char.IsDigit(c);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool IsValidInFormat(char c) => c != '}' && (c == ' ' || char.IsLetterOrDigit(c) || char.IsPunctuation(c));
     }
 
 #endif
