@@ -1,8 +1,8 @@
 ``` ini
 
 BenchmarkDotNet=v0.11.5, OS=Windows 10.0.18362
-Intel Core i7-7700HQ CPU 2.80GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-.NET Core SDK=2.2.401
+Intel Core i7-9750H CPU 2.60GHz, 1 CPU, 12 logical and 6 physical cores
+.NET Core SDK=2.2.402
   [Host]     : .NET Core 2.2.7 (CoreCLR 4.6.28008.02, CoreFX 4.6.28008.03), 64bit RyuJIT
   DefaultJob : .NET Core 2.2.7 (CoreCLR 4.6.28008.02, CoreFX 4.6.28008.03), 64bit RyuJIT
 
@@ -10,5 +10,5 @@ Intel Core i7-7700HQ CPU 2.80GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical co
 ```
 |                       Method |       Mean |     Error |    StdDev |  Gen 0 | Gen 1 | Gen 2 | Allocated |
 |----------------------------- |-----------:|----------:|----------:|-------:|------:|------:|----------:|
-|     TemplateWithNoProperties |   4.671 ns | 0.1223 ns | 0.1201 ns |      - |     - |     - |         - |
-| TemplateWithVariedProperties | 352.591 ns | 2.1608 ns | 2.0212 ns | 0.0300 |     - |     - |      96 B |
+|     TemplateWithNoProperties |   5.900 ns | 0.0423 ns | 0.0395 ns |      - |     - |     - |         - |
+| TemplateWithVariedProperties | 307.525 ns | 6.1256 ns | 7.9651 ns | 0.0148 |     - |     - |      96 B |
