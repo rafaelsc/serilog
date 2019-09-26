@@ -7,11 +7,11 @@ Intel Core i7-9750H CPU 2.60GHz, 1 CPU, 12 logical and 6 physical cores
 
 
 ```
-|                       Method |       Mean |     Error |    StdDev | Ratio | RatioSD |  Gen 0 | Gen 1 | Gen 2 | Allocated |
-|----------------------------- |-----------:|----------:|----------:|------:|--------:|-------:|------:|------:|----------:|
-|                EmptyTemplate |   137.3 ns |  1.071 ns |  1.002 ns |  1.00 |    0.00 | 0.0288 |     - |     - |     152 B |
-|           SimpleTextTemplate |   200.5 ns |  1.110 ns |  1.039 ns |  1.46 |    0.01 | 0.0503 |     - |     - |     264 B |
-|  SinglePropertyTokenTemplate |   324.2 ns |  3.736 ns |  3.495 ns |  2.36 |    0.04 | 0.0625 |     - |     - |     328 B |
-|    ManyPropertyTokenTemplate |   707.5 ns | 12.266 ns | 10.874 ns |  5.16 |    0.08 | 0.1259 |     - |     - |     665 B |
-|       MultipleTokensTemplate | 1,413.5 ns |  8.378 ns |  7.837 ns | 10.29 |    0.09 | 0.2213 |     - |     - |    1166 B |
-| DefaultConsoleOutputTemplate | 1,969.3 ns |  7.846 ns |  7.340 ns | 14.34 |    0.11 | 0.2785 |     - |     - |    1478 B |
+|                       Method |        Mean |     Error |    StdDev | Ratio | RatioSD |  Gen 0 | Gen 1 | Gen 2 | Allocated |
+|----------------------------- |------------:|----------:|----------:|------:|--------:|-------:|------:|------:|----------:|
+|                EmptyTemplate |    52.41 ns | 0.1970 ns | 0.1843 ns |  1.00 |    0.00 | 0.0153 |     - |     - |      80 B |
+|           SimpleTextTemplate |   179.45 ns | 1.7240 ns | 1.6126 ns |  3.42 |    0.03 | 0.0479 |     - |     - |     252 B |
+|  SinglePropertyTokenTemplate |   307.01 ns | 1.9500 ns | 1.7286 ns |  5.86 |    0.05 | 0.0591 |     - |     - |     312 B |
+|    ManyPropertyTokenTemplate |   646.69 ns | 6.0752 ns | 5.6827 ns | 12.34 |    0.13 | 0.1230 |     - |     - |     649 B |
+|       MultipleTokensTemplate | 1,294.01 ns | 6.6459 ns | 5.8914 ns | 24.69 |    0.13 | 0.2213 |     - |     - |    1166 B |
+| DefaultConsoleOutputTemplate | 1,863.49 ns | 5.5981 ns | 4.9626 ns | 35.55 |    0.18 | 0.2728 |     - |     - |    1430 B |
