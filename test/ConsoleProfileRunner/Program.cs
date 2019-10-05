@@ -22,13 +22,14 @@ namespace ConsoleProfileRunner
             Console.WriteLine("Ended!");
         }
 
-        static readonly MessageTemplateParser _parser = new MessageTemplateParser();
+        static readonly MessageTemplateParserSpanArr _parser = new MessageTemplateParserSpanArr();
 
         const string _SimpleTextTemplate = "Hello, world!";
         const string _SinglePropertyTokenTemplate = "{Name}";
         const string _ManyPropertyTokenTemplate = "{Greeting}, {Name}!";
         const string _MultipleTokensTemplate = "Hello, world! {Greeting}, {Name} - {{Escaped}} - {@Hello} {$World}";
         const string _DefaultConsoleOutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{NewLine}{Exception}";
+        const string _bigTemplate = "Hello, world! {Greeting}, {Name} - {{Escaped}} - {@Hello} {$World} {Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{NewLine}{Exception} Hello, world!";
 
         public static void EmptyTemplate()
         {
@@ -58,6 +59,11 @@ namespace ConsoleProfileRunner
         public static void DefaultConsoleOutputTemplate()
         {
             _parser.Parse(_DefaultConsoleOutputTemplate);
+        }
+
+        public static void BigTemplate()
+        {
+            _parser.Parse(_bigTemplate);
         }
     }
 }
