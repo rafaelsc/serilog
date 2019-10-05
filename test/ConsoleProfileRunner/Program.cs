@@ -24,6 +24,7 @@ namespace ConsoleProfileRunner
         }
 
         static readonly MessageTemplateParserSpanArr _parser = new MessageTemplateParserSpanArr();
+        //static readonly MessageTemplateParserWithSmallMods _parser = new MessageTemplateParserWithSmallMods();
 
         const string _SimpleTextTemplate = "Hello, world!";
         const string _SinglePropertyTokenTemplate = "{Name}";
