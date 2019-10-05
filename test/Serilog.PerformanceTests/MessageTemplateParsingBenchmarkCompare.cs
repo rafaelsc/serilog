@@ -35,7 +35,7 @@ namespace Serilog.PerformanceTests
         }
 
         [Benchmark]
-        public void MessageTemplateParserArr()
+        public void MessageTemplateParserSpanArr()
         {
             _parserArr.Parse(_bigTemplate);
         }
