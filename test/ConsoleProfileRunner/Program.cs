@@ -11,12 +11,13 @@ namespace ConsoleProfileRunner
 
             for (int i = 0; i < 1_000_000; i++)
             {
-                EmptyTemplate();
-                SimpleTextTemplate();
-                SinglePropertyTokenTemplate();
-                ManyPropertyTokenTemplate();
-                MultipleTokensTemplate();
-                DefaultConsoleOutputTemplate();
+                //EmptyTemplate();
+                //SimpleTextTemplate();
+                //SinglePropertyTokenTemplate();
+                //ManyPropertyTokenTemplate();
+                //MultipleTokensTemplate();
+                //DefaultConsoleOutputTemplate();
+                BigTemplate();
             }
 
             Console.WriteLine("Ended!");
@@ -29,7 +30,7 @@ namespace ConsoleProfileRunner
         const string _ManyPropertyTokenTemplate = "{Greeting}, {Name}!";
         const string _MultipleTokensTemplate = "Hello, world! {Greeting}, {Name} - {{Escaped}} - {@Hello} {$World}";
         const string _DefaultConsoleOutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{NewLine}{Exception}";
-        const string _bigTemplate = "Hello, world! {Greeting}, {Name} - {{Escaped}} - {@Hello} {$World} {Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{NewLine}{Exception} Hello, world!";
+        const string _bigTemplate = "Hello, world! {Greeting}, {Name} - {{Escaped}} - {@Hello} {$World} {Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{NewLine}{Exception} Hello, world! - {-1} {0} {1}";
 
         public static void EmptyTemplate()
         {
