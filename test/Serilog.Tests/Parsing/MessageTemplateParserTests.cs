@@ -78,6 +78,21 @@ namespace Serilog.Tests.Parsing
         }
 
         [Fact]
+        public void AMalformedPropertyTagIsParsedAsText2()
+        {
+            AssertParsedAs("{0_{{space}",
+                new TextToken("{0_{{space}"));
+        }
+
+        [Fact]
+        public void AMalformedPropertyTagIsParsedAsText3()
+        {
+            AssertParsedAs("{0_}}space}",
+                new PropertyToken("0_", "{0_}"),
+                new TextToken("}space}"));
+        }
+
+        [Fact]
         public void ASingleIntegerPropertyNameIsParsedAsPositionalProperty()
         {
             var parsed = (PropertyToken)Parse("{0}").Single();
