@@ -162,8 +162,11 @@ namespace Serilog.Tests.Parsing
         [Fact]
         public void DestructureWIthInvalidHintsIsParsedAsText()
         {
-            AssertParsedAs("{@$}", new TextToken("{@$}"));
-            AssertParsedAs("{$@}", new TextToken("{$@}"));
+            AssertParsedAs("{@$}",
+                new TextToken("{@$}"));
+
+            AssertParsedAs("{$@}",
+                new TextToken("{$@}"));
         }
 
         [Fact]
