@@ -78,11 +78,35 @@ namespace Serilog.Tests.Parsing
         }
 
         [Fact]
-        public void AnIntegerPropertyNameIsParsedAsPositionalProperty()
+        public void ASingleIntegerPropertyNameIsParsedAsPositionalProperty()
         {
             var parsed = (PropertyToken)Parse("{0}").Single();
             Assert.Equal("0", parsed.PropertyName);
             Assert.True(parsed.IsPositional);
+        }
+
+        [Fact]
+        public void ManyIntegerPropertyNameIsParsedAsPositionalProperty()
+        {
+            var parsed = Parse("{0}, {1}, {2}");
+
+            var prop1 = (PropertyToken)parsed[0];
+            Assert.Equal("0", prop1.PropertyName);
+            Assert.True(prop1.IsPositional);
+
+            var prop2 = (TextToken)parsed[1];
+            Assert.Equal(", ", prop2.Text);
+
+            var prop3 = (PropertyToken)parsed[2];
+            Assert.Equal("1", prop3.PropertyName);
+            Assert.True(prop3.IsPositional);
+
+            var prop4 = (TextToken)parsed[3];
+            Assert.Equal(", ", prop4.Text);
+
+            var prop5 = (PropertyToken)parsed[4];
+            Assert.Equal("2", prop5.PropertyName);
+            Assert.True(prop5.IsPositional);
         }
 
         [Fact]
