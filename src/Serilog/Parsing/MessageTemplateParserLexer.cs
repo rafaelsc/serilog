@@ -39,7 +39,7 @@ namespace Serilog.Parsing
             if (messageTemplate == null)
                 throw new ArgumentNullException(nameof(messageTemplate));
 
-            var tokens = (messageTemplate.Length == 0) ? new[] { new TextToken(string.Empty, 0) } : Tokenize(messageTemplate).ToArray();
+            var tokens = (messageTemplate.Length == 0) ? new[] { TextToken.Empty } : Tokenize(messageTemplate).ToArray();
             return new MessageTemplate(messageTemplate, tokens);
         }
 
@@ -62,7 +62,7 @@ namespace Serilog.Parsing
                     }
                     else
                     {
-                        tokens.Add( new PropertyToken(data, data, "", null, Destructuring.Default, 0) );
+                        tokens.Add( new PropertyToken(data, data, "", null, Destructuring.Default, a.Index) );
                     }
                 }
                 else
@@ -107,7 +107,7 @@ namespace Serilog.Parsing
             _lastIsToken = false;
         }
 
-        public TokenInfo Current => new TokenInfo(_sequence.Slice(_offset, _index), _lastIsToken);
+        public TokenInfo Current => new TokenInfo(_sequence.Slice(_offset, _index), _lastIsToken, _offset);
 
         public bool MoveNext()
         {
@@ -141,10 +141,13 @@ namespace Serilog.Parsing
             public ReadOnlySpan<char> Data { get; }
             public bool IsToken { get; }
 
-            internal TokenInfo(ReadOnlySpan<char> data, bool isToken)
+            public int Index { get; }
+
+            internal TokenInfo(ReadOnlySpan<char> data, bool isToken, int index)
             {
                 this.Data = data;
                 this.IsToken = isToken;
+                this.Index = index;
             }
         }
     }

@@ -41,7 +41,7 @@ namespace Serilog.Parsing
             if (messageTemplate == null)
                 throw new ArgumentNullException(nameof(messageTemplate));
 
-            var tokens = messageTemplate.Length == 0 ? new[] { new TextToken(string.Empty, 0) } : Tokenize(messageTemplate.AsMemory());
+            var tokens = messageTemplate.Length == 0 ? new[] { TextToken.Empty } : Tokenize(messageTemplate.AsMemory());
             return new MessageTemplate(messageTemplate, tokens);
         }
 

@@ -26,6 +26,11 @@ namespace Serilog.Parsing
     public sealed class TextToken : MessageTemplateToken
     {
         /// <summary>
+        /// E reference for a Empty TextToken
+        /// </summary>
+        public static TextToken Empty { get; } = new TextToken(string.Empty, 0);
+
+        /// <summary>
         /// Construct a <see cref="TextToken"/>.
         /// </summary>
         /// <param name="text">The text of the token.</param>
