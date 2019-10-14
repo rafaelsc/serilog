@@ -181,45 +181,53 @@ namespace Serilog.Tests.Parsing
             var prop1 = (PropertyToken)Parse("{Hello,-5:000}").Single();
             Assert.Equal("Hello", prop1.PropertyName);
             Assert.Equal("{Hello,-5:000}", prop1.RawText);
+            Assert.Equal("000", prop1.Format);
             Assert.Equal(new Alignment(AlignmentDirection.Left, 5), prop1.Alignment);
 
             var prop2 = (PropertyToken)Parse("{Hello,-50:000}").Single();
             Assert.Equal("Hello", prop2.PropertyName);
             Assert.Equal("{Hello,-50:000}", prop2.RawText);
+            Assert.Equal("000", prop2.Format);
             Assert.Equal(new Alignment(AlignmentDirection.Left, 50), prop2.Alignment);
 
             var prop3 = (PropertyToken)Parse("{Hello,5:000}").Single();
             Assert.Equal("Hello", prop3.PropertyName);
             Assert.Equal("{Hello,5:000}", prop3.RawText);
+            Assert.Equal("000", prop3.Format);
             Assert.Equal(new Alignment(AlignmentDirection.Right, 5), prop3.Alignment);
 
             var prop4 = (PropertyToken)Parse("{Hello,50:000}").Single();
             Assert.Equal("Hello", prop4.PropertyName);
             Assert.Equal("{Hello,50:000}", prop4.RawText);
+            Assert.Equal("000", prop4.Format);
             Assert.Equal(new Alignment(AlignmentDirection.Right, 50), prop4.Alignment);
         }
 
         [Fact]
-        public void FormatInFrontOfAlignmentWillHaveTheAlignmentIgnored()
+        public void FormatInFrontOfAlignmentWillHaveTheAlignmentBeConsidredPartOfTheFormat()
         {
             var prop1 = (PropertyToken)Parse("{Hello:000,-5}").Single();
             Assert.Equal("Hello", prop1.PropertyName);
             Assert.Equal("{Hello:000,-5}", prop1.RawText);
+            Assert.Equal("000,-5", prop1.Format);
             Assert.Null(prop1.Alignment);
 
             var prop2 = (PropertyToken)Parse("{Hello:000,-50}").Single();
             Assert.Equal("Hello", prop2.PropertyName);
             Assert.Equal("{Hello:000,-50}", prop2.RawText);
+            Assert.Equal("000, -50", prop2.Format);
             Assert.Null(prop2.Alignment);
 
             var prop3 = (PropertyToken)Parse("{Hello:000,5}").Single();
             Assert.Equal("Hello", prop3.PropertyName);
             Assert.Equal("{Hello:000,5}", prop3.RawText);
+            Assert.Equal("000,5", prop3.Format);
             Assert.Null(prop3.Alignment);
 
             var prop4 = (PropertyToken)Parse("{Hello:000,50}").Single();
             Assert.Equal("Hello", prop4.PropertyName);
             Assert.Equal("{Hello:000,50}", prop4.RawText);
+            Assert.Equal("000,50", prop4.Format);
             Assert.Null(prop4.Alignment);
         }
 
