@@ -36,6 +36,14 @@ namespace Serilog.Tests.Parsing
         }
 
         [Fact]
+        public void AnEmptyPropertyIsIsParsedAsText()
+        {
+            var t = Parse("{}").SingleOrDefault();
+            Assert.IsType<TextToken>(t);
+            Assert.Equal("{}", ((TextToken)t).Text);
+        }
+
+        [Fact]
         public void AMessageWithoutPropertiesIsASingleTextToken()
         {
             AssertParsedAs("Hello, world!",
@@ -137,7 +145,6 @@ namespace Serilog.Tests.Parsing
             var parsed = (PropertyToken)Parse("{Time:hh:mm}").Single();
             Assert.Equal("hh:mm", parsed.Format);
         }
-
 
         [Fact]
         public void PropertiesCanHaveLeftAlignment()
@@ -312,7 +319,6 @@ namespace Serilog.Tests.Parsing
             var parser = new MessageTemplateParser();
             parser.Parse("{,,}");
         }
-
 
     }
 }
