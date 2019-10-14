@@ -1,4 +1,5 @@
-﻿using Serilog.Parsing;
+﻿using System;
+using Serilog.Parsing;
 using System.Linq;
 using Xunit;
 
@@ -18,6 +19,12 @@ namespace Serilog.Tests.Parsing
             Assert.Equal(
                 parsed,
                 messageTemplateTokens);
+        }
+
+        [Fact]
+        public void ANullMessageIsAException()
+        {
+            Assert.Throws<ArgumentNullException>(() => Parse(null));
         }
 
         [Fact]
@@ -131,6 +138,84 @@ namespace Serilog.Tests.Parsing
             Assert.Equal("hh:mm", parsed.Format);
         }
 
+
+        [Fact]
+        public void PropertiesCanHaveLeftAlignment()
+        {
+            var prop1 = (PropertyToken)Parse("{Hello,-5}").Single();
+            Assert.Equal("Hello", prop1.PropertyName);
+            Assert.Equal("{Hello,-5}", prop1.RawText);
+            Assert.Equal(new Alignment(AlignmentDirection.Left, 5), prop1.Alignment);
+
+            var prop2 = (PropertyToken)Parse("{Hello,-50}").Single();
+            Assert.Equal("Hello", prop2.PropertyName);
+            Assert.Equal("{Hello,-50}", prop2.RawText);
+            Assert.Equal(new Alignment(AlignmentDirection.Left, 50), prop2.Alignment);
+        }
+
+        [Fact]
+        public void PropertiesCanRightAlignment()
+        {
+            var prop1 = (PropertyToken)Parse("{Hello,5}").Single();
+            Assert.Equal("Hello", prop1.PropertyName);
+            Assert.Equal("{Hello,5}", prop1.RawText);
+            Assert.Equal(new Alignment(AlignmentDirection.Right, 5), prop1.Alignment);
+
+            var prop2 = (PropertyToken)Parse("{Hello,50}").Single();
+            Assert.Equal("Hello", prop2.PropertyName);
+            Assert.Equal("{Hello,50}", prop2.RawText);
+            Assert.Equal(new Alignment(AlignmentDirection.Right, 50), prop2.Alignment);
+        }
+
+
+        [Fact]
+        public void PropertiesCanHaveAlignmentAndFormat()
+        {
+            var prop1 = (PropertyToken)Parse("{Hello,-5:000}").Single();
+            Assert.Equal("Hello", prop1.PropertyName);
+            Assert.Equal("{Hello,-5:000}", prop1.RawText);
+            Assert.Equal(new Alignment(AlignmentDirection.Left, 5), prop1.Alignment);
+
+            var prop2 = (PropertyToken)Parse("{Hello,-50:000}").Single();
+            Assert.Equal("Hello", prop2.PropertyName);
+            Assert.Equal("{Hello,-50:000}", prop2.RawText);
+            Assert.Equal(new Alignment(AlignmentDirection.Left, 50), prop2.Alignment);
+
+            var prop3 = (PropertyToken)Parse("{Hello,5:000}").Single();
+            Assert.Equal("Hello", prop3.PropertyName);
+            Assert.Equal("{Hello,5:000}", prop3.RawText);
+            Assert.Equal(new Alignment(AlignmentDirection.Right, 5), prop3.Alignment);
+
+            var prop4 = (PropertyToken)Parse("{Hello,50:000}").Single();
+            Assert.Equal("Hello", prop4.PropertyName);
+            Assert.Equal("{Hello,50:000}", prop4.RawText);
+            Assert.Equal(new Alignment(AlignmentDirection.Right, 50), prop4.Alignment);
+        }
+
+        [Fact]
+        public void FormatInFrontOfAlignmentWillHaveTheAlignmentIgnored()
+        {
+            var prop1 = (PropertyToken)Parse("{Hello:000,-5}").Single();
+            Assert.Equal("Hello", prop1.PropertyName);
+            Assert.Equal("{Hello:000,-5}", prop1.RawText);
+            Assert.Null(prop1.Alignment);
+
+            var prop2 = (PropertyToken)Parse("{Hello:000,-50}").Single();
+            Assert.Equal("Hello", prop2.PropertyName);
+            Assert.Equal("{Hello:000,-50}", prop2.RawText);
+            Assert.Null(prop2.Alignment);
+
+            var prop3 = (PropertyToken)Parse("{Hello:000,5}").Single();
+            Assert.Equal("Hello", prop3.PropertyName);
+            Assert.Equal("{Hello:000,5}", prop3.RawText);
+            Assert.Null(prop3.Alignment);
+
+            var prop4 = (PropertyToken)Parse("{Hello:000,50}").Single();
+            Assert.Equal("Hello", prop4.PropertyName);
+            Assert.Equal("{Hello:000,50}", prop4.RawText);
+            Assert.Null(prop4.Alignment);
+        }
+
         [Fact]
         public void ZeroValuesAlignmentIsParsedAsText()
         {
@@ -227,5 +312,7 @@ namespace Serilog.Tests.Parsing
             var parser = new MessageTemplateParser();
             parser.Parse("{,,}");
         }
+
+
     }
 }
