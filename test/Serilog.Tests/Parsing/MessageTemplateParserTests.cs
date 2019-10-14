@@ -215,7 +215,7 @@ namespace Serilog.Tests.Parsing
             var prop2 = (PropertyToken)Parse("{Hello:000,-50}").Single();
             Assert.Equal("Hello", prop2.PropertyName);
             Assert.Equal("{Hello:000,-50}", prop2.RawText);
-            Assert.Equal("000, -50", prop2.Format);
+            Assert.Equal("000,-50", prop2.Format);
             Assert.Null(prop2.Alignment);
 
             var prop3 = (PropertyToken)Parse("{Hello:000,5}").Single();
