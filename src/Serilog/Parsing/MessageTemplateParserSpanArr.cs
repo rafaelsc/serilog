@@ -48,12 +48,13 @@ namespace Serilog.Parsing
         static MessageTemplateToken[] Tokenize(in ReadOnlySpan<char> messageTemplate)
         {
             var tokens = new List<MessageTemplateToken>();
+            var reusableAccumInstance = new StringBuilder();
 
             var nextIndex = 0;
             while (true)
             {
                 var beforeText = nextIndex;
-                var tt = ParseTextToken(nextIndex, messageTemplate, out nextIndex);
+                var tt = ParseTextToken(nextIndex, messageTemplate, out nextIndex, reusableAccumInstance);
                 if (nextIndex > beforeText)
                     tokens.Add(tt);
 
@@ -240,11 +241,13 @@ namespace Serilog.Parsing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static TextToken ParseTextToken(int startAt, in ReadOnlySpan<char> messageTemplate, out int next)
+        static TextToken ParseTextToken(int startAt, in ReadOnlySpan<char> messageTemplate, out int next, StringBuilder reusableAccumInstance)
         {
             var first = startAt;
 
-            var accum = new StringBuilder();
+            reusableAccumInstance.Clear();
+            var accum = reusableAccumInstance;
+
             do
             {
                 var nc = messageTemplate[startAt];
