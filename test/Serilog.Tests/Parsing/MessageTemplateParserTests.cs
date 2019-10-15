@@ -33,14 +33,26 @@ namespace Serilog.Tests.Parsing
             var t = Parse("");
             Assert.Single(t);
             Assert.IsType<TextToken>(t.Single());
+
+            var tt = t.Single() as TextToken;
+            Assert.Equal("", tt.Text);
+            Assert.Equal("", tt.ToString());
+            Assert.Equal(0, tt.StartIndex);
+            Assert.Equal(0, tt.Length);
         }
 
         [Fact]
         public void AnEmptyPropertyIsIsParsedAsText()
         {
             var t = Parse("{}").SingleOrDefault();
+            Assert.NotNull(t);
             Assert.IsType<TextToken>(t);
-            Assert.Equal("{}", ((TextToken)t).Text);
+            
+            var tt = t as TextToken;
+            Assert.Equal("{}", tt.Text);
+            Assert.Equal("{}", tt.ToString());
+            Assert.Equal(0, tt.StartIndex);
+            Assert.Equal(2, tt.Length);
         }
 
         [Fact]
@@ -112,6 +124,8 @@ namespace Serilog.Tests.Parsing
         {
             var parsed = (PropertyToken)Parse("{0}").Single();
             Assert.Equal("0", parsed.PropertyName);
+            Assert.Equal("{0}", parsed.RawText);
+            Assert.Equal(parsed.RawText, parsed.ToString());
             Assert.True(parsed.IsPositional);
         }
 
@@ -122,21 +136,60 @@ namespace Serilog.Tests.Parsing
 
             var prop1 = (PropertyToken)parsed[0];
             Assert.Equal("0", prop1.PropertyName);
+            Assert.Equal("{0}", prop1.RawText);
             Assert.True(prop1.IsPositional);
-
+            Assert.Equal(0, prop1.StartIndex);
+            Assert.Equal(3, prop1.Length);
+            
             var prop2 = (TextToken)parsed[1];
             Assert.Equal(", ", prop2.Text);
+            Assert.Equal(3, prop2.StartIndex);
+            Assert.Equal(2, prop2.Length);
 
             var prop3 = (PropertyToken)parsed[2];
             Assert.Equal("1", prop3.PropertyName);
+            Assert.Equal("{1}", prop3.RawText);
             Assert.True(prop3.IsPositional);
-
+            Assert.Equal(5, prop3.StartIndex);
+            Assert.Equal(3, prop3.Length);
+            
             var prop4 = (TextToken)parsed[3];
             Assert.Equal(", ", prop4.Text);
+            Assert.Equal(8, prop4.StartIndex);
+            Assert.Equal(2, prop4.Length);
 
             var prop5 = (PropertyToken)parsed[4];
             Assert.Equal("2", prop5.PropertyName);
+            Assert.Equal("{2}", prop5.RawText);
             Assert.True(prop5.IsPositional);
+            Assert.Equal(10, prop5.StartIndex);
+            Assert.Equal(3, prop5.Length);
+        }
+
+
+        [Fact]
+        public void InvalidIntegerPropertyNameIsParsedAsText()
+        {
+            var parsed = Parse("{-1}{-0}{0}{1}{3.1415}");
+
+            var prop1 = (TextToken)parsed[0];
+            Assert.Equal("{-1}", prop1.Text);
+
+            var prop2 = (TextToken)parsed[1];
+            Assert.Equal("{-0}", prop2.Text);
+
+            var prop3 = (PropertyToken)parsed[2];
+            Assert.Equal("0", prop3.PropertyName);
+            Assert.Equal("{0}", prop3.RawText);
+            Assert.True(prop3.IsPositional);
+
+            var prop4 = (PropertyToken)parsed[3];
+            Assert.Equal("1", prop4.PropertyName);
+            Assert.Equal("{1}", prop4.RawText);
+            Assert.True(prop4.IsPositional);
+
+            var prop5 = (TextToken)parsed[4];
+            Assert.Equal("{3.1415}", prop5.Text);
         }
 
         [Fact]
@@ -328,5 +381,18 @@ namespace Serilog.Tests.Parsing
             parser.Parse("{,,}");
         }
 
+        [Fact]
+        public void FormatCanContainMultipleSections()
+        {
+            var parsed = (PropertyToken)Parse("{Number:##.0;-##.0;zero}").Single();
+            Assert.Equal("##.0;-##.0;zero", parsed.Format);
+        }
+
+        [Fact]
+        public void FormatCanContainPlusSign()
+        {
+            var parsed = (PropertyToken)Parse("{Number:+##.0}").Single();
+            Assert.Equal("+##.0", parsed.Format);
+        }
     }
 }
