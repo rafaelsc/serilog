@@ -296,7 +296,7 @@ namespace Serilog.Parsing
         static bool IsValidInAlignment(char c) => c == '-' || char.IsDigit(c);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static bool IsValidInFormat(char c) => c != '}' && (c == ' ' || char.IsLetterOrDigit(c) || char.IsPunctuation(c));
+        static bool IsValidInFormat(char c) => c != '}' && (c == ' ' || c == '+' || char.IsLetterOrDigit(c) || char.IsPunctuation(c));
 
     }
 }
