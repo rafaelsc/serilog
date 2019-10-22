@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Serilog.Core;
 using Serilog.Events;
 
@@ -45,110 +46,133 @@ namespace Serilog.Parsing
 
         static IEnumerable<MessageTemplateToken> Tokenize(string messageTemplate)
         {
-            var tokens = new List<MessageTemplateToken>();
+            var results = new List<MessageTemplateToken> ();
 
-            var isAProp = false;
-            var enumerator = messageTemplate.AsSpan().Tokenization("{}");
-            while (enumerator.MoveNext())
+            var lastState = States.Text;
+            var currentState = States.Text;
+
+            char lastChar = default;
+            int lastTokenStartIndex = 0;
+            int currentIndex = 0;
+            bool nextChatStartANewToken = true;
+
+            var allTextSpan = messageTemplate.AsSpan();
+            foreach (var c in allTextSpan)
             {
-                var a = enumerator.Current;
-                var data = a.Data.ToString();
-
-                if (a.IsToken == false)
+                switch (c)
                 {
-                    if (isAProp)
-                    {
-                        tokens.Add( new TextToken(data, 0) );
-                    }
-                    else
-                    {
-                        tokens.Add( new PropertyToken(data, data, "", null, Destructuring.Default, a.Index) );
-                    }
+                    case '{' when EnumFastHasFlag(currentState, States.PropertyStart) && lastChar == '{': ChangeState(States.Text | States.EscapeOpenBrakets); nextChatStartANewToken = false; break;
+                    case '{' when EnumFastHasFlag(currentState, States.Text): ChangeState(States.PropertyStart); nextChatStartANewToken = true; break;
+
+                    case '}' when lastChar == '}': ChangeState(currentState | States.EscapeCloseBrakets); break;
+                    case '}' when !EnumFastHasFlag(currentState, States.Text): nextChatStartANewToken = true; ChangeState(currentState | States.PropertyEnd); break;
                 }
-                else
+
+                //Validate Token
+                //		if (currentState.HasFlag(States.PropertyStart))
+                //		{
+                //			if(!IsValidInPropertyTag(c))
+                //			{
+                //				ChangeState(currentState | States.Invalid);
+                //			}
+                //		}
+
+                if (nextChatStartANewToken && lastChar == '{')
                 {
-                    if (a.Data[0] == '{')
-                    {
-                        isAProp = true;
-                    }
-                    else if (a.Data[0] == '}')
-                    {
-                        isAProp = false;
-                    }
+                    ProcessLastToken(allTextSpan.Slice(lastTokenStartIndex, currentIndex - lastTokenStartIndex - 1));
+                    lastTokenStartIndex = currentIndex - 1;
+                    nextChatStartANewToken = false;
+                }
+                if (nextChatStartANewToken && lastChar == '}')
+                {
+                    ChangeState(States.Text);
+                    nextChatStartANewToken = false;
+                }
+                if (nextChatStartANewToken && EnumFastHasFlag(currentState, States.PropertyEnd))
+                {
+                    ChangeState(States.Text);
+                    ProcessLastToken(allTextSpan.Slice(lastTokenStartIndex, currentIndex - lastTokenStartIndex + 1));
+                    lastTokenStartIndex++;
+                    nextChatStartANewToken = false;
+                }
+
+                //ProcessLastToken(allTextSpan.Slice(lastTokenStartIndex, currentIndex-lastTokenStartIndex));
+
+                switch (c)
+                {
+                    case '@' when EnumFastHasFlag(currentState, States.PropertyStart) && lastChar == '{' && !EnumFastHasFlag(currentState, States.PropertyEnd): ChangeState(currentState | States.WithDestructuringDestructure); break;
+                    case '@' when EnumFastHasFlag(currentState, States.PropertyStart) && !EnumFastHasFlag(currentState, States.PropertyEnd): ChangeState(currentState | States.Invalid); break;
+
+                    case '$' when EnumFastHasFlag(currentState, States.PropertyStart) && lastChar == '{' && !EnumFastHasFlag(currentState, States.PropertyEnd): ChangeState(currentState | States.WithDestructuringStringify); break;
+                    case '$' when EnumFastHasFlag(currentState, States.PropertyStart) && !EnumFastHasFlag(currentState, States.PropertyEnd): ChangeState(currentState | States.Invalid); break;
+
+                    case ',' when EnumFastHasFlag(currentState, States.PropertyStart) && !EnumFastHasFlag(currentState, States.PropertyEnd): ChangeState(currentState | States.WithAlignment); break;
+                    case ':' when EnumFastHasFlag(currentState, States.PropertyStart) && !EnumFastHasFlag(currentState, States.PropertyEnd): ChangeState(currentState | States.WithFormat); break;
+                }
+
+                lastChar = c;
+                currentIndex++;
+                //new { Data = c, currentState}.Dump("Debug");
+            }
+
+            lastState = currentState;
+            ProcessLastToken(allTextSpan.Slice(lastTokenStartIndex, currentIndex - lastTokenStartIndex));
+
+            return results;
+
+            void ChangeState(States newState)
+            {
+                lastState = currentState;
+                currentState = newState;
+            }
+
+            string ProcessText(ReadOnlySpan<char> span)
+            {
+                var str = span.ToString();
+                if (EnumFastHasFlag(currentState, States.EscapeOpenBrakets))
+                    str = str.Replace("{{", "{");
+                if (EnumFastHasFlag(currentState, States.EscapeCloseBrakets))
+                    str = str.Replace("}}", "}");
+                return str;
+            }
+
+            void ProcessLastToken(ReadOnlySpan<char> span)
+            {
+                if (EnumFastHasFlag(lastState, States.Invalid) || EnumFastHasFlag(lastState, States.Text))
+                {
+                    results.Add(new TextToken(ProcessText(span), lastTokenStartIndex));
+
+                    lastTokenStartIndex = currentIndex;
+                    return;
+                }
+
+                if (EnumFastHasFlag(lastState, States.PropertyStart) && EnumFastHasFlag(lastState, States.PropertyEnd))
+                {
+                    results.Add(new PropertyToken(ProcessText(span), "", null, null, Destructuring.Default, lastTokenStartIndex));
+
+                    lastTokenStartIndex = currentIndex;
+                    return;
                 }
             }
-
-            return tokens;
         }
-    }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool EnumFastHasFlag(States @enum, States flag) => ((@enum & flag) == flag);
 
-    internal static class MemoryExtensions
-    {
-        public static SpanSplitEnumerator<string> Tokenization(this ReadOnlySpan<char> span, string separator) => new SpanSplitEnumerator<string>(span, separator.AsSpan());
-    }
-
-    internal ref struct SpanSplitEnumerator<T> where T : IEquatable<T>
-    {
-        private readonly ReadOnlySpan<char> _sequence;
-        private readonly ReadOnlySpan<char> _separator;
-        private int _offset;
-        private int _index;
-        private bool _lastIsToken;
-
-        public SpanSplitEnumerator<T> GetEnumerator() => this;
-
-        internal SpanSplitEnumerator(ReadOnlySpan<char> span, ReadOnlySpan<char> separator)
+        [Flags]
+        enum States
         {
-            _sequence = span;
-            _separator = separator;
-            _index = 0;
-            _offset = 0;
-            _lastIsToken = false;
+            Invalid = 1,
+            Text = 1 << 1,
+            PropertyStart = 1 << 2,
+            WithDestructuringDestructure = 1 << 3,
+            WithDestructuringStringify = 1 << 4,
+            WithAlignment = 1 << 5,
+            WithFormat = 1 << 6,
+            EscapeOpenBrakets = 1 << 7,
+            EscapeCloseBrakets = 1 << 8,
+            PropertyEnd = 1 << 9,
         }
 
-        public TokenInfo Current => new TokenInfo(_sequence.Slice(_offset, _index), _lastIsToken, _offset);
-
-        public bool MoveNext()
-        {
-            if (_sequence.Length - _offset < _index) { return false; }
-            var slice = _sequence.Slice(_offset += _index);
-
-            if (slice.IsEmpty) { return false; }
-
-            var nextIdx = slice.IndexOfAny<char>(_separator);
-            if (nextIdx == 0)
-            {
-                _index = nextIdx + 1;
-                _lastIsToken = true;
-            }
-            else if (nextIdx != -1)
-            {
-                _index = nextIdx;
-                _lastIsToken = false;
-            }
-            else
-            {
-                _index = slice.Length;
-                _lastIsToken = false;
-            }
-
-            return true;
-        }
-
-        internal ref struct TokenInfo
-        {
-            public ReadOnlySpan<char> Data { get; }
-            public bool IsToken { get; }
-
-            public int Index { get; }
-
-            internal TokenInfo(ReadOnlySpan<char> data, bool isToken, int index)
-            {
-                this.Data = data;
-                this.IsToken = isToken;
-                this.Index = index;
-            }
-        }
     }
 }
