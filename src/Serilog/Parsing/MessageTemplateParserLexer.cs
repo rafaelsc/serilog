@@ -112,7 +112,6 @@ namespace Serilog.Parsing
 
                 lastChar = c;
                 currentIndex++;
-                //new { Data = c, currentState}.Dump("Debug");
             }
 
             lastState = currentState;
