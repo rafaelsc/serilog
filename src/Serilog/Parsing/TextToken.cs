@@ -28,7 +28,7 @@ namespace Serilog.Parsing
         /// <summary>
         /// E reference for a Empty TextToken
         /// </summary>
-        public static TextToken Empty { get; } = new TextToken(string.Empty);
+        public static TextToken Empty { get; } = new TextToken(string.Empty, 0);
 
         /// <summary>
         /// Construct a <see cref="TextToken"/>.

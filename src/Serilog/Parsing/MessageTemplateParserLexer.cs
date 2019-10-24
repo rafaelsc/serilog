@@ -68,24 +68,10 @@ namespace Serilog.Parsing
                     case '}' when !EnumFastHasFlag(currentState, States.Text): nextChatStartANewToken = true; ChangeState(currentState | States.PropertyEnd); break;
                 }
 
-                //Validate Token
-                //		if (currentState.HasFlag(States.PropertyStart))
-                //		{
-                //			if(!IsValidInPropertyTag(c))
-                //			{
-                //				ChangeState(currentState | States.Invalid);
-                //			}
-                //		}
-
                 if (nextChatStartANewToken && lastChar == '{')
                 {
                     ProcessLastToken(allTextSpan.Slice(lastTokenStartIndex, currentIndex - lastTokenStartIndex - 1));
                     lastTokenStartIndex = currentIndex - 1;
-                    nextChatStartANewToken = false;
-                }
-                if (nextChatStartANewToken && lastChar == '}')
-                {
-                    ChangeState(States.Text);
                     nextChatStartANewToken = false;
                 }
                 if (nextChatStartANewToken && EnumFastHasFlag(currentState, States.PropertyEnd))
@@ -95,8 +81,6 @@ namespace Serilog.Parsing
                     lastTokenStartIndex++;
                     nextChatStartANewToken = false;
                 }
-
-                //ProcessLastToken(allTextSpan.Slice(lastTokenStartIndex, currentIndex-lastTokenStartIndex));
 
                 switch (c)
                 {
@@ -110,10 +94,23 @@ namespace Serilog.Parsing
                     case ':' when EnumFastHasFlag(currentState, States.PropertyStart) && !EnumFastHasFlag(currentState, States.PropertyEnd): ChangeState(currentState | States.WithFormat); break;
                 }
 
+                //Validate Token
+                if (EnumFastHasFlag(currentState, States.PropertyStart))
+                {
+                    if (!IsValidInPropertyTag(c))
+                    {
+                        ChangeState(currentState | States.Invalid);
+                    }
+                }
+
                 lastChar = c;
                 currentIndex++;
             }
 
+            if (EnumFastHasFlag(currentState, States.PropertyStart) && !EnumFastHasFlag(currentState, States.PropertyEnd))
+            {
+                ChangeState(currentState | States.Invalid);
+            }
             lastState = currentState;
             ProcessLastToken(allTextSpan.Slice(lastTokenStartIndex, currentIndex - lastTokenStartIndex));
 
@@ -137,6 +134,9 @@ namespace Serilog.Parsing
 
             void ProcessLastToken(ReadOnlySpan<char> span)
             {
+                if (span.IsEmpty)
+                    return;
+
                 if (EnumFastHasFlag(lastState, States.Invalid) || EnumFastHasFlag(lastState, States.Text))
                 {
                     results.Add(new TextToken(ProcessText(span), lastTokenStartIndex));
@@ -147,13 +147,28 @@ namespace Serilog.Parsing
 
                 if (EnumFastHasFlag(lastState, States.PropertyStart) && EnumFastHasFlag(lastState, States.PropertyEnd))
                 {
-                    results.Add(new PropertyToken(ProcessText(span), "", null, null, Destructuring.Default, lastTokenStartIndex));
+                    results.Add(new PropertyToken(span.Slice(1, span.Length - 2).ToString(), span.ToString(), null, null, Destructuring.Default, lastTokenStartIndex));
 
                     lastTokenStartIndex = currentIndex;
                     return;
                 }
             }
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool IsValidInPropertyTag(char c) => c == ':' || IsValidInDestructuringHint(c) || IsValidInPropertyName(c) || IsValidInFormat(c);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool IsValidInPropertyName(char c) => c == '_' || char.IsLetterOrDigit(c);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool IsValidInDestructuringHint(char c) => c == '@' || c == '$';
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool IsValidInAlignment(char c) => c == '-' || char.IsDigit(c);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool IsValidInFormat(char c) => c != '}' && (c == ' ' || c == '+' || char.IsLetterOrDigit(c) || char.IsPunctuation(c));
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool EnumFastHasFlag(States @enum, States flag) => ((@enum & flag) == flag);
