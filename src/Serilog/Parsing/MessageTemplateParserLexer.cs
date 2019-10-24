@@ -40,11 +40,11 @@ namespace Serilog.Parsing
             if (messageTemplate == null)
                 throw new ArgumentNullException(nameof(messageTemplate));
 
-            var tokens = (messageTemplate.Length == 0) ? new[] { TextToken.Empty } : Tokenize(messageTemplate).ToArray();
+            var tokens = (messageTemplate.Length == 0) ? new[] { TextToken.Empty } : Tokenize(messageTemplate);
             return new MessageTemplate(messageTemplate, tokens);
         }
 
-        static IEnumerable<MessageTemplateToken> Tokenize(string messageTemplate)
+        static MessageTemplateToken[] Tokenize(string messageTemplate)
         {
             var results = new List<MessageTemplateToken> ();
 
@@ -114,7 +114,7 @@ namespace Serilog.Parsing
             lastState = currentState;
             ProcessLastToken(allTextSpan.Slice(lastTokenStartIndex, currentIndex - lastTokenStartIndex));
 
-            return results;
+            return results.ToArray();
 
             void ChangeState(States newState)
             {
