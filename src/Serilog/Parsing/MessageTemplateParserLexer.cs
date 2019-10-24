@@ -97,7 +97,20 @@ namespace Serilog.Parsing
                 //Validate Token
                 if (EnumFastHasFlag(currentState, States.PropertyStart))
                 {
-                    if (!IsValidInPropertyTag(c))
+                    //IsValidInPropertyName
+                    //IsValidInDestructuringHint
+                    //IsValidInAlignment
+                    //IsValidInFormat
+
+                    if (!EnumFastHasFlag(currentState, States.WithAlignment) && !EnumFastHasFlag(currentState, States.WithFormat)  && !IsValidInPropertyName(c))
+                    {
+                        ChangeState(currentState | States.Invalid);
+                    }
+                    else if (!EnumFastHasFlag(currentState, States.WithAlignment) && EnumFastHasFlag(currentState, States.WithFormat) && !IsValidInFormat(c))
+                    {
+                        ChangeState(currentState | States.Invalid);
+                    }
+                    else if (EnumFastHasFlag(currentState, States.WithAlignment) && !EnumFastHasFlag(currentState, States.WithFormat) && !IsValidInAlignment(c))
                     {
                         ChangeState(currentState | States.Invalid);
                     }
