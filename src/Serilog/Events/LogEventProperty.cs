@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2015 Serilog Contributors
+// Copyright 2013-2015 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -77,5 +77,31 @@ namespace Serilog.Events
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (!IsValidName(name)) throw new ArgumentException($"Property {nameof(name)} must not be empty or whitespace.", nameof(name));
         }
+
+        public void Deconstruct(out string name, out LogEventPropertyValue value)
+        {
+            name = Name;
+            value = Value;
+        }
+
+        public virtual bool Equals(LogEventProperty other) => Name == other.Name && Equals(Value, other.Value);
+
+        /// <inheritdoc />
+        public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is LogEventProperty other && Equals(other);
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ (Value != null ? Value.GetHashCode() : 0);
+            }
+        }
+
+        /// <inheritdoc />
+        public static bool operator ==(LogEventProperty left, LogEventProperty right) => Equals(left, right);
+
+        /// <inheritdoc />
+        public static bool operator !=(LogEventProperty left, LogEventProperty right) => !Equals(left, right);
     }
 }

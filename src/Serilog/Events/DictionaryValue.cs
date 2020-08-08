@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2015 Serilog Contributors
+// Copyright 2013-2015 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -67,5 +67,24 @@ namespace Serilog.Events
 
             output.Write(']');
         }
+
+        public void Deconstruct(out IReadOnlyDictionary<ScalarValue, LogEventPropertyValue> elements)
+        {
+            elements = Elements;
+        }
+
+        public virtual bool Equals(DictionaryValue other) => Equals(Elements, other.Elements);
+
+        /// <inheritdoc />
+        public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is DictionaryValue other && Equals(other);
+
+        /// <inheritdoc />
+        public override int GetHashCode() => (Elements != null ? Elements.GetHashCode() : 0);
+
+        /// <inheritdoc />
+        public static bool operator ==(DictionaryValue left, DictionaryValue right) => Equals(left, right);
+
+        /// <inheritdoc />
+        public static bool operator !=(DictionaryValue left, DictionaryValue right) => !Equals(left, right);
     }
 }

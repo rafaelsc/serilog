@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2015 Serilog Contributors
+// Copyright 2013-2015 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -189,5 +189,42 @@ namespace Serilog.Events
                 MessageTemplate,
                 properties);
         }
+
+        public void Deconstruct(out DateTimeOffset timestamp, out LogEventLevel level, out MessageTemplate messageTemplate, out IReadOnlyDictionary<string, LogEventPropertyValue> properties, out Exception exception)
+        {
+            timestamp = Timestamp;
+            level = Level;
+            messageTemplate = MessageTemplate;
+            properties = Properties;
+            exception = Exception;
+        }
+
+        public virtual bool Equals(LogEvent other)
+        {
+            return Equals(Properties, other.Properties) && Timestamp.Equals(other.Timestamp) && Level == other.Level && Equals(MessageTemplate, other.MessageTemplate) && Equals(Exception, other.Exception);
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is LogEvent other && Equals(other);
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (Properties != null ? Properties.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Timestamp.GetHashCode();
+                hashCode = (hashCode * 397) ^ (int) Level;
+                hashCode = (hashCode * 397) ^ (MessageTemplate != null ? MessageTemplate.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Exception != null ? Exception.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
+
+        /// <inheritdoc />
+        public static bool operator ==(LogEvent left, LogEvent right) => Equals(left, right);
+
+        /// <inheritdoc />
+        public static bool operator !=(LogEvent left, LogEvent right) => !Equals(left, right);
     }
 }

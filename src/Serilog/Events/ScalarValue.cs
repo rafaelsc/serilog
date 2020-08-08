@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2015 Serilog Contributors
+// Copyright 2013-2015 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -97,24 +97,30 @@ namespace Serilog.Events
             }
         }
 
-        /// <summary>
-        /// Determine if this instance is equal to <paramref name="obj"/>.
-        /// </summary>
-        /// <param name="obj">The instance to compare with.</param>
-        /// <returns>True if the instances are equal; otherwise, false.</returns>
-        public override bool Equals(object obj)
+        public void Deconstruct(out object value)
         {
-            return obj is ScalarValue sv && Equals(Value, sv.Value);
+            value = Value;
         }
 
         /// <summary>
-        /// Get a hash code representing the value.
+        /// Indicates whether this instance and a specified <see cref="ScalarValue"/> are equal.
         /// </summary>
-        /// <returns>The instance's hash code.</returns>
-        public override int GetHashCode()
-        {
-            if (Value == null) return 0;
-            return Value.GetHashCode();
-        }
+        /// <param name="other">The <see cref="ScalarValue"/> to compare with the current instance.</param>
+        /// <returns>
+        ///     <see langword="true"/> if <paramref name="other" /> and this instance represent the same value; otherwise, <see langword="false"/>.
+        /// </returns>
+        public virtual bool Equals(ScalarValue other) => Equals(Value, other.Value);
+
+        /// <inheritdoc />
+        public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is ScalarValue other && Equals(other);
+
+        /// <inheritdoc />
+        public override int GetHashCode() => (Value != null ? Value.GetHashCode() : 0);
+
+        /// <inheritdoc />
+        public static bool operator ==(ScalarValue left, ScalarValue right) => Equals(left, right);
+
+        /// <inheritdoc />
+        public static bool operator !=(ScalarValue left, ScalarValue right) => !Equals(left, right);
     }
 }

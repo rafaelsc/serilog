@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 // Copyright 2013-2015 Serilog Contributors
 //
@@ -96,5 +96,30 @@ namespace Serilog.Events
             output.Write(": ");
             property.Value.Render(output, null, formatProvider);
         }
+
+        public void Deconstruct(out LogEventProperty[] properties)
+        {
+            properties = _properties;
+        }
+
+        public virtual bool Equals(StructureValue other) => TypeTag == other.TypeTag && Equals(_properties, other._properties);
+
+        /// <inheritdoc />
+        public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is StructureValue other && Equals(other);
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((TypeTag != null ? TypeTag.GetHashCode() : 0) * 397) ^ (_properties != null ? _properties.GetHashCode() : 0);
+            }
+        }
+
+        /// <inheritdoc />
+        public static bool operator ==(StructureValue left, StructureValue right) => Equals(left, right);
+
+        /// <inheritdoc />
+        public static bool operator !=(StructureValue left, StructureValue right) => !Equals(left, right);
     }
 }
