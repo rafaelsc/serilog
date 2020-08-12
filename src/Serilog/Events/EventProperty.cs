@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Serilog Contributors
+// Copyright 2019 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ namespace Serilog.Events
         /// No property.
         /// </summary>
         public static EventProperty None = default;
-        
+
         /// <summary>
         /// The name of the property.
         /// </summary>
@@ -43,14 +43,15 @@ namespace Serilog.Events
         /// </summary>
         /// <param name="name">The name of the property.</param>
         /// <param name="value">The value of the property.</param>
-        /// <exception cref="ArgumentException"></exception>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentNullException">When <paramref name="name"/> is <code>null</code></exception>
+        /// <exception cref="ArgumentException">When <paramref name="name"/> is empty or only contains whitespace</exception>
+        /// <exception cref="ArgumentNullException">When <paramref name="value"/> is <code>null</code></exception>
         public EventProperty(string name, LogEventPropertyValue value)
         {
-            EnsureValid(name, value);
+            LogEventProperty.EnsureValidName(name);
 
             Name = name;
-            Value = value;
+            Value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
@@ -64,13 +65,6 @@ namespace Serilog.Events
             value = Value;
         }
 
-        static void EnsureValid(string name, LogEventPropertyValue value)
-        {
-            if (value == null) throw new ArgumentNullException(nameof(value));
-            if (!LogEventProperty.IsValidName(name))
-                throw new ArgumentException("Property name is not valid.", nameof(name));
-        }
-
         /// <inheritdoc />
         public override bool Equals(object obj)
         {
@@ -79,8 +73,7 @@ namespace Serilog.Events
 
         /// <summary>Indicates whether this instance and a specified <see cref="EventProperty"/> are equal.</summary>
         /// <param name="other">The <see cref="EventProperty"/> to compare with the current instance. </param>
-        /// <returns>
-        /// <see langword="true" /> if <paramref name="other" /> and this instance represent the same value; otherwise, <see langword="false" />. </returns>
+        /// <returns><see langword="true"/> if <paramref name="other" /> and this instance represent the same value; otherwise, <see langword="false"/>.</returns>
         public bool Equals(in EventProperty other)
         {
             return string.Equals(Name, other.Name) && Equals(Value, other.Value);

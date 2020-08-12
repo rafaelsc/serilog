@@ -25,11 +25,11 @@ namespace Serilog.PerformanceTests
     /// </example>
     public class Harness
     {
-        //[Fact]
-        //public void SourceContextMatch()
-        //{
-        //    BenchmarkRunner.Run<SourceContextMatchBenchmark>();
-        //}
+        [Fact]
+        public void SourceContextMatch()
+        {
+            BenchmarkRunner.Run<SourceContextMatchBenchmark>();
+        }
 
         [Fact]
         public void Allocations()
@@ -37,11 +37,11 @@ namespace Serilog.PerformanceTests
             BenchmarkRunner.Run<AllocationsBenchmark>();
         }
 
-        //[Fact]
-        //public void AllocationsIgnoringEvents()
-        //{
-        //    BenchmarkRunner.Run<AllocationsIgnoringEventsBenchmark>();
-        //}
+        [Fact]
+        public void AllocationsIgnoringEvents()
+        {
+            BenchmarkRunner.Run<AllocationsIgnoringEventsBenchmark>();
+        }
 
         [Fact]
         public void AlmostRealWorld()
@@ -49,65 +49,65 @@ namespace Serilog.PerformanceTests
             BenchmarkRunner.Run<AlmostRealWorldBenchmark>();
         }
 
-        //[Fact]
-        //public void MessageTemplateCache()
-        //{
-        //    BenchmarkRunner.Run<MessageTemplateCacheBenchmark_Cached>();
-        //    BenchmarkRunner.Run<MessageTemplateCacheBenchmark_Leaking>();
-        //}
+        [Fact]
+        public void MessageTemplateCache()
+        {
+            BenchmarkRunner.Run<MessageTemplateCacheBenchmark_Cached>();
+            BenchmarkRunner.Run<MessageTemplateCacheBenchmark_Leaking>();
+        }
 
-        //[Fact]
-        //public void LogContextEnrichment()
-        //{
-        //    BenchmarkRunner.Run<LogContextEnrichmentBenchmark>();
-        //}
+        [Fact]
+        public void LogContextEnrichment()
+        {
+            BenchmarkRunner.Run<LogContextEnrichmentBenchmark>();
+        }
 
-        //[Fact]
-        //public void MessageTemplateParsing()
-        //{
-        //    BenchmarkRunner.Run<MessageTemplateParsingBenchmark>();
-        //}
+        [Fact]
+        public void MessageTemplateParsing()
+        {
+            BenchmarkRunner.Run<MessageTemplateParsingBenchmark>();
+        }
 
-        //[Fact]
-        //public void LevelControl()
-        //{
-        //    BenchmarkRunner.Run<LevelControlBenchmark>();
-        //}
+        [Fact]
+        public void LevelControl()
+        {
+            BenchmarkRunner.Run<LevelControlBenchmark>();
+        }
 
-        //[Fact]
-        //public void NestedLoggerCreation()
-        //{
-        //    BenchmarkRunner.Run<NestedLoggerCreationBenchmark>();
-        //}
+        [Fact]
+        public void NestedLoggerCreation()
+        {
+            BenchmarkRunner.Run<NestedLoggerCreationBenchmark>();
+        }
 
-        //[Fact]
-        //public void NestedLoggerLatency()
-        //{
-        //    BenchmarkRunner.Run<NestedLoggerLatencyBenchmark>();
-        //}
+        [Fact]
+        public void NestedLoggerLatency()
+        {
+            BenchmarkRunner.Run<NestedLoggerLatencyBenchmark>();
+        }
 
-        //[Fact]
-        //public void Pipeline()
-        //{
-        //    BenchmarkRunner.Run<PipelineBenchmark>();
-        //}
+        [Fact]
+        public void Pipeline()
+        {
+            BenchmarkRunner.Run<PipelineBenchmark>();
+        }
 
-        //[Fact]
-        //public void OutputTemplateRendering()
-        //{
-        //    BenchmarkRunner.Run<OutputTemplateRenderingBenchmark>();
-        //}
+        [Fact]
+        public void OutputTemplateRendering()
+        {
+            BenchmarkRunner.Run<OutputTemplateRenderingBenchmark>();
+        }
 
-        //[Fact]
-        //public void MessageTemplateRendering()
-        //{
-        //    BenchmarkRunner.Run<MessageTemplateRenderingBenchmark>();
-        //}
+        [Fact]
+        public void MessageTemplateRendering()
+        {
+            BenchmarkRunner.Run<MessageTemplateRenderingBenchmark>();
+        }
 
-        //[Fact]
-        //public void Binding()
-        //{
-        //    BenchmarkRunner.Run<BindingBenchmark>();
-        //}
+        [Fact]
+        public void Binding()
+        {
+            BenchmarkRunner.Run<BindingBenchmark>();
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2015 Serilog Contributors
+// Copyright 2013-2015 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -114,6 +114,8 @@ namespace Serilog.Formatting.Json
         /// </summary>
         /// <param name="logEvent">The event to format.</param>
         /// <param name="output">The output.</param>
+        /// <exception cref="ArgumentNullException">When <paramref name="logEvent"/> is <code>null</code></exception>
+        /// <exception cref="ArgumentNullException">When <paramref name="output"/> is <code>null</code></exception>
         public void Format(LogEvent logEvent, TextWriter output)
         {
             if (logEvent == null) throw new ArgumentNullException(nameof(logEvent));
@@ -138,8 +140,7 @@ namespace Serilog.Formatting.Json
             if (logEvent.Properties.Count != 0)
                 WriteProperties(logEvent.Properties, output);
 
-            var tokensWithFormat = logEvent.MessageTemplate.Tokens
-                .OfType<PropertyToken>()
+            var tokensWithFormat = logEvent.MessageTemplate.AllProperties
                 .Where(pt => pt.Format != null)
                 .GroupBy(pt => pt.PropertyName)
                 .ToArray();
@@ -161,6 +162,8 @@ namespace Serilog.Formatting.Json
         /// </summary>
         /// <param name="type">The type of values, which <paramref name="writer" /> handles.</param>
         /// <param name="writer">The function, which writes the values.</param>
+        /// <exception cref="ArgumentNullException">When <paramref name="type"/> is <code>null</code></exception>
+        /// <exception cref="ArgumentNullException">When <paramref name="writer"/> is <code>null</code></exception>
         [Obsolete(ExtensionPointObsoletionMessage)]
         protected void AddLiteralWriter(Type type, Action<object, TextWriter> writer)
         {

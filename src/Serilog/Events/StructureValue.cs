@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 // Copyright 2013-2015 Serilog Contributors
 //
@@ -15,7 +15,7 @@ using System.Collections.Generic;
 // limitations under the License.
 
 using System.IO;
-using System.Linq;
+using Serilog.Support;
 
 namespace Serilog.Events
 {
@@ -30,13 +30,15 @@ namespace Serilog.Events
         /// Construct a <see cref="StructureValue"/> with the provided properties.
         /// </summary>
         /// <param name="typeTag">Optionally, a piece of metadata describing the "type" of the
-        /// structure.</param>
+        /// structure. Can be <code>null</code>.</param>
         /// <param name="properties">The properties of the structure.</param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentNullException">When <paramref name="properties"/> is <code>null</code></exception>
         public StructureValue(IEnumerable<LogEventProperty> properties, string typeTag = null)
         {
+            if (properties == null) throw new ArgumentNullException(nameof(properties));
+
             TypeTag = typeTag;
-            _properties = properties as LogEventProperty[] ?? properties?.ToArray() ?? throw new ArgumentNullException(nameof(properties));
+            _properties = properties.AsArray();
         }
 
         /// <summary>
@@ -60,6 +62,7 @@ namespace Serilog.Events
         /// <param name="format">A format string applied to the value, or null.</param>
         /// <param name="formatProvider">A format provider to apply to the value, or null to use the default.</param>
         /// <seealso cref="LogEventPropertyValue.ToString(string, IFormatProvider)"/>.
+        /// <exception cref="ArgumentNullException">When <paramref name="output"/> is <code>null</code></exception>
         public override void Render(TextWriter output, string format = null, IFormatProvider formatProvider = null)
         {
             if (output == null) throw new ArgumentNullException(nameof(output));

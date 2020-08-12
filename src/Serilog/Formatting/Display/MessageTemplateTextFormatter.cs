@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2017 Serilog Contributors
+// Copyright 2013-2017 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,9 +41,11 @@ namespace Serilog.Formatting.Display
         /// <param name="outputTemplate">A message template describing the
         /// output messages.</param>
         /// <param name="formatProvider">Supplies culture-specific formatting information, or null.</param>
+        /// <exception cref="ArgumentNullException">When <paramref name="outputTemplate"/> is <code>null</code></exception>
         public MessageTemplateTextFormatter(string outputTemplate, IFormatProvider formatProvider = null)
         {
             if (outputTemplate == null) throw new ArgumentNullException(nameof(outputTemplate));
+
             _outputTemplate = new MessageTemplateParser().Parse(outputTemplate);
             _formatProvider = formatProvider;
         }
@@ -53,12 +55,14 @@ namespace Serilog.Formatting.Display
         /// </summary>
         /// <param name="logEvent">The event to format.</param>
         /// <param name="output">The output.</param>
+        /// <exception cref="ArgumentNullException">When <paramref name="logEvent"/> is <code>null</code></exception>
+        /// <exception cref="ArgumentNullException">When <paramref name="output"/> is <code>null</code></exception>
         public void Format(LogEvent logEvent, TextWriter output)
         {
             if (logEvent == null) throw new ArgumentNullException(nameof(logEvent));
             if (output == null) throw new ArgumentNullException(nameof(output));
 
-            foreach (var token in _outputTemplate.Tokens)
+            foreach (var token in _outputTemplate.TokenArray)
             {
                 if (token is TextToken tt)
                 {

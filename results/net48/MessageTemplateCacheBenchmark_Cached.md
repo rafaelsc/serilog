@@ -1,83 +1,52 @@
 ``` ini
 
-BenchmarkDotNet=v0.11.5, OS=Windows 10.0.18362
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19041.388 (2004/?/20H1)
 Intel Core i7-9750H CPU 2.60GHz, 1 CPU, 12 logical and 6 physical cores
-  [Host] : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 32bit LegacyJIT-v4.8.4010.0
+  [Host]   : .NET Framework 4.8 (4.8.4180.0), X86 LegacyJIT
+  ShortRun : .NET Framework 4.8 (4.8.4180.0), X86 LegacyJIT
 
 Job=ShortRun  IterationCount=3  LaunchCount=1  
 WarmupCount=3  
 
 ```
-|     Method | Items | MaxDegreeOfParallelism | Mean | Error | Ratio | RatioSD |
-|----------- |------ |----------------------- |-----:|------:|------:|--------:|
-| **Dictionary** |    **10** |                     **-1** |   **NA** |    **NA** |     **?** |       **?** |
-|  Hashtable |    10 |                     -1 |   NA |    NA |     ? |       ? |
-| Concurrent |    10 |                     -1 |   NA |    NA |     ? |       ? |
-|            |       |                        |      |       |       |         |
-| **Dictionary** |    **10** |                      **1** |   **NA** |    **NA** |     **?** |       **?** |
-|  Hashtable |    10 |                      1 |   NA |    NA |     ? |       ? |
-| Concurrent |    10 |                      1 |   NA |    NA |     ? |       ? |
-|            |       |                        |      |       |       |         |
-| **Dictionary** |    **20** |                     **-1** |   **NA** |    **NA** |     **?** |       **?** |
-|  Hashtable |    20 |                     -1 |   NA |    NA |     ? |       ? |
-| Concurrent |    20 |                     -1 |   NA |    NA |     ? |       ? |
-|            |       |                        |      |       |       |         |
-| **Dictionary** |    **20** |                      **1** |   **NA** |    **NA** |     **?** |       **?** |
-|  Hashtable |    20 |                      1 |   NA |    NA |     ? |       ? |
-| Concurrent |    20 |                      1 |   NA |    NA |     ? |       ? |
-|            |       |                        |      |       |       |         |
-| **Dictionary** |    **50** |                     **-1** |   **NA** |    **NA** |     **?** |       **?** |
-|  Hashtable |    50 |                     -1 |   NA |    NA |     ? |       ? |
-| Concurrent |    50 |                     -1 |   NA |    NA |     ? |       ? |
-|            |       |                        |      |       |       |         |
-| **Dictionary** |    **50** |                      **1** |   **NA** |    **NA** |     **?** |       **?** |
-|  Hashtable |    50 |                      1 |   NA |    NA |     ? |       ? |
-| Concurrent |    50 |                      1 |   NA |    NA |     ? |       ? |
-|            |       |                        |      |       |       |         |
-| **Dictionary** |   **100** |                     **-1** |   **NA** |    **NA** |     **?** |       **?** |
-|  Hashtable |   100 |                     -1 |   NA |    NA |     ? |       ? |
-| Concurrent |   100 |                     -1 |   NA |    NA |     ? |       ? |
-|            |       |                        |      |       |       |         |
-| **Dictionary** |   **100** |                      **1** |   **NA** |    **NA** |     **?** |       **?** |
-|  Hashtable |   100 |                      1 |   NA |    NA |     ? |       ? |
-| Concurrent |   100 |                      1 |   NA |    NA |     ? |       ? |
-|            |       |                        |      |       |       |         |
-| **Dictionary** |  **1000** |                     **-1** |   **NA** |    **NA** |     **?** |       **?** |
-|  Hashtable |  1000 |                     -1 |   NA |    NA |     ? |       ? |
-| Concurrent |  1000 |                     -1 |   NA |    NA |     ? |       ? |
-|            |       |                        |      |       |       |         |
-| **Dictionary** |  **1000** |                      **1** |   **NA** |    **NA** |     **?** |       **?** |
-|  Hashtable |  1000 |                      1 |   NA |    NA |     ? |       ? |
-| Concurrent |  1000 |                      1 |   NA |    NA |     ? |       ? |
-
-Benchmarks with issues:
-  MessageTemplateCacheBenchmark_Cached.Dictionary: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=10, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Hashtable: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=10, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Concurrent: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=10, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Dictionary: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=10, MaxDegreeOfParallelism=1]
-  MessageTemplateCacheBenchmark_Cached.Hashtable: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=10, MaxDegreeOfParallelism=1]
-  MessageTemplateCacheBenchmark_Cached.Concurrent: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=10, MaxDegreeOfParallelism=1]
-  MessageTemplateCacheBenchmark_Cached.Dictionary: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=20, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Hashtable: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=20, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Concurrent: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=20, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Dictionary: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=20, MaxDegreeOfParallelism=1]
-  MessageTemplateCacheBenchmark_Cached.Hashtable: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=20, MaxDegreeOfParallelism=1]
-  MessageTemplateCacheBenchmark_Cached.Concurrent: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=20, MaxDegreeOfParallelism=1]
-  MessageTemplateCacheBenchmark_Cached.Dictionary: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=50, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Hashtable: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=50, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Concurrent: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=50, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Dictionary: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=50, MaxDegreeOfParallelism=1]
-  MessageTemplateCacheBenchmark_Cached.Hashtable: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=50, MaxDegreeOfParallelism=1]
-  MessageTemplateCacheBenchmark_Cached.Concurrent: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=50, MaxDegreeOfParallelism=1]
-  MessageTemplateCacheBenchmark_Cached.Dictionary: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=100, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Hashtable: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=100, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Concurrent: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=100, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Dictionary: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=100, MaxDegreeOfParallelism=1]
-  MessageTemplateCacheBenchmark_Cached.Hashtable: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=100, MaxDegreeOfParallelism=1]
-  MessageTemplateCacheBenchmark_Cached.Concurrent: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=100, MaxDegreeOfParallelism=1]
-  MessageTemplateCacheBenchmark_Cached.Dictionary: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=1000, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Hashtable: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=1000, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Concurrent: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=1000, MaxDegreeOfParallelism=-1]
-  MessageTemplateCacheBenchmark_Cached.Dictionary: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=1000, MaxDegreeOfParallelism=1]
-  MessageTemplateCacheBenchmark_Cached.Hashtable: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=1000, MaxDegreeOfParallelism=1]
-  MessageTemplateCacheBenchmark_Cached.Concurrent: ShortRun(IterationCount=3, LaunchCount=1, WarmupCount=3) [Items=1000, MaxDegreeOfParallelism=1]
+|     Method | Items | MaxDegreeOfParallelism |        Mean |      Error |    StdDev | Ratio | RatioSD |
+|----------- |------ |----------------------- |------------:|-----------:|----------:|------:|--------:|
+| **Dictionary** |    **10** |                     **-1** |   **463.96 μs** | **133.971 μs** |  **7.343 μs** |  **1.00** |    **0.00** |
+|  Hashtable |    10 |                     -1 |    30.82 μs |  20.614 μs |  1.130 μs |  0.07 |    0.00 |
+| Concurrent |    10 |                     -1 |    31.52 μs |   5.203 μs |  0.285 μs |  0.07 |    0.00 |
+|            |       |                        |             |            |           |       |         |
+| **Dictionary** |    **10** |                      **1** |    **87.98 μs** |  **23.004 μs** |  **1.261 μs** |  **1.00** |    **0.00** |
+|  Hashtable |    10 |                      1 |    79.41 μs |  24.136 μs |  1.323 μs |  0.90 |    0.02 |
+| Concurrent |    10 |                      1 |    81.16 μs |   1.602 μs |  0.088 μs |  0.92 |    0.01 |
+|            |       |                        |             |            |           |       |         |
+| **Dictionary** |    **20** |                     **-1** |   **648.57 μs** |  **55.371 μs** |  **3.035 μs** |  **1.00** |    **0.00** |
+|  Hashtable |    20 |                     -1 |    43.00 μs |  21.538 μs |  1.181 μs |  0.07 |    0.00 |
+| Concurrent |    20 |                     -1 |    46.26 μs |   9.258 μs |  0.507 μs |  0.07 |    0.00 |
+|            |       |                        |             |            |           |       |         |
+| **Dictionary** |    **20** |                      **1** |   **173.73 μs** |  **44.249 μs** |  **2.425 μs** |  **1.00** |    **0.00** |
+|  Hashtable |    20 |                      1 |   158.75 μs |  36.225 μs |  1.986 μs |  0.91 |    0.02 |
+| Concurrent |    20 |                      1 |   170.32 μs |  44.111 μs |  2.418 μs |  0.98 |    0.00 |
+|            |       |                        |             |            |           |       |         |
+| **Dictionary** |    **50** |                     **-1** | **1,111.60 μs** | **239.708 μs** | **13.139 μs** |  **1.00** |    **0.00** |
+|  Hashtable |    50 |                     -1 |    88.94 μs |  30.092 μs |  1.649 μs |  0.08 |    0.00 |
+| Concurrent |    50 |                     -1 |    89.41 μs |  40.316 μs |  2.210 μs |  0.08 |    0.00 |
+|            |       |                        |             |            |           |       |         |
+| **Dictionary** |    **50** |                      **1** |   **429.50 μs** | **101.663 μs** |  **5.572 μs** |  **1.00** |    **0.00** |
+|  Hashtable |    50 |                      1 |   394.28 μs | 107.339 μs |  5.884 μs |  0.92 |    0.03 |
+| Concurrent |    50 |                      1 |   379.22 μs | 128.816 μs |  7.061 μs |  0.88 |    0.03 |
+|            |       |                        |             |            |           |       |         |
+| **Dictionary** |   **100** |                     **-1** | **1,621.24 μs** | **192.672 μs** | **10.561 μs** |  **1.00** |    **0.00** |
+|  Hashtable |   100 |                     -1 |   158.74 μs |  40.121 μs |  2.199 μs |  0.10 |    0.00 |
+| Concurrent |   100 |                     -1 |   162.26 μs |   7.779 μs |  0.426 μs |  0.10 |    0.00 |
+|            |       |                        |             |            |           |       |         |
+| **Dictionary** |   **100** |                      **1** |   **837.94 μs** | **166.369 μs** |  **9.119 μs** |  **1.00** |    **0.00** |
+|  Hashtable |   100 |                      1 |   762.12 μs | 142.817 μs |  7.828 μs |  0.91 |    0.02 |
+| Concurrent |   100 |                      1 |   770.14 μs | 185.410 μs | 10.163 μs |  0.92 |    0.02 |
+|            |       |                        |             |            |           |       |         |
+| **Dictionary** |  **1000** |                     **-1** | **1,827.46 μs** | **415.377 μs** | **22.768 μs** |  **1.00** |    **0.00** |
+|  Hashtable |  1000 |                     -1 |   160.82 μs |  56.837 μs |  3.115 μs |  0.09 |    0.00 |
+| Concurrent |  1000 |                     -1 |   171.09 μs | 110.771 μs |  6.072 μs |  0.09 |    0.00 |
+|            |       |                        |             |            |           |       |         |
+| **Dictionary** |  **1000** |                      **1** |   **854.42 μs** |  **66.318 μs** |  **3.635 μs** |  **1.00** |    **0.00** |
+|  Hashtable |  1000 |                      1 |   766.43 μs | 139.153 μs |  7.627 μs |  0.90 |    0.01 |
+| Concurrent |  1000 |                      1 |   808.51 μs | 219.922 μs | 12.055 μs |  0.95 |    0.01 |

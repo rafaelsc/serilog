@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2015 Serilog Contributors
+// Copyright 2013-2015 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using Serilog.Support;
 
 namespace Serilog.Events
 {
@@ -30,10 +30,12 @@ namespace Serilog.Events
         /// Create a <see cref="SequenceValue"/> with the provided <paramref name="elements"/>.
         /// </summary>
         /// <param name="elements">The elements of the sequence.</param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentNullException">When <paramref name="elements"/> is <code>null</code></exception>
         public SequenceValue(IEnumerable<LogEventPropertyValue> elements)
         {
-            _elements = elements as LogEventPropertyValue[] ?? elements?.ToArray() ?? throw new ArgumentNullException(nameof(elements));
+            if (elements == null) throw new ArgumentNullException(nameof(elements));
+
+            _elements = elements.AsArray();
         }
 
         /// <summary>
@@ -48,6 +50,7 @@ namespace Serilog.Events
         /// <param name="format">A format string applied to the value, or null.</param>
         /// <param name="formatProvider">A format provider to apply to the value, or null to use the default.</param>
         /// <seealso cref="LogEventPropertyValue.ToString(string, IFormatProvider)"/>.
+        /// <exception cref="ArgumentNullException">When <paramref name="output"/> is <code>null</code></exception>
         public override void Render(TextWriter output, string format = null, IFormatProvider formatProvider = null)
         {
             if (output == null) throw new ArgumentNullException(nameof(output));
