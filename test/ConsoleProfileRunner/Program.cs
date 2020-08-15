@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Serilog;
 using Serilog.Context;
@@ -14,6 +14,11 @@ namespace ConsoleProfileRunner
         {
             Console.WriteLine("Starting...");
             _logger = CreateLog();
+
+            var l2 = _logger.ForContext<Program>();
+
+            _logger.Debug("App - Start {a}...", 1);
+            l2.Debug("Logger 2 - Start...");
 
             for (int i = 0; i < 1_000; i++)
             {
