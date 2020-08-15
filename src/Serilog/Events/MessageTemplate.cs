@@ -19,7 +19,6 @@ using System.Linq;
 using Serilog.Debugging;
 using Serilog.Parsing;
 using Serilog.Rendering;
-using Serilog.Support;
 
 namespace Serilog.Events
 {
@@ -59,7 +58,7 @@ namespace Serilog.Events
         public MessageTemplate(string text, IEnumerable<MessageTemplateToken> tokens)
         {
             Text = text ?? throw new ArgumentNullException(nameof(text));
-            _tokens = (tokens ?? throw new ArgumentNullException(nameof(tokens))).AsArray(forceNewInstance: false);
+            _tokens = (tokens ?? throw new ArgumentNullException(nameof(tokens))).ToArray();
 
             if(_tokens.Length == 0)
                 return;
@@ -120,7 +119,11 @@ namespace Serilog.Events
 
         internal PropertyToken[] PositionalProperties { get; }
 
-        internal IEnumerable<PropertyToken> AllProperties => NamedProperties ?? PositionalProperties ?? Enumerable.Empty<PropertyToken>();
+#if NET45 || NETSTANDARD1_0
+        internal PropertyToken[] AllProperties => NamedProperties ?? PositionalProperties ?? new PropertyToken[0];
+#else
+        internal PropertyToken[] AllProperties => NamedProperties ?? PositionalProperties ?? Array.Empty<PropertyToken>();
+#endif
 
 
         /// <summary>
