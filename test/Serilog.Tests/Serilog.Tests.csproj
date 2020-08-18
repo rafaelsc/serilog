@@ -39,8 +39,10 @@
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' or '$(TargetFramework)' == 'netcoreapp2.2' ">
     <DefineConstants>$(DefineConstants);ASYNCLOCAL</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0'  or '$(TargetFramework)' == 'netcoreapp3.1' ">
+  <!--<PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0' or '$(TargetFramework)' == 'netcoreapp3.1' ">
     <DefineConstants>$(DefineConstants);ASYNCLOCAL;FEATURE_DEFAULT_INTERFACE;FEATURE_SPAN</DefineConstants>
+  </PropertyGroup>-->
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0' or '$(TargetFramework)' == 'netcoreapp3.1' ">
+    <DefineConstants>$(DefineConstants);ASYNCLOCAL;FEATURE_SPAN</DefineConstants>
   </PropertyGroup>
-
 </Project>
