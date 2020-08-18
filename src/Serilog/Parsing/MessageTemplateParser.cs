@@ -39,6 +39,7 @@ namespace Serilog.Parsing
         /// is not syntactically valid, text tokens will be returned. The parser
         /// will make a best effort to extract valid property tokens even in the
         /// presence of parsing issues.</returns>
+        /// <exception cref="ArgumentNullException">When <paramref name="messageTemplate"/> is <code>null</code></exception>
         public MessageTemplate Parse(string messageTemplate)
         {
             if (messageTemplate == null)
@@ -289,7 +290,7 @@ namespace Serilog.Parsing
         static bool IsValidInAlignment(char c) => c == '-' || char.IsDigit(c);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static bool IsValidInFormat(char c) => c != '}' && (c == ' ' || char.IsLetterOrDigit(c) || char.IsPunctuation(c));
+        static bool IsValidInFormat(char c) => c != '}' && (c == ' ' || c == '+' || char.IsLetterOrDigit(c) || char.IsPunctuation(c));
     }
 
 #endif

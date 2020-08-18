@@ -1,6 +1,5 @@
-﻿using Serilog.Core;
+using Serilog.Core;
 using Serilog.Core.Filters;
-using Serilog.Debugging;
 using Serilog.Events;
 using Serilog.Tests.Support;
 using System;
@@ -11,6 +10,7 @@ using Serilog.Configuration;
 using Serilog.Core.Enrichers;
 using TestDummies;
 using Xunit;
+
 // ReSharper disable PossibleNullReferenceException
 
 namespace Serilog.Tests
@@ -34,15 +34,18 @@ namespace Serilog.Tests
         [Fact]
         public void LoggerShouldNotReferenceToItsConfigurationAfterBeingCreated()
         {
-            // This fact required to run in Release mode to run successful.
-            var loggerConfiguration = new LoggerConfiguration();
-            var wr = new WeakReference(loggerConfiguration);
-            var logger = loggerConfiguration.CreateLogger();
+            var (logger, wr) = CreateLogger();
 
             GC.Collect();
 
             Assert.False(wr.IsAlive);
             GC.KeepAlive(logger);
+
+            (ILogger, WeakReference) CreateLogger()
+            {
+                var loggerConfiguration = new LoggerConfiguration();
+                return (loggerConfiguration.CreateLogger(), new WeakReference(loggerConfiguration));
+            }
         }
 
         [Fact]
@@ -261,6 +264,35 @@ namespace Serilog.Tests
             logger.Write(Some.InformationEvent());
 
             Assert.True(enrichedPropertySeen);
+        }
+
+        [Fact]
+        public void MaximumDestructuringDepthDefaultIsEffective()
+        {
+            var x = new
+            {
+                Lvl01 = new
+                {
+                    Lvl02 = new
+                    {
+                        Lvl03 = new
+                        {
+                            Lvl04 = new
+                            {
+                                Lvl05 = new
+                                {
+                                    Lvl06 = new { Lvl07 = new { Lvl08 = new { Lvl09 = new { Lvl10 = "Lvl11" } } } }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var xs = LogAndGetAsString(x, conf => conf, "@");
+
+            Assert.Contains("Lvl10", xs);
+            Assert.DoesNotContain("Lvl11", xs);
         }
 
         [Fact]
@@ -663,20 +695,6 @@ namespace Serilog.Tests
         }
 
         [Fact]
-        public void WrappingWarnsAboutNonDisposableWrapper()
-        {
-            var messages = new List<string>();
-            SelfLog.Enable(s => messages.Add(s));
-
-            new LoggerConfiguration()
-                .WriteTo.Dummy(w => w.Sink<DisposeTrackingSink>())
-                .CreateLogger();
-
-            SelfLog.Disable();
-            Assert.NotEmpty(messages);
-        }
-
-        [Fact]
         public void WrappingSinkRespectsLogEventLevelSetting()
         {
             DummyWrappingSink.Reset();
@@ -707,7 +725,7 @@ namespace Serilog.Tests
             Assert.Empty(DummyWrappingSink.Emitted);
             Assert.Empty(sink.Events);
         }
-        
+
         [Fact]
         public void WrappingSinkReceivesEventsWhenLevelIsAppropriate()
         {
@@ -779,7 +797,7 @@ namespace Serilog.Tests
             var evt = Assert.Single(enricher.Events);
             Assert.Equal(LogEventLevel.Warning, evt.Level);
         }
-        
+
         [Fact]
         public void LeveledEnrichersCheckLevels()
         {
