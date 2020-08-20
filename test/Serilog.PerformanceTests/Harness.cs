@@ -12,8 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Environments;
+using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
-using Xunit;
+//using Xunit;
 
 namespace Serilog.PerformanceTests
 {
@@ -25,89 +28,95 @@ namespace Serilog.PerformanceTests
     /// </example>
     public class Harness
     {
-        [Fact]
-        public void SourceContextMatch()
-        {
-            BenchmarkRunner.Run<SourceContextMatchBenchmark>();
-        }
+        //[Fact]
+        //public void SourceContextMatch()
+        //{
+        //    BenchmarkRunner.Run<SourceContextMatchBenchmark>();
+        //}
 
-        [Fact]
-        public void Allocations()
-        {
-            BenchmarkRunner.Run<AllocationsBenchmark>();
-        }
+        //[Fact]
+        //public void Allocations()
+        //{
+        //    BenchmarkRunner.Run<AllocationsBenchmark>();
+        //}
 
-        [Fact]
-        public void AllocationsIgnoringEvents()
-        {
-            BenchmarkRunner.Run<AllocationsIgnoringEventsBenchmark>();
-        }
+        //[Fact]
+        //public void AllocationsIgnoringEvents()
+        //{
+        //    BenchmarkRunner.Run<AllocationsIgnoringEventsBenchmark>();
+        //}
 
-        [Fact]
-        public void AlmostRealWorld()
-        {
-            BenchmarkRunner.Run<AlmostRealWorldBenchmark>();
-        }
+        //[Fact]
+        //public void AlmostRealWorld()
+        //{
+        //    BenchmarkRunner.Run<AlmostRealWorldBenchmark>();
+        //}
 
-        [Fact]
-        public void MessageTemplateCache()
-        {
-            BenchmarkRunner.Run<MessageTemplateCacheBenchmark_Cached>();
-            BenchmarkRunner.Run<MessageTemplateCacheBenchmark_Leaking>();
-        }
+        //[Fact]
+        //public void MessageTemplateCache()
+        //{
+        //    BenchmarkRunner.Run<MessageTemplateCacheBenchmark_Cached>();
+        //    BenchmarkRunner.Run<MessageTemplateCacheBenchmark_Leaking>();
+        //}
 
-        [Fact]
-        public void LogContextEnrichment()
-        {
-            BenchmarkRunner.Run<LogContextEnrichmentBenchmark>();
-        }
+        //[Fact]
+        //public void LogContextEnrichment()
+        //{
+        //    BenchmarkRunner.Run<LogContextEnrichmentBenchmark>();
+        //}
 
-        [Fact]
-        public void MessageTemplateParsing()
-        {
-            BenchmarkRunner.Run<MessageTemplateParsingBenchmark>();
-        }
+        //[Fact]
+        //public void MessageTemplateParsing()
+        //{
+        //    //BenchmarkRunner.Run<MessageTemplateParsingBenchmark>();
+        //    BenchmarkRunner.Run<MessageTemplateParsingBenchmarkCompare>();
+        //    //DefaultConfig.Instance
+        //    //                                                                          .AddJob(Job.Default.WithRuntime(ClrRuntime.Net48))
+        //    //                                                                          .AddJob(Job.Default.WithRuntime(CoreRuntime.Core31))
+        //    //                                                                          .AddJob(Job.Default.WithJit(Jit.LegacyJit))
+        //    //                                                                          .AddJob(Job.Default.WithJit(Jit.RyuJit)) );
+        //}
 
-        [Fact]
-        public void LevelControl()
-        {
-            BenchmarkRunner.Run<LevelControlBenchmark>();
-        }
+        //[Fact]
+        //public void LevelControl()
+        //{
+        //    BenchmarkRunner.Run<LevelControlBenchmark>();
+        //}
 
-        [Fact]
-        public void NestedLoggerCreation()
-        {
-            BenchmarkRunner.Run<NestedLoggerCreationBenchmark>();
-        }
+        //[Fact]
+        //public void NestedLoggerCreation()
+        //{
+        //    BenchmarkRunner.Run<NestedLoggerCreationBenchmark>();
+        //}
 
-        [Fact]
-        public void NestedLoggerLatency()
-        {
-            BenchmarkRunner.Run<NestedLoggerLatencyBenchmark>();
-        }
+        //[Fact]
+        //public void NestedLoggerLatency()
+        //{
+        //    BenchmarkRunner.Run<NestedLoggerLatencyBenchmark>();
+        //}
 
-        [Fact]
-        public void Pipeline()
-        {
-            BenchmarkRunner.Run<PipelineBenchmark>();
-        }
+        //[Fact]
+        //public void Pipeline()
+        //{
+        //    BenchmarkRunner.Run<PipelineBenchmark>();
+        //}
 
-        [Fact]
-        public void OutputTemplateRendering()
-        {
-            BenchmarkRunner.Run<OutputTemplateRenderingBenchmark>();
-        }
+        //[Fact]
+        //public void OutputTemplateRendering()
+        //{
+        //    BenchmarkRunner.Run<OutputTemplateRenderingBenchmark>();
+        //}
 
-        [Fact]
-        public void MessageTemplateRendering()
-        {
-            BenchmarkRunner.Run<MessageTemplateRenderingBenchmark>();
-        }
+        //[Fact]
+        //public void MessageTemplateRendering()
+        //{
+        //    BenchmarkRunner.Run<MessageTemplateRenderingBenchmark>();
+        //}
 
-        [Fact]
-        public void Binding()
-        {
-            BenchmarkRunner.Run<BindingBenchmark>();
-        }
+        //[Fact]
+        //public void Binding()
+        //{
+        //    BenchmarkRunner.Run<BindingBenchmark>();
+        //}
     }
 }

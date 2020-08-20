@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2015 Serilog Contributors
+// Copyright 2013-2015 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ namespace Serilog.Parsing
 
         static MessageTemplateToken[] Tokenize(string messageTemplate)
         {
-            var results = new List<MessageTemplateToken> ();
+            var results = new List<MessageTemplateToken>();
 
             var lastState = States.Text;
             var currentState = States.Text;
@@ -61,11 +61,18 @@ namespace Serilog.Parsing
             {
                 switch (c)
                 {
-                    case '{' when EnumFastHasFlag(currentState, States.PropertyStart) && lastChar == '{': ChangeState(States.Text | States.EscapeOpenBrakets); nextChatStartANewToken = false; break;
-                    case '{' when EnumFastHasFlag(currentState, States.Text): ChangeState(States.PropertyStart); nextChatStartANewToken = true; break;
+                    case '{' when EnumFastHasFlag(currentState, States.PropertyStart) && lastChar == '{':
+                        ChangeState(States.Text | States.EscapeOpenBrakets); nextChatStartANewToken = false; break;
+                    //			case '{' when EnumFastHasFlag(currentState, States.Text) && EnumFastHasFlag(currentState, States.EscapeOpenBrakets):
+                    //				ChangeState(States.Text | States.EscapeOpenBrakets); nextChatStartANewToken = false; break;
+                    case '{' when EnumFastHasFlag(currentState, States.Text):
+                        ChangeState(States.PropertyStart); nextChatStartANewToken = true; break;
 
-                    case '}' when lastChar == '}': ChangeState(currentState | States.EscapeCloseBrakets); break;
-                    case '}' when !EnumFastHasFlag(currentState, States.Text): nextChatStartANewToken = true; ChangeState(currentState | States.PropertyEnd); break;
+                    case '}' when lastChar == '}':
+                        ChangeState(currentState | States.EscapeCloseBrakets); break;
+                    case '}' when !EnumFastHasFlag(currentState, States.Text):
+                        nextChatStartANewToken = true;
+                        ChangeState(currentState | States.PropertyEnd); break;
                 }
 
                 if (nextChatStartANewToken && lastChar == '{')
@@ -95,14 +102,14 @@ namespace Serilog.Parsing
                 }
 
                 //Validate Token
-                if (EnumFastHasFlag(currentState, States.PropertyStart))
+                if (c != '{' && EnumFastHasFlag(currentState, States.PropertyStart))
                 {
                     //IsValidInPropertyName
                     //IsValidInDestructuringHint
                     //IsValidInAlignment
                     //IsValidInFormat
 
-                    if (!EnumFastHasFlag(currentState, States.WithAlignment) && !EnumFastHasFlag(currentState, States.WithFormat)  && !IsValidInPropertyName(c))
+                    if (!EnumFastHasFlag(currentState, States.WithAlignment) && !EnumFastHasFlag(currentState, States.WithFormat) && !IsValidInPropertyName(c))
                     {
                         ChangeState(currentState | States.Invalid);
                     }
@@ -145,12 +152,25 @@ namespace Serilog.Parsing
                 return str;
             }
 
+            string ProcessTextNoEscape(ReadOnlySpan<char> span)
+            {
+                var str = span.ToString();
+                return str;
+            }
+
             void ProcessLastToken(ReadOnlySpan<char> span)
             {
                 if (span.IsEmpty)
                     return;
 
-                if (EnumFastHasFlag(lastState, States.Invalid) || EnumFastHasFlag(lastState, States.Text))
+                if (EnumFastHasFlag(lastState, States.PropertyStart) && (EnumFastHasFlag(lastState, States.Invalid)))
+                {
+                    results.Add(new TextToken(ProcessTextNoEscape(span), lastTokenStartIndex));
+
+                    lastTokenStartIndex = currentIndex;
+                    return;
+                }
+                else if (EnumFastHasFlag(lastState, States.EscapeOpenBrakets) || EnumFastHasFlag(lastState, States.Invalid) || EnumFastHasFlag(lastState, States.Text))
                 {
                     results.Add(new TextToken(ProcessText(span), lastTokenStartIndex));
 

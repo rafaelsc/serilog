@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Serilog.Parsing;
 using System.Linq;
 using Xunit;
@@ -10,7 +10,8 @@ namespace Serilog.Tests.Parsing
         static MessageTemplateToken[] Parse(string messageTemplate)
         {
             //return new MessageTemplateParser().Parse(messageTemplate).Tokens.ToArray();
-            return new MessageTemplateParserLexer().Parse(messageTemplate).Tokens.ToArray();
+            return new MessageTemplateParserLexer2().Parse(messageTemplate).Tokens.ToArray();
+            //return new MessageTemplateParserLexer().Parse(messageTemplate).Tokens.ToArray();
         }
 
         // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local

@@ -16,6 +16,9 @@ namespace Serilog.PerformanceTests
 
         readonly MessageTemplateParserMemoryIterator _parserMemory;
         readonly MessageTemplateParserLexer _parserLexer;
+        readonly MessageTemplateParserLexer2 _parserLexer2;
+        readonly MessageTemplateParserLexer3 _parserLexer3;
+
         readonly MessageTemplateParserWithMoreMods _parserMods2;
 
         const string _bigTemplate = "Hello, world! {Greeting}, {Name} - {{Escaped}} - {@Hello} {$World} {Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{NewLine}{Exception} Hello, world! {0} {-1} {2} {Test,-15} {Prop,50} {Qnt,5:000}";
@@ -30,6 +33,10 @@ namespace Serilog.PerformanceTests
             _parserArrNoIn = new MessageTemplateParserSpanArrNoIn();
             _parserMemory = new MessageTemplateParserMemoryIterator();
             _parserLexer = new MessageTemplateParserLexer();
+            _parserLexer2 = new MessageTemplateParserLexer2();
+            _parserLexer3 = new MessageTemplateParserLexer3();
+
+
         }
 
         [Benchmark(Baseline = true)]
@@ -71,6 +78,16 @@ namespace Serilog.PerformanceTests
         public void MessageTemplateParserLexer()
         {
             _parserLexer.Parse(_bigTemplate);
+        }
+        [Benchmark]
+        public void MessageTemplateParserLexer2()
+        {
+            _parserLexer2.Parse(_bigTemplate);
+        }
+        [Benchmark]
+        public void MessageTemplateParserLexer3()
+        {
+            _parserLexer3.Parse(_bigTemplate);
         }
     }
 }
