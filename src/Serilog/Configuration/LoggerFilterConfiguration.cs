@@ -44,11 +44,11 @@ namespace Serilog.Configuration
         /// <exception cref="ArgumentException">When any element of <paramref name="filters"/> is <code>null</code></exception>
         public LoggerConfiguration With(params ILogEventFilter[] filters)
         {
-            if (filters == null) throw new ArgumentNullException(nameof(filters));
+            if (filters is null) throw new ArgumentNullException(nameof(filters));
 
             foreach (var logEventFilter in filters)
             {
-                if (logEventFilter == null) throw new ArgumentException("Null filter is not allowed.");
+                if (logEventFilter is null) throw new ArgumentException("Null filter is not allowed.");
 
                 _addFilter(logEventFilter);
             }

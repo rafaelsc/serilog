@@ -89,7 +89,7 @@ namespace Serilog.Context
         /// <exception cref="ArgumentNullException">When <paramref name="enricher"/> is <code>null</code></exception>
         public static IDisposable Push(ILogEventEnricher enricher)
         {
-            if (enricher == null) throw new ArgumentNullException(nameof(enricher));
+            if (enricher is null) throw new ArgumentNullException(nameof(enricher));
 
             var stack = GetOrCreateEnricherStack();
             var bookmark = new ContextStackBookmark(stack);
@@ -111,7 +111,7 @@ namespace Serilog.Context
         /// <exception cref="ArgumentNullException">When <paramref name="enrichers"/> is <code>null</code></exception>
         public static IDisposable Push(params ILogEventEnricher[] enrichers)
         {
-            if (enrichers == null) throw new ArgumentNullException(nameof(enrichers));
+            if (enrichers is null) throw new ArgumentNullException(nameof(enrichers));
 
             var stack = GetOrCreateEnricherStack();
             var bookmark = new ContextStackBookmark(stack);
@@ -178,7 +178,7 @@ namespace Serilog.Context
         static ImmutableStack<ILogEventEnricher> GetOrCreateEnricherStack()
         {
             var enrichers = Enrichers;
-            if (enrichers == null)
+            if (enrichers is null)
             {
                 enrichers = ImmutableStack<ILogEventEnricher>.Empty;
                 Enrichers = enrichers;
@@ -189,7 +189,7 @@ namespace Serilog.Context
         internal static void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
             var enrichers = Enrichers;
-            if (enrichers == null || enrichers == ImmutableStack<ILogEventEnricher>.Empty)
+            if (enrichers is null || enrichers == ImmutableStack<ILogEventEnricher>.Empty)
                 return;
 
             foreach (var enricher in enrichers)

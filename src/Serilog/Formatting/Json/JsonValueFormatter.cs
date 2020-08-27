@@ -63,7 +63,7 @@ namespace Serilog.Formatting.Json
         /// <exception cref="ArgumentNullException">When <paramref name="scalar"/> is <code>null</code></exception>
         protected override bool VisitScalarValue(TextWriter state, ScalarValue scalar)
         {
-            if (scalar == null) throw new ArgumentNullException(nameof(scalar));
+            if (scalar is null) throw new ArgumentNullException(nameof(scalar));
 
             FormatLiteralValue(scalar.Value, state);
             return false;
@@ -78,7 +78,7 @@ namespace Serilog.Formatting.Json
         /// <exception cref="ArgumentNullException">When <paramref name="sequence"/> is <code>null</code></exception>
         protected override bool VisitSequenceValue(TextWriter state, SequenceValue sequence)
         {
-            if (sequence == null) throw new ArgumentNullException(nameof(sequence));
+            if (sequence is null) throw new ArgumentNullException(nameof(sequence));
 
             state.Write('[');
             var delim = "";
@@ -158,7 +158,7 @@ namespace Serilog.Formatting.Json
         /// <param name="output">The output</param>
         protected virtual void FormatLiteralValue(object value, TextWriter output)
         {
-            if (value == null)
+            if (value is null)
             {
                 FormatNullValue(output);
                 return;
@@ -273,7 +273,7 @@ namespace Serilog.Formatting.Json
 
         static void FormatLiteralObjectValue(object value, TextWriter output)
         {
-            if (value == null) throw new ArgumentNullException(nameof(value));
+            if (value is null) throw new ArgumentNullException(nameof(value));
 
             FormatStringValue(value.ToString(), output);
         }

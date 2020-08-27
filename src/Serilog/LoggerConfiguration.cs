@@ -191,7 +191,7 @@ namespace Serilog
                 }
             }
 
-            return _levelSwitch == null ?
+            return _levelSwitch is null ?
                 new Logger(processor, _minimumLevel, sink, enricher, Dispose, overrideMap) :
                 new Logger(processor, _levelSwitch, sink, enricher, Dispose, overrideMap);
         }

@@ -86,8 +86,8 @@ namespace Serilog.Parsing
         /// <exception cref="ArgumentNullException">When <paramref name="output"/> is <code>null</code></exception>
         public override void Render(IReadOnlyDictionary<string, LogEventPropertyValue> properties, TextWriter output, IFormatProvider formatProvider = null)
         {
-            if (properties == null) throw new ArgumentNullException(nameof(properties));
-            if (output == null) throw new ArgumentNullException(nameof(output));
+            if (properties is null) throw new ArgumentNullException(nameof(properties));
+            if (output is null) throw new ArgumentNullException(nameof(output));
 
             MessageTemplateRenderer.RenderPropertyToken(this, properties, output, formatProvider, isLiteral: false, isJson: false);
         }
@@ -126,7 +126,7 @@ namespace Serilog.Parsing
         /// <returns>True if the property is positional, otherwise false.</returns>
         public bool TryGetPositionalValue(out int position)
         {
-            if (_position == null)
+            if (_position is null)
             {
                 position = 0;
                 return false;

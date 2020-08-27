@@ -54,9 +54,9 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException">When <paramref name="output"/> is <code>null</code></exception>
         internal static void Render(object value, TextWriter output, string format = null, IFormatProvider formatProvider = null)
         {
-            if (output == null) throw new ArgumentNullException(nameof(output));
+            if (output is null) throw new ArgumentNullException(nameof(output));
 
-            if (value == null)
+            if (value is null)
             {
                 output.Write("null");
                 return;
@@ -113,7 +113,7 @@ namespace Serilog.Events
         /// <returns>The instance's hash code.</returns>
         public override int GetHashCode()
         {
-            if (Value == null) return 0;
+            if (Value is null) return 0;
             return Value.GetHashCode();
         }
     }

@@ -118,8 +118,8 @@ namespace Serilog.Formatting.Json
         /// <exception cref="ArgumentNullException">When <paramref name="output"/> is <code>null</code></exception>
         public void Format(LogEvent logEvent, TextWriter output)
         {
-            if (logEvent == null) throw new ArgumentNullException(nameof(logEvent));
-            if (output == null) throw new ArgumentNullException(nameof(output));
+            if (logEvent is null) throw new ArgumentNullException(nameof(logEvent));
+            if (output is null) throw new ArgumentNullException(nameof(output));
 
             if (!_omitEnclosingObject)
                 output.Write("{");
@@ -168,8 +168,8 @@ namespace Serilog.Formatting.Json
         [Obsolete(ExtensionPointObsoletionMessage)]
         protected void AddLiteralWriter(Type type, Action<object, TextWriter> writer)
         {
-            if (type == null) throw new ArgumentNullException(nameof(type));
-            if (writer == null) throw new ArgumentNullException(nameof(writer));
+            if (type is null) throw new ArgumentNullException(nameof(type));
+            if (writer is null) throw new ArgumentNullException(nameof(writer));
 
             _literalWriters[type] = (v, _, w) => writer(v, w);
         }
@@ -372,7 +372,7 @@ namespace Serilog.Formatting.Json
 
         void WriteLiteral(object value, TextWriter output, bool forceQuotation = false)
         {
-            if (value == null)
+            if (value is null)
             {
                 output.Write("null");
                 return;
@@ -441,7 +441,7 @@ namespace Serilog.Formatting.Json
         [Obsolete("Use JsonValueFormatter.WriteQuotedJsonString() instead."), EditorBrowsable(EditorBrowsableState.Never)]
         public static string Escape(string s)
         {
-            if (s == null) return null;
+            if (s is null) return null;
 
             var escapedResult = new StringWriter();
             JsonValueFormatter.WriteQuotedJsonString(s, escapedResult);
