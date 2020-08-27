@@ -11,11 +11,11 @@ Intel Core i7-9750H CPU 2.60GHz, 1 CPU, 12 logical and 6 physical cores
 IterationCount=15  LaunchCount=2  WarmupCount=10  
 
 ```
-|                       Method |             Job |       Jit |       Runtime |       Mean |     Error |    StdDev |  Gen 0 | Gen 1 | Gen 2 | Allocated |
-|----------------------------- |---------------- |---------- |-------------- |-----------:|----------:|----------:|-------:|------:|------:|----------:|
-|     TemplateWithNoProperties |   core31 RyuJit |    RyuJit | .NET Core 3.1 |   3.908 ns | 0.3465 ns | 0.5186 ns |      - |     - |     - |         - |
-| TemplateWithVariedProperties |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 298.268 ns | 3.3369 ns | 4.9945 ns | 0.0153 |     - |     - |      96 B |
-|     TemplateWithNoProperties | net48 LegacyJit | LegacyJit |      .NET 4.8 |   4.174 ns | 0.0488 ns | 0.0731 ns |      - |     - |     - |         - |
-| TemplateWithVariedProperties | net48 LegacyJit | LegacyJit |      .NET 4.8 | 379.530 ns | 2.5731 ns | 3.7717 ns | 0.0153 |     - |     - |      96 B |
-|     TemplateWithNoProperties |    net48 RyuJit |    RyuJit |      .NET 4.8 |   4.174 ns | 0.0541 ns | 0.0809 ns |      - |     - |     - |         - |
-| TemplateWithVariedProperties |    net48 RyuJit |    RyuJit |      .NET 4.8 | 378.676 ns | 3.0587 ns | 4.5781 ns | 0.0153 |     - |     - |      96 B |
+|                       Method |             Job |       Jit |       Runtime |       Mean |      Error |     StdDev |  Gen 0 | Gen 1 | Gen 2 | Allocated |
+|----------------------------- |---------------- |---------- |-------------- |-----------:|-----------:|-----------:|-------:|------:|------:|----------:|
+|     TemplateWithNoProperties |   core31 RyuJit |    RyuJit | .NET Core 3.1 |   5.650 ns |  0.3957 ns |  0.5801 ns |      - |     - |     - |         - |
+| TemplateWithVariedProperties |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 360.585 ns | 16.9100 ns | 24.7864 ns | 0.0153 |     - |     - |      96 B |
+|     TemplateWithNoProperties | net48 LegacyJit | LegacyJit |      .NET 4.8 |   5.854 ns |  0.2564 ns |  0.3677 ns |      - |     - |     - |         - |
+| TemplateWithVariedProperties | net48 LegacyJit | LegacyJit |      .NET 4.8 | 441.629 ns | 43.9386 ns | 65.7652 ns | 0.0153 |     - |     - |      96 B |
+|     TemplateWithNoProperties |    net48 RyuJit |    RyuJit |      .NET 4.8 |   7.211 ns |  0.5697 ns |  0.8351 ns |      - |     - |     - |         - |
+| TemplateWithVariedProperties |    net48 RyuJit |    RyuJit |      .NET 4.8 | 409.771 ns | 10.6417 ns | 15.9280 ns | 0.0153 |     - |     - |      96 B |

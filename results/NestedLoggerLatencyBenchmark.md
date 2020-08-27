@@ -11,13 +11,13 @@ Intel Core i7-9750H CPU 2.60GHz, 1 CPU, 12 logical and 6 physical cores
 IterationCount=15  LaunchCount=2  WarmupCount=10  
 
 ```
-|       Method |             Job |       Jit |       Runtime |      Mean |     Error |    StdDev | Ratio | RatioSD |
-|------------- |---------------- |---------- |-------------- |----------:|----------:|----------:|------:|--------:|
-|   RootLogger |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  9.824 ns | 0.0947 ns | 0.1417 ns |  1.00 |    0.00 |
-| NestedLogger |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 38.172 ns | 1.4092 ns | 2.0655 ns |  3.88 |    0.22 |
-|              |                 |           |               |           |           |           |       |         |
-|   RootLogger | net48 LegacyJit | LegacyJit |      .NET 4.8 | 10.192 ns | 0.0892 ns | 0.1280 ns |  1.00 |    0.00 |
-| NestedLogger | net48 LegacyJit | LegacyJit |      .NET 4.8 | 42.399 ns | 1.4609 ns | 2.0952 ns |  4.16 |    0.21 |
-|              |                 |           |               |           |           |           |       |         |
-|   RootLogger |    net48 RyuJit |    RyuJit |      .NET 4.8 | 10.188 ns | 0.0943 ns | 0.1411 ns |  1.00 |    0.00 |
-| NestedLogger |    net48 RyuJit |    RyuJit |      .NET 4.8 | 43.402 ns | 2.0793 ns | 3.1122 ns |  4.26 |    0.32 |
+|       Method |             Job |       Jit |       Runtime |     Mean |    Error |   StdDev |   Median | Ratio | RatioSD |
+|------------- |---------------- |---------- |-------------- |---------:|---------:|---------:|---------:|------:|--------:|
+|   RootLogger |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 11.46 ns | 0.558 ns | 0.835 ns | 11.45 ns |  1.00 |    0.00 |
+| NestedLogger |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 38.51 ns | 0.335 ns | 0.502 ns | 38.34 ns |  3.38 |    0.23 |
+|              |                 |           |               |          |          |          |          |       |         |
+|   RootLogger | net48 LegacyJit | LegacyJit |      .NET 4.8 | 11.43 ns | 0.069 ns | 0.100 ns | 11.43 ns |  1.00 |    0.00 |
+| NestedLogger | net48 LegacyJit | LegacyJit |      .NET 4.8 | 45.73 ns | 1.396 ns | 2.002 ns | 45.23 ns |  4.00 |    0.19 |
+|              |                 |           |               |          |          |          |          |       |         |
+|   RootLogger |    net48 RyuJit |    RyuJit |      .NET 4.8 | 12.99 ns | 1.823 ns | 2.672 ns | 11.47 ns |  1.00 |    0.00 |
+| NestedLogger |    net48 RyuJit |    RyuJit |      .NET 4.8 | 60.03 ns | 4.368 ns | 6.124 ns | 59.38 ns |  4.90 |    0.96 |

@@ -11,19 +11,19 @@ Intel Core i7-9750H CPU 2.60GHz, 1 CPU, 12 logical and 6 physical cores
 IterationCount=15  LaunchCount=2  WarmupCount=10  
 
 ```
-|               Method |             Job |       Jit |       Runtime |      Mean |     Error |    StdDev |    Median | Ratio | RatioSD |
-|--------------------- |---------------- |---------- |-------------- |----------:|----------:|----------:|----------:|------:|--------:|
-|                 Bare |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  11.07 ns |  0.404 ns |  0.580 ns |  10.75 ns |  1.00 |    0.00 |
-|         PushProperty |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 144.49 ns | 14.097 ns | 20.218 ns | 138.21 ns | 13.08 |    1.93 |
-|   PushPropertyNested |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 281.84 ns | 25.206 ns | 36.150 ns | 270.92 ns | 25.40 |    2.28 |
-| PushPropertyEnriched |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 224.24 ns | 12.706 ns | 18.624 ns | 218.90 ns | 20.38 |    2.32 |
-|                      |                 |           |               |           |           |           |           |       |         |
-|                 Bare | net48 LegacyJit | LegacyJit |      .NET 4.8 |  12.69 ns |  0.380 ns |  0.520 ns |  12.72 ns |  1.00 |    0.00 |
-|         PushProperty | net48 LegacyJit | LegacyJit |      .NET 4.8 |  98.08 ns |  5.130 ns |  7.519 ns |  97.26 ns |  7.80 |    0.70 |
-|   PushPropertyNested | net48 LegacyJit | LegacyJit |      .NET 4.8 | 178.19 ns |  3.523 ns |  4.938 ns | 176.73 ns | 14.07 |    0.69 |
-| PushPropertyEnriched | net48 LegacyJit | LegacyJit |      .NET 4.8 | 177.56 ns |  3.388 ns |  4.965 ns | 177.47 ns | 13.98 |    0.61 |
-|                      |                 |           |               |           |           |           |           |       |         |
-|                 Bare |    net48 RyuJit |    RyuJit |      .NET 4.8 |  11.60 ns |  0.176 ns |  0.252 ns |  11.53 ns |  1.00 |    0.00 |
-|         PushProperty |    net48 RyuJit |    RyuJit |      .NET 4.8 |  89.97 ns |  1.911 ns |  2.741 ns |  89.36 ns |  7.76 |    0.24 |
-|   PushPropertyNested |    net48 RyuJit |    RyuJit |      .NET 4.8 | 173.87 ns |  1.961 ns |  2.875 ns | 172.82 ns | 15.00 |    0.45 |
-| PushPropertyEnriched |    net48 RyuJit |    RyuJit |      .NET 4.8 | 172.84 ns |  1.763 ns |  2.354 ns | 172.76 ns | 14.93 |    0.32 |
+|               Method |             Job |       Jit |       Runtime |      Mean |     Error |    StdDev | Ratio | RatioSD |
+|--------------------- |---------------- |---------- |-------------- |----------:|----------:|----------:|------:|--------:|
+|                 Bare |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  14.30 ns |  2.302 ns |  3.301 ns |  1.00 |    0.00 |
+|         PushProperty |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 142.91 ns |  9.007 ns | 12.626 ns | 10.56 |    2.48 |
+|   PushPropertyNested |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 255.26 ns | 16.369 ns | 24.500 ns | 19.04 |    5.51 |
+| PushPropertyEnriched |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 274.63 ns | 23.137 ns | 32.435 ns | 19.95 |    3.33 |
+|                      |                 |           |               |           |           |           |       |         |
+|                 Bare | net48 LegacyJit | LegacyJit |      .NET 4.8 |  12.50 ns |  0.905 ns |  1.298 ns |  1.00 |    0.00 |
+|         PushProperty | net48 LegacyJit | LegacyJit |      .NET 4.8 | 100.31 ns |  3.504 ns |  5.245 ns |  8.06 |    0.92 |
+|   PushPropertyNested | net48 LegacyJit | LegacyJit |      .NET 4.8 | 270.56 ns | 27.812 ns | 41.628 ns | 22.01 |    3.51 |
+| PushPropertyEnriched | net48 LegacyJit | LegacyJit |      .NET 4.8 | 206.16 ns | 11.300 ns | 16.914 ns | 16.65 |    1.18 |
+|                      |                 |           |               |           |           |           |       |         |
+|                 Bare |    net48 RyuJit |    RyuJit |      .NET 4.8 |  11.24 ns |  0.087 ns |  0.130 ns |  1.00 |    0.00 |
+|         PushProperty |    net48 RyuJit |    RyuJit |      .NET 4.8 | 122.42 ns | 17.339 ns | 25.416 ns | 10.90 |    2.29 |
+|   PushPropertyNested |    net48 RyuJit |    RyuJit |      .NET 4.8 | 227.30 ns | 17.588 ns | 25.780 ns | 20.24 |    2.39 |
+| PushPropertyEnriched |    net48 RyuJit |    RyuJit |      .NET 4.8 | 193.80 ns |  7.331 ns | 10.514 ns | 17.25 |    0.91 |

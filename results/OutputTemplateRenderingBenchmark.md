@@ -11,8 +11,8 @@ Intel Core i7-9750H CPU 2.60GHz, 1 CPU, 12 logical and 6 physical cores
 IterationCount=15  LaunchCount=2  WarmupCount=10  
 
 ```
-|         Method |             Job |       Jit |       Runtime |       Mean |    Error |   StdDev |  Gen 0 | Gen 1 | Gen 2 | Allocated |
-|--------------- |---------------- |---------- |-------------- |-----------:|---------:|---------:|-------:|------:|------:|----------:|
-| FormatToOutput |   core31 RyuJit |    RyuJit | .NET Core 3.1 |   893.8 ns |  6.03 ns |  8.83 ns | 0.0315 |     - |     - |     200 B |
-| FormatToOutput | net48 LegacyJit | LegacyJit |      .NET 4.8 | 1,174.8 ns | 12.16 ns | 18.20 ns | 0.1106 |     - |     - |     698 B |
-| FormatToOutput |    net48 RyuJit |    RyuJit |      .NET 4.8 | 1,178.4 ns | 11.75 ns | 17.23 ns | 0.1106 |     - |     - |     698 B |
+|         Method |             Job |       Jit |       Runtime |     Mean |     Error |    StdDev |  Gen 0 | Gen 1 | Gen 2 | Allocated |
+|--------------- |---------------- |---------- |-------------- |---------:|----------:|----------:|-------:|------:|------:|----------:|
+| FormatToOutput |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 1.058 μs | 0.0709 μs | 0.1061 μs | 0.0267 |     - |     - |     168 B |
+| FormatToOutput | net48 LegacyJit | LegacyJit |      .NET 4.8 | 1.229 μs | 0.0263 μs | 0.0385 μs | 0.1049 |     - |     - |     666 B |
+| FormatToOutput |    net48 RyuJit |    RyuJit |      .NET 4.8 | 1.428 μs | 0.1563 μs | 0.2242 μs | 0.1049 |     - |     - |     666 B |

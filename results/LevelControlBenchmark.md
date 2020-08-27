@@ -11,19 +11,19 @@ Intel Core i7-9750H CPU 2.60GHz, 1 CPU, 12 logical and 6 physical cores
 IterationCount=15  LaunchCount=2  WarmupCount=10  
 
 ```
-|         Method |             Job |       Jit |       Runtime |      Mean |     Error |    StdDev | Ratio | RatioSD |
-|--------------- |---------------- |---------- |-------------- |----------:|----------:|----------:|------:|--------:|
-|            Off |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  2.722 ns | 0.0456 ns | 0.0682 ns |  1.00 |    0.00 |
-| LevelSwitchOff |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  2.597 ns | 0.0421 ns | 0.0631 ns |  0.95 |    0.04 |
-| MinimumLevelOn |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  9.919 ns | 0.0905 ns | 0.1355 ns |  3.65 |    0.10 |
-|  LevelSwitchOn |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 10.155 ns | 0.0913 ns | 0.1366 ns |  3.73 |    0.11 |
-|                |                 |           |               |           |           |           |       |         |
-|            Off | net48 LegacyJit | LegacyJit |      .NET 4.8 |  2.474 ns | 0.0424 ns | 0.0635 ns |  1.00 |    0.00 |
-| LevelSwitchOff | net48 LegacyJit | LegacyJit |      .NET 4.8 |  2.859 ns | 0.1129 ns | 0.1655 ns |  1.16 |    0.07 |
-| MinimumLevelOn | net48 LegacyJit | LegacyJit |      .NET 4.8 | 11.530 ns | 0.5289 ns | 0.7752 ns |  4.66 |    0.33 |
-|  LevelSwitchOn | net48 LegacyJit | LegacyJit |      .NET 4.8 | 11.021 ns | 0.2492 ns | 0.3652 ns |  4.46 |    0.19 |
-|                |                 |           |               |           |           |           |       |         |
-|            Off |    net48 RyuJit |    RyuJit |      .NET 4.8 |  2.617 ns | 0.0476 ns | 0.0713 ns |  1.00 |    0.00 |
-| LevelSwitchOff |    net48 RyuJit |    RyuJit |      .NET 4.8 |  2.881 ns | 0.0678 ns | 0.0929 ns |  1.10 |    0.05 |
-| MinimumLevelOn |    net48 RyuJit |    RyuJit |      .NET 4.8 | 13.428 ns | 1.7213 ns | 2.5230 ns |  5.13 |    0.94 |
-|  LevelSwitchOn |    net48 RyuJit |    RyuJit |      .NET 4.8 | 10.694 ns | 0.1454 ns | 0.1890 ns |  4.10 |    0.13 |
+|         Method |             Job |       Jit |       Runtime |      Mean |     Error |    StdDev |    Median | Ratio | RatioSD |
+|--------------- |---------------- |---------- |-------------- |----------:|----------:|----------:|----------:|------:|--------:|
+|            Off |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  3.699 ns | 0.9503 ns | 1.3929 ns |  2.981 ns |  1.00 |    0.00 |
+| LevelSwitchOff |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  3.811 ns | 0.3173 ns | 0.4750 ns |  3.824 ns |  1.15 |    0.36 |
+| MinimumLevelOn |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 11.452 ns | 0.2761 ns | 0.4047 ns | 11.353 ns |  3.40 |    0.86 |
+|  LevelSwitchOn |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 13.035 ns | 1.4752 ns | 2.1157 ns | 13.565 ns |  3.86 |    0.93 |
+|                |                 |           |               |           |           |           |           |       |         |
+|            Off | net48 LegacyJit | LegacyJit |      .NET 4.8 |  3.933 ns | 0.3106 ns | 0.4455 ns |  3.822 ns |  1.00 |    0.00 |
+| LevelSwitchOff | net48 LegacyJit | LegacyJit |      .NET 4.8 |  3.647 ns | 0.0646 ns | 0.0884 ns |  3.647 ns |  0.94 |    0.12 |
+| MinimumLevelOn | net48 LegacyJit | LegacyJit |      .NET 4.8 | 14.531 ns | 2.5508 ns | 3.8180 ns | 13.357 ns |  3.77 |    1.31 |
+|  LevelSwitchOn | net48 LegacyJit | LegacyJit |      .NET 4.8 | 11.723 ns | 0.6413 ns | 0.9399 ns | 11.401 ns |  3.01 |    0.28 |
+|                |                 |           |               |           |           |           |           |       |         |
+|            Off |    net48 RyuJit |    RyuJit |      .NET 4.8 |  3.369 ns | 0.0320 ns | 0.0470 ns |  3.366 ns |  1.00 |    0.00 |
+| LevelSwitchOff |    net48 RyuJit |    RyuJit |      .NET 4.8 |  4.793 ns | 0.7618 ns | 1.1403 ns |  4.499 ns |  1.41 |    0.35 |
+| MinimumLevelOn |    net48 RyuJit |    RyuJit |      .NET 4.8 | 13.108 ns | 0.7265 ns | 1.0874 ns | 13.166 ns |  3.91 |    0.30 |
+|  LevelSwitchOn |    net48 RyuJit |    RyuJit |      .NET 4.8 | 11.181 ns | 0.2511 ns | 0.3680 ns | 11.109 ns |  3.32 |    0.11 |

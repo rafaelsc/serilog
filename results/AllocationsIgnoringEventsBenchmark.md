@@ -11,70 +11,70 @@ Intel Core i7-9750H CPU 2.60GHz, 1 CPU, 12 logical and 6 physical cores
 IterationCount=15  LaunchCount=2  WarmupCount=10  
 
 ```
-|               Method |             Job |       Jit |       Runtime |      Mean |     Error |     StdDev |    Median | Ratio | RatioSD |  Gen 0 | Gen 1 | Gen 2 | Allocated |
-|--------------------- |---------------- |---------- |-------------- |----------:|----------:|-----------:|----------:|------:|--------:|-------:|------:|------:|----------:|
-|             LogEmpty |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  2.499 ns | 0.1456 ns |  0.2135 ns |  2.346 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-| LogEmptyWithEnricher |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  2.354 ns | 0.0767 ns |  0.1124 ns |  2.300 ns |  0.95 |    0.12 |      - |     - |     - |         - |
-|               LogMsg |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  4.138 ns | 0.1165 ns |  0.1707 ns |  4.089 ns |  1.67 |    0.14 |      - |     - |     - |         - |
-|         LogMsgWithEx |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  4.413 ns | 0.0539 ns |  0.0790 ns |  4.387 ns |  1.78 |    0.16 |      - |     - |     - |         - |
-|           LogScalar1 |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  6.767 ns | 0.1673 ns |  0.2399 ns |  6.862 ns |  2.73 |    0.20 |      - |     - |     - |         - |
-|           LogScalar2 |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 12.852 ns | 0.7701 ns |  1.0796 ns | 12.198 ns |  5.24 |    0.82 |      - |     - |     - |         - |
-|           LogScalar3 |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 16.243 ns | 0.5385 ns |  0.7894 ns | 16.224 ns |  6.55 |    0.66 |      - |     - |     - |         - |
-|        LogScalarMany |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 20.212 ns | 0.6597 ns |  0.9462 ns | 19.974 ns |  8.19 |    1.02 | 0.0089 |     - |     - |      56 B |
-|     LogScalarStruct1 |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  5.355 ns | 0.0480 ns |  0.0718 ns |  5.357 ns |  2.16 |    0.19 |      - |     - |     - |         - |
-|     LogScalarStruct2 |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  5.827 ns | 0.0513 ns |  0.0735 ns |  5.838 ns |  2.35 |    0.20 |      - |     - |     - |         - |
-|     LogScalarStruct3 |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  8.693 ns | 0.3454 ns |  0.5063 ns |  8.522 ns |  3.49 |    0.24 |      - |     - |     - |         - |
-|  LogScalarStructMany |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 30.248 ns | 0.5646 ns |  0.8451 ns | 30.307 ns | 12.20 |    1.17 | 0.0242 |     - |     - |     152 B |
-|   LogScalarBigStruct |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 20.822 ns | 0.2103 ns |  0.3083 ns | 20.770 ns |  8.39 |    0.75 |      - |     - |     - |         - |
-|        LogDictionary |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 14.857 ns | 2.5367 ns |  3.6381 ns | 13.299 ns |  6.08 |    1.88 | 0.0051 |     - |     - |      32 B |
-|          LogSequence |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 11.156 ns | 0.4845 ns |  0.7101 ns | 10.976 ns |  4.49 |    0.44 | 0.0051 |     - |     - |      32 B |
-|         LogAnonymous |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 11.690 ns | 0.7046 ns |  1.0327 ns | 11.540 ns |  4.71 |    0.58 | 0.0051 |     - |     - |      32 B |
-|              LogMix2 |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 11.566 ns | 0.1068 ns |  0.1531 ns | 11.596 ns |  4.68 |    0.42 |      - |     - |     - |         - |
-|              LogMix3 |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 16.486 ns | 0.7935 ns |  1.1631 ns | 17.070 ns |  6.68 |    1.00 |      - |     - |     - |         - |
-|              LogMix4 |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 29.583 ns | 0.4314 ns |  0.6457 ns | 29.603 ns | 11.91 |    1.00 | 0.0216 |     - |     - |     136 B |
-|              LogMix5 |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 34.658 ns | 0.4356 ns |  0.6520 ns | 34.733 ns | 13.97 |    1.23 | 0.0268 |     - |     - |     168 B |
-|           LogMixMany |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 64.197 ns | 0.8269 ns |  1.2377 ns | 64.032 ns | 25.87 |    2.16 | 0.0446 |     - |     - |     280 B |
-|                      |                 |           |               |           |           |            |           |       |         |        |       |       |           |
-|             LogEmpty | net48 LegacyJit | LegacyJit |      .NET 4.8 |  2.440 ns | 0.0361 ns |  0.0540 ns |  2.442 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-| LogEmptyWithEnricher | net48 LegacyJit | LegacyJit |      .NET 4.8 |  2.444 ns | 0.0509 ns |  0.0731 ns |  2.446 ns |  1.00 |    0.04 |      - |     - |     - |         - |
-|               LogMsg | net48 LegacyJit | LegacyJit |      .NET 4.8 |  4.049 ns | 0.0412 ns |  0.0616 ns |  4.043 ns |  1.66 |    0.04 |      - |     - |     - |         - |
-|         LogMsgWithEx | net48 LegacyJit | LegacyJit |      .NET 4.8 |  4.085 ns | 0.0459 ns |  0.0673 ns |  4.079 ns |  1.67 |    0.04 |      - |     - |     - |         - |
-|           LogScalar1 | net48 LegacyJit | LegacyJit |      .NET 4.8 |  7.594 ns | 0.1436 ns |  0.2149 ns |  7.544 ns |  3.11 |    0.12 |      - |     - |     - |         - |
-|           LogScalar2 | net48 LegacyJit | LegacyJit |      .NET 4.8 | 13.921 ns | 0.4723 ns |  0.6923 ns | 13.383 ns |  5.71 |    0.31 |      - |     - |     - |         - |
-|           LogScalar3 | net48 LegacyJit | LegacyJit |      .NET 4.8 | 17.865 ns | 0.3395 ns |  0.5081 ns | 17.873 ns |  7.33 |    0.29 |      - |     - |     - |         - |
-|        LogScalarMany | net48 LegacyJit | LegacyJit |      .NET 4.8 | 18.753 ns | 0.2207 ns |  0.3303 ns | 18.730 ns |  7.69 |    0.22 | 0.0089 |     - |     - |      56 B |
-|     LogScalarStruct1 | net48 LegacyJit | LegacyJit |      .NET 4.8 |  7.653 ns | 0.4325 ns |  0.6473 ns |  7.664 ns |  3.14 |    0.26 |      - |     - |     - |         - |
-|     LogScalarStruct2 | net48 LegacyJit | LegacyJit |      .NET 4.8 |  7.180 ns | 0.0938 ns |  0.1404 ns |  7.161 ns |  2.94 |    0.07 |      - |     - |     - |         - |
-|     LogScalarStruct3 | net48 LegacyJit | LegacyJit |      .NET 4.8 | 11.164 ns | 0.1071 ns |  0.1602 ns | 11.169 ns |  4.58 |    0.13 |      - |     - |     - |         - |
-|  LogScalarStructMany | net48 LegacyJit | LegacyJit |      .NET 4.8 | 30.695 ns | 1.1966 ns |  1.7911 ns | 30.043 ns | 12.59 |    0.82 | 0.0242 |     - |     - |     152 B |
-|   LogScalarBigStruct | net48 LegacyJit | LegacyJit |      .NET 4.8 | 24.067 ns | 0.6423 ns |  0.9614 ns | 23.876 ns |  9.87 |    0.50 |      - |     - |     - |         - |
-|        LogDictionary | net48 LegacyJit | LegacyJit |      .NET 4.8 | 10.872 ns | 0.7627 ns |  1.1415 ns | 10.424 ns |  4.46 |    0.49 | 0.0051 |     - |     - |      32 B |
-|          LogSequence | net48 LegacyJit | LegacyJit |      .NET 4.8 | 10.700 ns | 0.5827 ns |  0.8541 ns | 10.434 ns |  4.38 |    0.33 | 0.0051 |     - |     - |      32 B |
-|         LogAnonymous | net48 LegacyJit | LegacyJit |      .NET 4.8 | 10.552 ns | 0.1093 ns |  0.1496 ns | 10.543 ns |  4.32 |    0.14 | 0.0051 |     - |     - |      32 B |
-|              LogMix2 | net48 LegacyJit | LegacyJit |      .NET 4.8 | 15.652 ns | 1.4774 ns |  2.0711 ns | 14.655 ns |  6.40 |    0.79 |      - |     - |     - |         - |
-|              LogMix3 | net48 LegacyJit | LegacyJit |      .NET 4.8 | 18.423 ns | 0.7717 ns |  1.0563 ns | 18.316 ns |  7.55 |    0.48 |      - |     - |     - |         - |
-|              LogMix4 | net48 LegacyJit | LegacyJit |      .NET 4.8 | 29.550 ns | 0.9479 ns |  1.3895 ns | 29.517 ns | 12.12 |    0.72 | 0.0216 |     - |     - |     136 B |
-|              LogMix5 | net48 LegacyJit | LegacyJit |      .NET 4.8 | 40.098 ns | 2.3792 ns |  3.5611 ns | 38.722 ns | 16.45 |    1.58 | 0.0268 |     - |     - |     168 B |
-|           LogMixMany | net48 LegacyJit | LegacyJit |      .NET 4.8 | 67.883 ns | 2.2409 ns |  3.1414 ns | 67.648 ns | 27.80 |    1.43 | 0.0446 |     - |     - |     281 B |
-|                      |                 |           |               |           |           |            |           |       |         |        |       |       |           |
-|             LogEmpty |    net48 RyuJit |    RyuJit |      .NET 4.8 |  2.531 ns | 0.0640 ns |  0.0855 ns |  2.497 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-| LogEmptyWithEnricher |    net48 RyuJit |    RyuJit |      .NET 4.8 |  3.040 ns | 0.2513 ns |  0.3761 ns |  2.993 ns |  1.20 |    0.14 |      - |     - |     - |         - |
-|               LogMsg |    net48 RyuJit |    RyuJit |      .NET 4.8 |  4.452 ns | 0.3170 ns |  0.4745 ns |  4.316 ns |  1.79 |    0.16 |      - |     - |     - |         - |
-|         LogMsgWithEx |    net48 RyuJit |    RyuJit |      .NET 4.8 |  4.127 ns | 0.0319 ns |  0.0467 ns |  4.134 ns |  1.63 |    0.06 |      - |     - |     - |         - |
-|           LogScalar1 |    net48 RyuJit |    RyuJit |      .NET 4.8 |  7.624 ns | 0.0759 ns |  0.1113 ns |  7.603 ns |  3.02 |    0.11 |      - |     - |     - |         - |
-|           LogScalar2 |    net48 RyuJit |    RyuJit |      .NET 4.8 | 13.704 ns | 0.3061 ns |  0.4487 ns | 13.845 ns |  5.45 |    0.20 |      - |     - |     - |         - |
-|           LogScalar3 |    net48 RyuJit |    RyuJit |      .NET 4.8 | 17.500 ns | 0.1830 ns |  0.2739 ns | 17.481 ns |  6.91 |    0.28 |      - |     - |     - |         - |
-|        LogScalarMany |    net48 RyuJit |    RyuJit |      .NET 4.8 | 19.207 ns | 0.1278 ns |  0.1874 ns | 19.192 ns |  7.60 |    0.27 | 0.0089 |     - |     - |      56 B |
-|     LogScalarStruct1 |    net48 RyuJit |    RyuJit |      .NET 4.8 |  7.102 ns | 0.0673 ns |  0.0965 ns |  7.096 ns |  2.81 |    0.10 |      - |     - |     - |         - |
-|     LogScalarStruct2 |    net48 RyuJit |    RyuJit |      .NET 4.8 |  7.522 ns | 0.1794 ns |  0.2630 ns |  7.541 ns |  2.96 |    0.17 |      - |     - |     - |         - |
-|     LogScalarStruct3 |    net48 RyuJit |    RyuJit |      .NET 4.8 | 11.446 ns | 0.2942 ns |  0.4312 ns | 11.323 ns |  4.53 |    0.20 |      - |     - |     - |         - |
-|  LogScalarStructMany |    net48 RyuJit |    RyuJit |      .NET 4.8 | 34.035 ns | 1.3720 ns |  1.9234 ns | 33.358 ns | 13.50 |    0.97 | 0.0242 |     - |     - |     152 B |
-|   LogScalarBigStruct |    net48 RyuJit |    RyuJit |      .NET 4.8 | 26.583 ns | 0.8887 ns |  1.2745 ns | 26.906 ns | 10.46 |    0.58 |      - |     - |     - |         - |
-|        LogDictionary |    net48 RyuJit |    RyuJit |      .NET 4.8 | 13.343 ns | 2.6336 ns |  3.7771 ns | 11.847 ns |  5.36 |    1.67 | 0.0051 |     - |     - |      32 B |
-|          LogSequence |    net48 RyuJit |    RyuJit |      .NET 4.8 | 14.237 ns | 2.2206 ns |  3.1847 ns | 13.093 ns |  5.67 |    1.46 | 0.0051 |     - |     - |      32 B |
-|         LogAnonymous |    net48 RyuJit |    RyuJit |      .NET 4.8 | 12.890 ns | 0.9939 ns |  1.3268 ns | 12.224 ns |  5.09 |    0.46 | 0.0051 |     - |     - |      32 B |
-|              LogMix2 |    net48 RyuJit |    RyuJit |      .NET 4.8 | 16.472 ns | 0.9752 ns |  1.3985 ns | 16.027 ns |  6.51 |    0.64 |      - |     - |     - |         - |
-|              LogMix3 |    net48 RyuJit |    RyuJit |      .NET 4.8 | 21.937 ns | 1.0883 ns |  1.5609 ns | 21.720 ns |  8.71 |    0.72 |      - |     - |     - |         - |
-|              LogMix4 |    net48 RyuJit |    RyuJit |      .NET 4.8 | 40.061 ns | 3.5244 ns |  5.2751 ns | 40.055 ns | 16.16 |    2.11 | 0.0216 |     - |     - |     136 B |
-|              LogMix5 |    net48 RyuJit |    RyuJit |      .NET 4.8 | 46.985 ns | 4.3044 ns |  6.3094 ns | 46.486 ns | 18.60 |    2.88 | 0.0268 |     - |     - |     168 B |
-|           LogMixMany |    net48 RyuJit |    RyuJit |      .NET 4.8 | 84.570 ns | 7.9177 ns | 11.3553 ns | 81.050 ns | 32.94 |    3.87 | 0.0446 |     - |     - |     281 B |
+|               Method |             Job |       Jit |       Runtime |      Mean |      Error |     StdDev |    Median | Ratio | RatioSD |  Gen 0 | Gen 1 | Gen 2 | Allocated |
+|--------------------- |---------------- |---------- |-------------- |----------:|-----------:|-----------:|----------:|------:|--------:|-------:|------:|------:|----------:|
+|             LogEmpty |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  2.316 ns |  0.0244 ns |  0.0365 ns |  2.309 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+| LogEmptyWithEnricher |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  2.812 ns |  0.0439 ns |  0.0630 ns |  2.847 ns |  1.21 |    0.03 |      - |     - |     - |         - |
+|               LogMsg |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  4.303 ns |  0.1728 ns |  0.2479 ns |  4.372 ns |  1.86 |    0.12 |      - |     - |     - |         - |
+|         LogMsgWithEx |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  4.179 ns |  0.1159 ns |  0.1625 ns |  4.233 ns |  1.80 |    0.08 |      - |     - |     - |         - |
+|           LogScalar1 |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  6.542 ns |  0.1608 ns |  0.2306 ns |  6.489 ns |  2.82 |    0.11 |      - |     - |     - |         - |
+|           LogScalar2 |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 11.843 ns |  0.0631 ns |  0.0924 ns | 11.821 ns |  5.11 |    0.08 |      - |     - |     - |         - |
+|           LogScalar3 |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 15.386 ns |  0.1501 ns |  0.2152 ns | 15.362 ns |  6.64 |    0.15 |      - |     - |     - |         - |
+|        LogScalarMany |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 22.150 ns |  0.2611 ns |  0.3907 ns | 22.123 ns |  9.57 |    0.24 | 0.0089 |     - |     - |      56 B |
+|     LogScalarStruct1 |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  5.396 ns |  0.0277 ns |  0.0406 ns |  5.396 ns |  2.33 |    0.04 |      - |     - |     - |         - |
+|     LogScalarStruct2 |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  5.756 ns |  0.0383 ns |  0.0549 ns |  5.761 ns |  2.48 |    0.05 |      - |     - |     - |         - |
+|     LogScalarStruct3 |   core31 RyuJit |    RyuJit | .NET Core 3.1 |  8.905 ns |  0.0849 ns |  0.1190 ns |  8.898 ns |  3.85 |    0.08 |      - |     - |     - |         - |
+|  LogScalarStructMany |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 34.145 ns |  2.3311 ns |  3.4891 ns | 33.021 ns | 14.74 |    1.46 | 0.0242 |     - |     - |     152 B |
+|   LogScalarBigStruct |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 21.443 ns |  0.1354 ns |  0.1897 ns | 21.419 ns |  9.26 |    0.18 |      - |     - |     - |         - |
+|        LogDictionary |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 10.992 ns |  0.3029 ns |  0.4439 ns | 11.043 ns |  4.75 |    0.21 | 0.0051 |     - |     - |      32 B |
+|          LogSequence |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 10.971 ns |  0.2572 ns |  0.3688 ns | 10.914 ns |  4.73 |    0.18 | 0.0051 |     - |     - |      32 B |
+|         LogAnonymous |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 10.573 ns |  0.1997 ns |  0.2864 ns | 10.611 ns |  4.56 |    0.15 | 0.0051 |     - |     - |      32 B |
+|              LogMix2 |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 12.227 ns |  0.2140 ns |  0.3000 ns | 12.271 ns |  5.28 |    0.17 |      - |     - |     - |         - |
+|              LogMix3 |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 15.456 ns |  0.3029 ns |  0.4534 ns | 15.432 ns |  6.68 |    0.23 |      - |     - |     - |         - |
+|              LogMix4 |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 30.072 ns |  0.3752 ns |  0.5616 ns | 30.064 ns | 12.99 |    0.33 | 0.0216 |     - |     - |     136 B |
+|              LogMix5 |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 36.035 ns |  0.3576 ns |  0.5352 ns | 35.923 ns | 15.56 |    0.32 | 0.0268 |     - |     - |     168 B |
+|           LogMixMany |   core31 RyuJit |    RyuJit | .NET Core 3.1 | 64.984 ns |  0.7479 ns |  1.0726 ns | 65.052 ns | 28.04 |    0.64 | 0.0446 |     - |     - |     280 B |
+|                      |                 |           |               |           |            |            |           |       |         |        |       |       |           |
+|             LogEmpty | net48 LegacyJit | LegacyJit |      .NET 4.8 |  2.846 ns |  0.0318 ns |  0.0475 ns |  2.849 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+| LogEmptyWithEnricher | net48 LegacyJit | LegacyJit |      .NET 4.8 |  2.862 ns |  0.0421 ns |  0.0603 ns |  2.864 ns |  1.01 |    0.02 |      - |     - |     - |         - |
+|               LogMsg | net48 LegacyJit | LegacyJit |      .NET 4.8 |  4.600 ns |  0.0493 ns |  0.0692 ns |  4.593 ns |  1.62 |    0.04 |      - |     - |     - |         - |
+|         LogMsgWithEx | net48 LegacyJit | LegacyJit |      .NET 4.8 |  3.932 ns |  0.0631 ns |  0.0925 ns |  3.929 ns |  1.38 |    0.04 |      - |     - |     - |         - |
+|           LogScalar1 | net48 LegacyJit | LegacyJit |      .NET 4.8 |  9.329 ns |  0.0638 ns |  0.0955 ns |  9.341 ns |  3.28 |    0.07 |      - |     - |     - |         - |
+|           LogScalar2 | net48 LegacyJit | LegacyJit |      .NET 4.8 | 14.053 ns |  0.3988 ns |  0.5969 ns | 14.058 ns |  4.94 |    0.21 |      - |     - |     - |         - |
+|           LogScalar3 | net48 LegacyJit | LegacyJit |      .NET 4.8 | 18.757 ns |  0.3023 ns |  0.4238 ns | 18.817 ns |  6.59 |    0.15 |      - |     - |     - |         - |
+|        LogScalarMany | net48 LegacyJit | LegacyJit |      .NET 4.8 | 20.311 ns |  0.3764 ns |  0.5633 ns | 20.267 ns |  7.14 |    0.23 | 0.0089 |     - |     - |      56 B |
+|     LogScalarStruct1 | net48 LegacyJit | LegacyJit |      .NET 4.8 |  7.000 ns |  0.0722 ns |  0.1058 ns |  7.003 ns |  2.46 |    0.05 |      - |     - |     - |         - |
+|     LogScalarStruct2 | net48 LegacyJit | LegacyJit |      .NET 4.8 |  7.774 ns |  0.0624 ns |  0.0915 ns |  7.760 ns |  2.73 |    0.05 |      - |     - |     - |         - |
+|     LogScalarStruct3 | net48 LegacyJit | LegacyJit |      .NET 4.8 | 11.392 ns |  0.2002 ns |  0.2872 ns | 11.349 ns |  4.00 |    0.11 |      - |     - |     - |         - |
+|  LogScalarStructMany | net48 LegacyJit | LegacyJit |      .NET 4.8 | 31.770 ns |  1.1102 ns |  1.6617 ns | 31.356 ns | 11.17 |    0.63 | 0.0242 |     - |     - |     152 B |
+|   LogScalarBigStruct | net48 LegacyJit | LegacyJit |      .NET 4.8 | 23.857 ns |  0.2008 ns |  0.2749 ns | 23.902 ns |  8.38 |    0.13 |      - |     - |     - |         - |
+|        LogDictionary | net48 LegacyJit | LegacyJit |      .NET 4.8 | 10.820 ns |  0.5417 ns |  0.7770 ns | 10.541 ns |  3.80 |    0.27 | 0.0051 |     - |     - |      32 B |
+|          LogSequence | net48 LegacyJit | LegacyJit |      .NET 4.8 | 10.436 ns |  0.0894 ns |  0.1338 ns | 10.421 ns |  3.67 |    0.07 | 0.0051 |     - |     - |      32 B |
+|         LogAnonymous | net48 LegacyJit | LegacyJit |      .NET 4.8 | 10.369 ns |  0.1112 ns |  0.1664 ns | 10.343 ns |  3.64 |    0.08 | 0.0051 |     - |     - |      32 B |
+|              LogMix2 | net48 LegacyJit | LegacyJit |      .NET 4.8 | 14.089 ns |  0.2268 ns |  0.3395 ns | 14.095 ns |  4.95 |    0.14 |      - |     - |     - |         - |
+|              LogMix3 | net48 LegacyJit | LegacyJit |      .NET 4.8 | 19.073 ns |  0.6998 ns |  1.0474 ns | 19.264 ns |  6.70 |    0.35 |      - |     - |     - |         - |
+|              LogMix4 | net48 LegacyJit | LegacyJit |      .NET 4.8 | 29.655 ns |  0.6842 ns |  1.0240 ns | 29.510 ns | 10.42 |    0.42 | 0.0216 |     - |     - |     136 B |
+|              LogMix5 | net48 LegacyJit | LegacyJit |      .NET 4.8 | 36.288 ns |  0.9229 ns |  1.3235 ns | 35.694 ns | 12.75 |    0.58 | 0.0268 |     - |     - |     168 B |
+|           LogMixMany | net48 LegacyJit | LegacyJit |      .NET 4.8 | 67.375 ns |  1.9826 ns |  2.8434 ns | 67.286 ns | 23.66 |    1.03 | 0.0446 |     - |     - |     281 B |
+|                      |                 |           |               |           |            |            |           |       |         |        |       |       |           |
+|             LogEmpty |    net48 RyuJit |    RyuJit |      .NET 4.8 |  2.850 ns |  0.0410 ns |  0.0589 ns |  2.847 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+| LogEmptyWithEnricher |    net48 RyuJit |    RyuJit |      .NET 4.8 |  2.853 ns |  0.0361 ns |  0.0540 ns |  2.851 ns |  1.00 |    0.03 |      - |     - |     - |         - |
+|               LogMsg |    net48 RyuJit |    RyuJit |      .NET 4.8 |  4.644 ns |  0.0505 ns |  0.0691 ns |  4.648 ns |  1.63 |    0.04 |      - |     - |     - |         - |
+|         LogMsgWithEx |    net48 RyuJit |    RyuJit |      .NET 4.8 |  3.951 ns |  0.0524 ns |  0.0734 ns |  3.961 ns |  1.39 |    0.04 |      - |     - |     - |         - |
+|           LogScalar1 |    net48 RyuJit |    RyuJit |      .NET 4.8 |  9.408 ns |  0.0608 ns |  0.0910 ns |  9.425 ns |  3.30 |    0.08 |      - |     - |     - |         - |
+|           LogScalar2 |    net48 RyuJit |    RyuJit |      .NET 4.8 | 13.857 ns |  0.3229 ns |  0.4833 ns | 13.756 ns |  4.88 |    0.17 |      - |     - |     - |         - |
+|           LogScalar3 |    net48 RyuJit |    RyuJit |      .NET 4.8 | 18.352 ns |  0.6063 ns |  0.8887 ns | 17.979 ns |  6.45 |    0.28 |      - |     - |     - |         - |
+|        LogScalarMany |    net48 RyuJit |    RyuJit |      .NET 4.8 | 20.422 ns |  0.5738 ns |  0.8411 ns | 20.259 ns |  7.16 |    0.37 | 0.0089 |     - |     - |      56 B |
+|     LogScalarStruct1 |    net48 RyuJit |    RyuJit |      .NET 4.8 |  7.472 ns |  0.2219 ns |  0.3183 ns |  7.550 ns |  2.62 |    0.14 |      - |     - |     - |         - |
+|     LogScalarStruct2 |    net48 RyuJit |    RyuJit |      .NET 4.8 |  8.318 ns |  0.3916 ns |  0.5617 ns |  8.100 ns |  2.92 |    0.21 |      - |     - |     - |         - |
+|     LogScalarStruct3 |    net48 RyuJit |    RyuJit |      .NET 4.8 | 11.288 ns |  0.1418 ns |  0.1941 ns | 11.266 ns |  3.97 |    0.11 |      - |     - |     - |         - |
+|  LogScalarStructMany |    net48 RyuJit |    RyuJit |      .NET 4.8 | 31.152 ns |  0.8449 ns |  1.2385 ns | 30.943 ns | 10.94 |    0.50 | 0.0242 |     - |     - |     152 B |
+|   LogScalarBigStruct |    net48 RyuJit |    RyuJit |      .NET 4.8 | 24.160 ns |  0.3282 ns |  0.4601 ns | 24.061 ns |  8.49 |    0.25 |      - |     - |     - |         - |
+|        LogDictionary |    net48 RyuJit |    RyuJit |      .NET 4.8 | 11.281 ns |  0.1039 ns |  0.1524 ns | 11.255 ns |  3.96 |    0.09 | 0.0051 |     - |     - |      32 B |
+|          LogSequence |    net48 RyuJit |    RyuJit |      .NET 4.8 | 23.452 ns |  5.0102 ns |  7.4991 ns | 22.571 ns |  7.87 |    2.26 | 0.0051 |     - |     - |      32 B |
+|         LogAnonymous |    net48 RyuJit |    RyuJit |      .NET 4.8 | 25.658 ns |  3.6008 ns |  5.3894 ns | 26.798 ns |  9.19 |    1.80 | 0.0051 |     - |     - |      32 B |
+|              LogMix2 |    net48 RyuJit |    RyuJit |      .NET 4.8 | 17.166 ns |  1.5232 ns |  2.2798 ns | 17.660 ns |  6.02 |    0.79 |      - |     - |     - |         - |
+|              LogMix3 |    net48 RyuJit |    RyuJit |      .NET 4.8 | 17.521 ns |  0.1908 ns |  0.2675 ns | 17.476 ns |  6.15 |    0.14 |      - |     - |     - |         - |
+|              LogMix4 |    net48 RyuJit |    RyuJit |      .NET 4.8 | 42.327 ns |  1.7445 ns |  2.6110 ns | 41.947 ns | 14.89 |    0.99 | 0.0216 |     - |     - |     136 B |
+|              LogMix5 |    net48 RyuJit |    RyuJit |      .NET 4.8 | 59.430 ns |  7.3287 ns | 10.7423 ns | 56.777 ns | 20.95 |    3.80 | 0.0268 |     - |     - |     168 B |
+|           LogMixMany |    net48 RyuJit |    RyuJit |      .NET 4.8 | 87.269 ns | 12.6780 ns | 18.5833 ns | 77.532 ns | 30.77 |    6.26 | 0.0446 |     - |     - |     281 B |
