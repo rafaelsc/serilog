@@ -49,8 +49,8 @@ namespace Serilog.Parsing
 
         static MessageTemplateToken[] Tokenize(ReadOnlySpan<char> messageTemplate)
         {
-            var tokens = new List<MessageTemplateToken>(2);
-            var reusableAccumInstance = new StringBuilder(messageTemplate.Length/4);
+            var tokens = new List<MessageTemplateToken>();
+            var reusableAccumInstance = new StringBuilder();
 
             var nextIndex = 0;
             while (true)
