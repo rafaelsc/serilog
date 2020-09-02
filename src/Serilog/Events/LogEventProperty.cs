@@ -35,7 +35,7 @@ namespace Serilog.Events
             EnsureValidName(name);
 
             Name = name;
-            Value = value ?? throw new ArgumentNullException(nameof(value));
+            Value = value;
         }
 
         /// <summary>
