@@ -56,15 +56,20 @@ namespace Serilog.Events
             if (output is null) throw new ArgumentNullException(nameof(output));
 
             output.Write('[');
+
             var allButLast = _elements.Length - 1;
             for (var i = 0; i < allButLast; ++i)
             {
-                _elements[i].Render(output, format, formatProvider);
+                var property = _elements[i];
+                property.Render(output, format, formatProvider);
                 output.Write(", ");
             }
 
             if (_elements.Length > 0)
-                _elements[_elements.Length - 1].Render(output, format, formatProvider);
+            {
+                var last = _elements[_elements.Length - 1];
+                last.Render(output, format, formatProvider);
+            }
 
             output.Write(']');
         }

@@ -122,7 +122,9 @@ namespace Serilog.Formatting.Json
             if (output is null) throw new ArgumentNullException(nameof(output));
 
             if (!_omitEnclosingObject)
+            {
                 output.Write("{");
+            }
 
             var delim = "";
             WriteTimestamp(logEvent.Timestamp, ref delim, output);
@@ -135,10 +137,14 @@ namespace Serilog.Formatting.Json
             }
 
             if (logEvent.Exception != null)
+            {
                 WriteException(logEvent.Exception, ref delim, output);
+            }
 
             if (logEvent.Properties.Count != 0)
+            {
                 WriteProperties(logEvent.Properties, output);
+            }
 
             var tokensWithFormat = logEvent.MessageTemplate.AllProperties
                 .Where(pt => pt.Format != null)

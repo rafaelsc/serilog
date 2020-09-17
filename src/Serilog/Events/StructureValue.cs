@@ -73,6 +73,7 @@ namespace Serilog.Events
                 output.Write(' ');
             }
             output.Write("{ ");
+
             var allButLast = _properties.Length - 1;
             for (var i = 0; i < allButLast; i++)
             {
