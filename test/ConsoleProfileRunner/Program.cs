@@ -11,7 +11,7 @@ namespace ConsoleProfileRunner
 {
     class Program
     {
-        const int TodoMainLoopCount = 2_000_000;
+        const int TodoMainLoopCount = 1;
         //static readonly Random Rnd = new Random(42);
 
         static void Main(string[] args)
@@ -19,14 +19,21 @@ namespace ConsoleProfileRunner
             Console.WriteLine("Starting...");
 
             //(new Program()).SimulateAAppWithSerilogOn();
-            var b = new MessageTemplateRenderingBenchmark();
+            //var b = new MessageTemplateRenderingBenchmark();
+            //for (int i = 0; i < TodoMainLoopCount; i++)
+            //{
+            //    b.NoMessage();
+            //    b.NoProperties();
+            //    b.OneSimpleProperties();
+            //    b.VariedProperties();
+            //    b.ComplexProperties();
+            //}
+
+            var b = new PipelineBenchmark();
             for (int i = 0; i < TodoMainLoopCount; i++)
             {
-                b.NoMessage();
-                b.NoProperties();
-                b.OneSimpleProperties();
-                b.VariedProperties();
-                b.ComplexProperties();
+                b.EmitLogEventWith1Enrich1ForContext1LogContext();
+                b.EmitLogEventWith10Enrich10ForContext10LogContext();
             }
 
             Console.WriteLine("Ended!");
