@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Serilog.Capturing;
+using Serilog.Context;
 using Serilog.Core.Enrichers;
 using Serilog.Core.Pipeline;
 using Serilog.Debugging;
@@ -403,7 +404,8 @@ namespace Serilog.Core
 
             _messageTemplateProcessor.Process(messageTemplate, propertyValues, out var parsedTemplate, out var boundProperties);
 
-            var logEvent = new LogEvent(DateTimeOffset.Now, level, exception, parsedTemplate, boundProperties, _numOfEnrichers);
+            var numOfPropertiesViaEnrichers = _numOfEnrichers + LogContext.Count;
+            var logEvent = new LogEvent(DateTimeOffset.Now, level, exception, parsedTemplate, boundProperties, numOfPropertiesViaEnrichers);
             Dispatch(logEvent);
         }
 
