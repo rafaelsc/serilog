@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2015 Serilog Contributors
+// Copyright 2013-2015 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ using System.Globalization;
 using System.IO;
 using Serilog.Events;
 using Serilog.Rendering;
+using Serilog.Support;
 
 namespace Serilog.Parsing
 {
@@ -64,8 +65,7 @@ namespace Serilog.Parsing
             _rawText = rawText ?? throw new ArgumentNullException(nameof(rawText));
             Alignment = alignment;
 
-            if (int.TryParse(PropertyName, NumberStyles.None, CultureInfo.InvariantCulture, out var position) &&
-                position >= 0)
+            if (propertyName.Length > 0 && char.IsDigit(propertyName[0]) && IntHelper.TryParse(PropertyName, out var position) && position >= 0)
             {
                 _position = position;
             }
@@ -86,8 +86,8 @@ namespace Serilog.Parsing
         /// <exception cref="ArgumentNullException">When <paramref name="output"/> is <code>null</code></exception>
         public override void Render(IReadOnlyDictionary<string, LogEventPropertyValue> properties, TextWriter output, IFormatProvider formatProvider = null)
         {
-            if (properties == null) throw new ArgumentNullException(nameof(properties));
-            if (output == null) throw new ArgumentNullException(nameof(output));
+            if (properties is null) throw new ArgumentNullException(nameof(properties));
+            if (output is null) throw new ArgumentNullException(nameof(output));
 
             MessageTemplateRenderer.RenderPropertyToken(this, properties, output, formatProvider, isLiteral: false, isJson: false);
         }
@@ -126,7 +126,7 @@ namespace Serilog.Parsing
         /// <returns>True if the property is positional, otherwise false.</returns>
         public bool TryGetPositionalValue(out int position)
         {
-            if (_position == null)
+            if (_position is null)
             {
                 position = 0;
                 return false;

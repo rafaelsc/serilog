@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 // Copyright 2013-2015 Serilog Contributors
 //
@@ -35,7 +35,7 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException">When <paramref name="properties"/> is <code>null</code></exception>
         public StructureValue(IEnumerable<LogEventProperty> properties, string typeTag = null)
         {
-            if (properties == null) throw new ArgumentNullException(nameof(properties));
+            if (properties is null) throw new ArgumentNullException(nameof(properties));
 
             TypeTag = typeTag;
             _properties = properties.ToArray();
@@ -65,7 +65,7 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException">When <paramref name="output"/> is <code>null</code></exception>
         public override void Render(TextWriter output, string format = null, IFormatProvider formatProvider = null)
         {
-            if (output == null) throw new ArgumentNullException(nameof(output));
+            if (output is null) throw new ArgumentNullException(nameof(output));
 
             if (TypeTag != null)
             {
@@ -73,6 +73,7 @@ namespace Serilog.Events
                 output.Write(' ');
             }
             output.Write("{ ");
+
             var allButLast = _properties.Length - 1;
             for (var i = 0; i < allButLast; i++)
             {

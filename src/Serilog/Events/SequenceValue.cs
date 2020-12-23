@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2015 Serilog Contributors
+// Copyright 2013-2015 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException">When <paramref name="elements"/> is <code>null</code></exception>
         public SequenceValue(IEnumerable<LogEventPropertyValue> elements)
         {
-            if (elements == null) throw new ArgumentNullException(nameof(elements));
+            if (elements is null) throw new ArgumentNullException(nameof(elements));
 
             _elements = elements.ToArray();
         }
@@ -53,18 +53,23 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException">When <paramref name="output"/> is <code>null</code></exception>
         public override void Render(TextWriter output, string format = null, IFormatProvider formatProvider = null)
         {
-            if (output == null) throw new ArgumentNullException(nameof(output));
+            if (output is null) throw new ArgumentNullException(nameof(output));
 
             output.Write('[');
+
             var allButLast = _elements.Length - 1;
             for (var i = 0; i < allButLast; ++i)
             {
-                _elements[i].Render(output, format, formatProvider);
+                var property = _elements[i];
+                property.Render(output, format, formatProvider);
                 output.Write(", ");
             }
 
             if (_elements.Length > 0)
-                _elements[_elements.Length - 1].Render(output, format, formatProvider);
+            {
+                var last = _elements[_elements.Length - 1];
+                last.Render(output, format, formatProvider);
+            }
 
             output.Write(']');
         }

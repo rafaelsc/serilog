@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2015 Serilog Contributors
+// Copyright 2013-2015 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException">When <paramref name="elements"/> is <code>null</code></exception>
         public DictionaryValue(IEnumerable<KeyValuePair<ScalarValue, LogEventPropertyValue>> elements)
         {
-            if (elements == null) throw new ArgumentNullException(nameof(elements));
+            if (elements is null) throw new ArgumentNullException(nameof(elements));
 
             Elements = elements.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
@@ -51,7 +51,7 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException">When <paramref name="output"/> is <code>null</code></exception>
         public override void Render(TextWriter output, string format = null, IFormatProvider formatProvider = null)
         {
-            if (output == null) throw new ArgumentNullException(nameof(output));
+            if (output is null) throw new ArgumentNullException(nameof(output));
 
             output.Write('[');
             var delim = "(";

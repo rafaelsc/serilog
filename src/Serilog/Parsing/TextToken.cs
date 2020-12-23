@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2015 Serilog Contributors
+// Copyright 2013-2015 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,6 +26,11 @@ namespace Serilog.Parsing
     public sealed class TextToken : MessageTemplateToken
     {
         /// <summary>
+        /// A reference for a Empty TextToken
+        /// </summary>
+        public static TextToken Empty { get; } = new TextToken(string.Empty, 0);
+
+        /// <summary>
         /// Construct a <see cref="TextToken"/>.
         /// </summary>
         /// <param name="text">The text of the token.</param>
@@ -51,7 +56,7 @@ namespace Serilog.Parsing
         /// <exception cref="ArgumentNullException">When <paramref name="output"/> is <code>null</code></exception>
         public override void Render(IReadOnlyDictionary<string, LogEventPropertyValue> properties, TextWriter output, IFormatProvider formatProvider = null)
         {
-            if (output == null) throw new ArgumentNullException(nameof(output));
+            if (output is null) throw new ArgumentNullException(nameof(output));
 
             MessageTemplateRenderer.RenderTextToken(this, output);
         }

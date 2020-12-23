@@ -122,7 +122,7 @@ namespace Serilog.Configuration
             LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum,
             LoggingLevelSwitch levelSwitch = null)
         {
-            if (configureLogger == null) throw new ArgumentNullException(nameof(configureLogger));
+            if (configureLogger is null) throw new ArgumentNullException(nameof(configureLogger));
 
             var lc = new LoggerConfiguration().MinimumLevel.Is(LevelAlias.Minimum);
             configureLogger(lc);
@@ -154,7 +154,7 @@ namespace Serilog.Configuration
             ILogger logger,
             LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum)
         {
-            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (logger is null) throw new ArgumentNullException(nameof(logger));
 
             if (logger is Logger concreteLogger && concreteLogger.HasOverrideMap)
             {
@@ -177,8 +177,8 @@ namespace Serilog.Configuration
         /// <exception cref="ArgumentNullException">When <paramref name="configureSink"/> is <code>null</code></exception>
         public LoggerConfiguration Conditional(Func<LogEvent, bool> condition, Action<LoggerSinkConfiguration> configureSink)
         {
-            if (condition == null) throw new ArgumentNullException(nameof(condition));
-            if (configureSink == null) throw new ArgumentNullException(nameof(configureSink));
+            if (condition is null) throw new ArgumentNullException(nameof(condition));
+            if (configureSink is null) throw new ArgumentNullException(nameof(configureSink));
 
             // Level aliases and so on don't need to be accepted here; if the user wants both a condition and leveling, they
             // can specify `restrictedToMinimumLevel` etc in the wrapped sink configuration.
@@ -224,9 +224,9 @@ namespace Serilog.Configuration
             LogEventLevel restrictedToMinimumLevel,
             LoggingLevelSwitch levelSwitch)
         {
-            if (loggerSinkConfiguration == null) throw new ArgumentNullException(nameof(loggerSinkConfiguration));
-            if (wrapSink == null) throw new ArgumentNullException(nameof(wrapSink));
-            if (configureWrappedSink == null) throw new ArgumentNullException(nameof(configureWrappedSink));
+            if (loggerSinkConfiguration is null) throw new ArgumentNullException(nameof(loggerSinkConfiguration));
+            if (wrapSink is null) throw new ArgumentNullException(nameof(wrapSink));
+            if (configureWrappedSink is null) throw new ArgumentNullException(nameof(configureWrappedSink));
 
             var sinksToWrap = new List<ILogEventSink>();
 

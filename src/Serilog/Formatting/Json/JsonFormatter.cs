@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2015 Serilog Contributors
+// Copyright 2013-2015 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -118,11 +118,13 @@ namespace Serilog.Formatting.Json
         /// <exception cref="ArgumentNullException">When <paramref name="output"/> is <code>null</code></exception>
         public void Format(LogEvent logEvent, TextWriter output)
         {
-            if (logEvent == null) throw new ArgumentNullException(nameof(logEvent));
-            if (output == null) throw new ArgumentNullException(nameof(output));
+            if (logEvent is null) throw new ArgumentNullException(nameof(logEvent));
+            if (output is null) throw new ArgumentNullException(nameof(output));
 
             if (!_omitEnclosingObject)
+            {
                 output.Write("{");
+            }
 
             var delim = "";
             WriteTimestamp(logEvent.Timestamp, ref delim, output);
@@ -135,13 +137,16 @@ namespace Serilog.Formatting.Json
             }
 
             if (logEvent.Exception != null)
+            {
                 WriteException(logEvent.Exception, ref delim, output);
+            }
 
             if (logEvent.Properties.Count != 0)
+            {
                 WriteProperties(logEvent.Properties, output);
+            }
 
-            var tokensWithFormat = logEvent.MessageTemplate.Tokens
-                .OfType<PropertyToken>()
+            var tokensWithFormat = logEvent.MessageTemplate.AllProperties
                 .Where(pt => pt.Format != null)
                 .GroupBy(pt => pt.PropertyName)
                 .ToArray();
@@ -168,8 +173,8 @@ namespace Serilog.Formatting.Json
         [Obsolete(ExtensionPointObsoletionMessage)]
         protected void AddLiteralWriter(Type type, Action<object, TextWriter> writer)
         {
-            if (type == null) throw new ArgumentNullException(nameof(type));
-            if (writer == null) throw new ArgumentNullException(nameof(writer));
+            if (type is null) throw new ArgumentNullException(nameof(type));
+            if (writer is null) throw new ArgumentNullException(nameof(writer));
 
             _literalWriters[type] = (v, _, w) => writer(v, w);
         }
@@ -372,7 +377,7 @@ namespace Serilog.Formatting.Json
 
         void WriteLiteral(object value, TextWriter output, bool forceQuotation = false)
         {
-            if (value == null)
+            if (value is null)
             {
                 output.Write("null");
                 return;
@@ -441,7 +446,7 @@ namespace Serilog.Formatting.Json
         [Obsolete("Use JsonValueFormatter.WriteQuotedJsonString() instead."), EditorBrowsable(EditorBrowsableState.Never)]
         public static string Escape(string s)
         {
-            if (s == null) return null;
+            if (s is null) return null;
 
             var escapedResult = new StringWriter();
             JsonValueFormatter.WriteQuotedJsonString(s, escapedResult);

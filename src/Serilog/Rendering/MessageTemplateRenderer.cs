@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2017 Serilog Contributors
+// Copyright 2013-2017 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,35 +33,39 @@ namespace Serilog.Rendering
 
             if (format != null)
             {
-                for (var i = 0; i < format.Length; ++i)
+                foreach (var c in format)
                 {
-                    if (format[i] == 'l')
+                    if (c == 'l')
+                    {
                         isLiteral = true;
-                    else if (format[i] == 'j')
+                    }
+                    else if (c == 'j')
+                    {
                         isJson = true;
+                    }
                 }
             }
 
-            for (var ti = 0; ti < messageTemplate.TokenArray.Length; ++ti)
+            foreach (var token in messageTemplate.TokenArray)
             {
-                var token = messageTemplate.TokenArray[ti];
                 if (token is TextToken tt)
                 {
                     RenderTextToken(tt, output);
                 }
-                else
+                else if(token is PropertyToken pt)
                 {
-                    var pt = (PropertyToken)token;
                     RenderPropertyToken(pt, properties, output, formatProvider, isLiteral, isJson);
                 }
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void RenderTextToken(TextToken tt, TextWriter output)
         {
             output.Write(tt.Text);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void RenderPropertyToken(PropertyToken pt, IReadOnlyDictionary<string, LogEventPropertyValue> properties, TextWriter output, IFormatProvider formatProvider, bool isLiteral, bool isJson)
         {
             if (!properties.TryGetValue(pt.PropertyName, out var propertyValue))
@@ -89,13 +93,14 @@ namespace Serilog.Rendering
             Padding.Apply(output, value, pt.Alignment.Value);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void RenderValue(LogEventPropertyValue propertyValue, bool literal, bool json, TextWriter output, string format, IFormatProvider formatProvider)
         {
             if (literal && propertyValue is ScalarValue sv && sv.Value is string str)
             {
                 output.Write(str);
             }
-            else if (json && format == null)
+            else if (json && format is null)
             {
                 JsonValueFormatter.Format(propertyValue, output);
             }

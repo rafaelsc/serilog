@@ -85,7 +85,7 @@ namespace Serilog.Settings.KeyValuePairs
 
         public void Configure(LoggerConfiguration loggerConfiguration)
         {
-            if (loggerConfiguration == null) throw new ArgumentNullException(nameof(loggerConfiguration));
+            if (loggerConfiguration is null) throw new ArgumentNullException(nameof(loggerConfiguration));
 
             var directives = _settings
                 .Where(kvp => _supportedDirectives.Any(kvp.Key.StartsWith))
@@ -234,7 +234,7 @@ namespace Serilog.Settings.KeyValuePairs
                 {
                     var call = (from p in target.GetParameters().Skip(1)
                                 let directive = directiveInfo.FirstOrDefault(s => s.ArgumentName == p.Name)
-                                select directive == null ? p.DefaultValue : ConvertOrLookupByName(directive.Value, p.ParameterType, declaredSwitches)).ToList();
+                                select directive is null ? p.DefaultValue : ConvertOrLookupByName(directive.Value, p.ParameterType, declaredSwitches)).ToList();
 
                     call.Insert(0, loggerConfigMethod);
 

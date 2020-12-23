@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2015 Serilog Contributors
+// Copyright 2013-2015 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,37 +54,36 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException">When <paramref name="output"/> is <code>null</code></exception>
         internal static void Render(object value, TextWriter output, string format = null, IFormatProvider formatProvider = null)
         {
-            if (output == null) throw new ArgumentNullException(nameof(output));
+            if (output is null) throw new ArgumentNullException(nameof(output));
 
-            if (value == null)
+            switch (value)
             {
-                output.Write("null");
-                return;
-            }
-
-            if (value is string s)
-            {
-                if (format != "l")
+                case null:
                 {
-                    output.Write("\"");
-                    output.Write(s.Replace("\"", "\\\""));
-                    output.Write("\"");
-                }
-                else
-                {
-                    output.Write(s);
-                }
-                return;
-            }
-
-            if (formatProvider != null)
-            {
-                var custom = (ICustomFormatter)formatProvider.GetFormat(typeof(ICustomFormatter));
-                if (custom != null)
-                {
-                    output.Write(custom.Format(format, value, formatProvider));
+                    output.Write("null");
                     return;
                 }
+                case string s:
+                {
+                    if (format != "l")
+                    {
+                        output.Write("\"");
+                        output.Write(s.Replace("\"", "\\\""));
+                        output.Write("\"");
+                    }
+                    else
+                    {
+                        output.Write(s);
+                    }
+                    return;
+                }
+            }
+
+            var custom = (ICustomFormatter) formatProvider?.GetFormat(typeof(ICustomFormatter));
+            if (custom != null)
+            {
+                output.Write(custom.Format(format, value, formatProvider));
+                return;
             }
 
             if (value is IFormattable f)
@@ -113,7 +112,7 @@ namespace Serilog.Events
         /// <returns>The instance's hash code.</returns>
         public override int GetHashCode()
         {
-            if (Value == null) return 0;
+            if (Value is null) return 0;
             return Value.GetHashCode();
         }
     }

@@ -40,7 +40,7 @@ namespace Serilog.Tests
         public static IEnumerable<object[]> DefaultInterfaceMethods =>
             typeof(ILogger).GetMethods()
                 .Where(mi => mi.GetMethodBody() != null)
-                .Where(mi => mi.GetCustomAttribute(typeof(CustomDefaultMethodImplementationAttribute)) == null)
+                .Where(mi => mi.GetCustomAttribute(typeof(CustomDefaultMethodImplementationAttribute)) is null)
                 .Where(mi => typeof(Logger).GetInterfaceMap(typeof(ILogger)).InterfaceMethods.Contains(mi))
                 .Select(mi => new object[] { mi });
 
@@ -117,6 +117,12 @@ namespace Serilog.Tests
                         var classMethodDef = classMember is MethodInfo mc ? mc.IsGenericMethod ? mc.GetGenericMethodDefinition() : mc : null;
 
                         if (ifaceMethodDef == classMethodDef)
+                        {
+                            continue;
+                        }
+
+                        var isSameSignature = ifaceMethodDef.IsPrivate && classMethodDef.IsPrivate && ifaceMethodDef.ToString() == classMethodDef.ToString();
+                        if (isSameSignature)
                         {
                             continue;
                         }

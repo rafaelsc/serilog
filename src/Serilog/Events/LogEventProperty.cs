@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2015 Serilog Contributors
+// Copyright 2013-2015 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,7 +32,6 @@ namespace Serilog.Events
         /// <exception cref="ArgumentNullException">When <paramref name="value"/> is <code>null</code></exception>
         public LogEventProperty(string name, LogEventPropertyValue value)
         {
-            if (value == null) throw new ArgumentNullException(nameof(value));
             EnsureValidName(name);
 
             Name = name;
@@ -44,7 +43,7 @@ namespace Serilog.Events
         /// </summary>
         /// <param name="property">The existing property.</param>
         /// <exception cref="ArgumentNullException">When <paramref name="property"/> is <code>default</code></exception>
-        internal LogEventProperty(EventProperty property)
+        internal LogEventProperty(in EventProperty property)
         {
             if (property.Equals(EventProperty.None)) throw new ArgumentNullException(nameof(property));
 
@@ -74,7 +73,7 @@ namespace Serilog.Events
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void EnsureValidName(string name)
         {
-            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (name is null) throw new ArgumentNullException(nameof(name));
             if (!IsValidName(name)) throw new ArgumentException($"Property {nameof(name)} must not be empty or whitespace.", nameof(name));
         }
     }

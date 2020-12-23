@@ -42,15 +42,18 @@ namespace Serilog.Filters
         /// <exception cref="ArgumentNullException">When <paramref name="source"/> is <code>null</code></exception>
         public static Func<LogEvent, bool> FromSource(string source)
         {
-            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (source is null) throw new ArgumentNullException(nameof(source));
 
             return WithProperty<string>(
                 Constants.SourceContextPropertyName,
                 s => s != null && s
 #if FEATURE_SPAN
-                  .AsSpan()
+                    .AsSpan().StartsWith(source.AsSpan())
+#else
+                    .StartsWith(source)
 #endif
-                  .StartsWith(source) && (s.Length == source.Length || s[source.Length] == '.'));
+                    && (s.Length == source.Length || s[source.Length] == '.'));
+
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace Serilog.Filters
         /// <exception cref="ArgumentNullException">When <paramref name="propertyName"/> is <code>null</code></exception>
         public static Func<LogEvent, bool> WithProperty(string propertyName)
         {
-            if (propertyName == null) throw new ArgumentNullException(nameof(propertyName));
+            if (propertyName is null) throw new ArgumentNullException(nameof(propertyName));
 
             return e => e.Properties.ContainsKey(propertyName);
         }
@@ -77,7 +80,7 @@ namespace Serilog.Filters
         /// <exception cref="ArgumentNullException">When <paramref name="propertyName"/> is <code>null</code></exception>
         public static Func<LogEvent, bool> WithProperty(string propertyName, object scalarValue)
         {
-            if (propertyName == null) throw new ArgumentNullException(nameof(propertyName));
+            if (propertyName is null) throw new ArgumentNullException(nameof(propertyName));
 
             var scalar = new ScalarValue(scalarValue);
             return e =>
@@ -98,8 +101,8 @@ namespace Serilog.Filters
         /// <exception cref="ArgumentNullException">When <paramref name="predicate"/> is <code>null</code></exception>
         public static Func<LogEvent, bool> WithProperty<TScalar>(string propertyName, Func<TScalar, bool> predicate)
         {
-            if (propertyName == null) throw new ArgumentNullException(nameof(propertyName));
-            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+            if (propertyName is null) throw new ArgumentNullException(nameof(propertyName));
+            if (predicate is null) throw new ArgumentNullException(nameof(predicate));
 
             return e =>
             {
