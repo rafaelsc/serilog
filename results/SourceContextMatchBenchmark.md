@@ -13,17 +13,17 @@ Jit=RyuJit  IterationCount=15  LaunchCount=2
 WarmupCount=10  
 
 ```
-|                             Method |    Job |       Runtime |       Mean |    Error |   StdDev |
-|----------------------------------- |------- |-------------- |-----------:|---------:|---------:|
-|          Filter_MatchingFromSource | core22 | .NET Core 2.2 | 5,742.7 ns | 39.47 ns | 59.07 ns |
-|                  Logger_ForContext | core22 | .NET Core 2.2 | 3,349.0 ns | 17.40 ns | 26.04 ns |
-| LevelOverrideMap_GetEffectiveLevel | core22 | .NET Core 2.2 | 2,777.1 ns | 16.13 ns | 24.15 ns |
-|          Filter_MatchingFromSource | core31 | .NET Core 3.1 | 2,327.5 ns | 17.36 ns | 25.98 ns |
-|                  Logger_ForContext | core31 | .NET Core 3.1 |   653.5 ns |  5.78 ns |  8.66 ns |
-| LevelOverrideMap_GetEffectiveLevel | core31 | .NET Core 3.1 |   139.9 ns |  3.36 ns |  4.92 ns |
-|          Filter_MatchingFromSource |  net48 |      .NET 4.8 | 6,413.0 ns | 37.43 ns | 56.03 ns |
-|                  Logger_ForContext |  net48 |      .NET 4.8 | 3,288.1 ns | 16.84 ns | 25.20 ns |
-| LevelOverrideMap_GetEffectiveLevel |  net48 |      .NET 4.8 | 2,774.8 ns | 20.14 ns | 30.15 ns |
-|          Filter_MatchingFromSource |  net50 | .NET Core 5.0 | 2,182.8 ns | 18.37 ns | 27.50 ns |
-|                  Logger_ForContext |  net50 | .NET Core 5.0 |   518.3 ns |  6.08 ns |  9.11 ns |
-| LevelOverrideMap_GetEffectiveLevel |  net50 | .NET Core 5.0 |   140.6 ns |  2.72 ns |  4.08 ns |
+|                             Method |    Job |       Runtime |       Mean |    Error |    StdDev |
+|----------------------------------- |------- |-------------- |-----------:|---------:|----------:|
+|          Filter_MatchingFromSource | core22 | .NET Core 2.2 | 2,816.4 ns | 63.56 ns |  93.17 ns |
+|                  Logger_ForContext | core22 | .NET Core 2.2 |   666.1 ns |  7.63 ns |  11.41 ns |
+| LevelOverrideMap_GetEffectiveLevel | core22 | .NET Core 2.2 |   138.3 ns |  2.64 ns |   3.95 ns |
+|          Filter_MatchingFromSource | core31 | .NET Core 3.1 | 2,609.9 ns | 65.72 ns |  98.36 ns |
+|                  Logger_ForContext | core31 | .NET Core 3.1 |   670.8 ns |  8.51 ns |  12.74 ns |
+| LevelOverrideMap_GetEffectiveLevel | core31 | .NET Core 3.1 |   129.4 ns |  2.14 ns |   3.14 ns |
+|          Filter_MatchingFromSource |  net48 |      .NET 4.8 | 3,581.1 ns | 69.33 ns | 101.62 ns |
+|                  Logger_ForContext |  net48 |      .NET 4.8 |   783.8 ns |  7.70 ns |  11.52 ns |
+| LevelOverrideMap_GetEffectiveLevel |  net48 |      .NET 4.8 |   247.0 ns |  3.93 ns |   5.88 ns |
+|          Filter_MatchingFromSource |  net50 | .NET Core 5.0 | 2,315.3 ns | 56.63 ns |  81.22 ns |
+|                  Logger_ForContext |  net50 | .NET Core 5.0 |   514.2 ns |  8.91 ns |  13.34 ns |
+| LevelOverrideMap_GetEffectiveLevel |  net50 | .NET Core 5.0 |   131.6 ns |  2.48 ns |   3.71 ns |

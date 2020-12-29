@@ -14,68 +14,68 @@ WarmupCount=10
 ```
 |               Method |    Job |       Runtime |      Mean |     Error |    StdDev |    Median | Ratio | RatioSD |  Gen 0 | Gen 1 | Gen 2 | Allocated |
 |--------------------- |------- |-------------- |----------:|----------:|----------:|----------:|------:|--------:|-------:|------:|------:|----------:|
-|             LogEmpty | core31 | .NET Core 3.1 |  2.284 ns | 0.0159 ns | 0.0232 ns |  2.286 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-| LogEmptyWithEnricher | core31 | .NET Core 3.1 |  2.285 ns | 0.0175 ns | 0.0256 ns |  2.286 ns |  1.00 |    0.01 |      - |     - |     - |         - |
-|               LogMsg | core31 | .NET Core 3.1 |  3.754 ns | 0.0309 ns | 0.0443 ns |  3.763 ns |  1.64 |    0.03 |      - |     - |     - |         - |
-|         LogMsgWithEx | core31 | .NET Core 3.1 |  4.173 ns | 0.0334 ns | 0.0499 ns |  4.178 ns |  1.83 |    0.03 |      - |     - |     - |         - |
-|           LogScalar1 | core31 | .NET Core 3.1 |  6.104 ns | 0.0622 ns | 0.0892 ns |  6.110 ns |  2.67 |    0.05 |      - |     - |     - |         - |
-|           LogScalar2 | core31 | .NET Core 3.1 | 12.406 ns | 0.2633 ns | 0.3941 ns | 12.412 ns |  5.43 |    0.18 |      - |     - |     - |         - |
-|           LogScalar3 | core31 | .NET Core 3.1 | 15.257 ns | 0.3447 ns | 0.5160 ns | 15.324 ns |  6.67 |    0.23 |      - |     - |     - |         - |
-|        LogScalarMany | core31 | .NET Core 3.1 | 19.787 ns | 0.2532 ns | 0.3790 ns | 19.750 ns |  8.67 |    0.19 | 0.0089 |     - |     - |      56 B |
-|     LogScalarStruct1 | core31 | .NET Core 3.1 |  5.280 ns | 0.0596 ns | 0.0892 ns |  5.286 ns |  2.31 |    0.04 |      - |     - |     - |         - |
-|     LogScalarStruct2 | core31 | .NET Core 3.1 |  5.862 ns | 0.0605 ns | 0.0905 ns |  5.851 ns |  2.57 |    0.05 |      - |     - |     - |         - |
-|     LogScalarStruct3 | core31 | .NET Core 3.1 |  8.511 ns | 0.0743 ns | 0.1112 ns |  8.492 ns |  3.73 |    0.06 |      - |     - |     - |         - |
-|  LogScalarStructMany | core31 | .NET Core 3.1 | 27.673 ns | 0.1784 ns | 0.2670 ns | 27.689 ns | 12.12 |    0.14 | 0.0242 |     - |     - |     152 B |
-|   LogScalarBigStruct | core31 | .NET Core 3.1 | 21.421 ns | 0.3964 ns | 0.5933 ns | 21.381 ns |  9.37 |    0.28 |      - |     - |     - |         - |
-|        LogDictionary | core31 | .NET Core 3.1 |  9.409 ns | 0.1269 ns | 0.1899 ns |  9.407 ns |  4.13 |    0.09 | 0.0051 |     - |     - |      32 B |
-|          LogSequence | core31 | .NET Core 3.1 |  9.593 ns | 0.1040 ns | 0.1557 ns |  9.607 ns |  4.20 |    0.08 | 0.0051 |     - |     - |      32 B |
-|         LogAnonymous | core31 | .NET Core 3.1 |  9.879 ns | 0.1714 ns | 0.2566 ns |  9.901 ns |  4.33 |    0.13 | 0.0051 |     - |     - |      32 B |
-|              LogMix2 | core31 | .NET Core 3.1 | 11.602 ns | 0.2507 ns | 0.3753 ns | 11.627 ns |  5.08 |    0.17 |      - |     - |     - |         - |
-|              LogMix3 | core31 | .NET Core 3.1 | 15.086 ns | 0.3264 ns | 0.4785 ns | 15.014 ns |  6.61 |    0.22 |      - |     - |     - |         - |
-|              LogMix4 | core31 | .NET Core 3.1 | 27.310 ns | 0.1608 ns | 0.2407 ns | 27.320 ns | 11.96 |    0.18 | 0.0217 |     - |     - |     136 B |
-|              LogMix5 | core31 | .NET Core 3.1 | 31.976 ns | 0.3646 ns | 0.5458 ns | 31.832 ns | 14.01 |    0.31 | 0.0268 |     - |     - |     168 B |
-|           LogMixMany | core31 | .NET Core 3.1 | 58.781 ns | 0.6055 ns | 0.9062 ns | 58.661 ns | 25.75 |    0.49 | 0.0446 |     - |     - |     280 B |
+|             LogEmpty | core31 | .NET Core 3.1 |  1.536 ns | 0.1019 ns | 0.1526 ns |  1.539 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+| LogEmptyWithEnricher | core31 | .NET Core 3.1 |  1.591 ns | 0.0613 ns | 0.0917 ns |  1.585 ns |  1.04 |    0.08 |      - |     - |     - |         - |
+|               LogMsg | core31 | .NET Core 3.1 |  2.063 ns | 0.0294 ns | 0.0440 ns |  2.075 ns |  1.36 |    0.13 |      - |     - |     - |         - |
+|         LogMsgWithEx | core31 | .NET Core 3.1 |  2.260 ns | 0.0490 ns | 0.0734 ns |  2.251 ns |  1.48 |    0.14 |      - |     - |     - |         - |
+|           LogScalar1 | core31 | .NET Core 3.1 |  6.438 ns | 0.1386 ns | 0.2075 ns |  6.428 ns |  4.23 |    0.42 |      - |     - |     - |         - |
+|           LogScalar2 | core31 | .NET Core 3.1 | 11.788 ns | 0.3021 ns | 0.4522 ns | 11.623 ns |  7.77 |    1.04 |      - |     - |     - |         - |
+|           LogScalar3 | core31 | .NET Core 3.1 | 12.330 ns | 0.2041 ns | 0.2992 ns | 12.353 ns |  8.09 |    0.96 |      - |     - |     - |         - |
+|        LogScalarMany | core31 | .NET Core 3.1 | 16.856 ns | 0.3385 ns | 0.5067 ns | 16.913 ns | 11.10 |    1.34 | 0.0089 |     - |     - |      56 B |
+|     LogScalarStruct1 | core31 | .NET Core 3.1 |  6.840 ns | 0.5595 ns | 0.8374 ns |  6.201 ns |  4.54 |    0.97 |      - |     - |     - |         - |
+|     LogScalarStruct2 | core31 | .NET Core 3.1 |  5.598 ns | 0.0939 ns | 0.1406 ns |  5.591 ns |  3.68 |    0.35 |      - |     - |     - |         - |
+|     LogScalarStruct3 | core31 | .NET Core 3.1 |  5.973 ns | 0.1126 ns | 0.1685 ns |  5.984 ns |  3.93 |    0.41 |      - |     - |     - |         - |
+|  LogScalarStructMany | core31 | .NET Core 3.1 | 25.799 ns | 0.2193 ns | 0.3283 ns | 25.817 ns | 16.96 |    1.73 | 0.0242 |     - |     - |     152 B |
+|   LogScalarBigStruct | core31 | .NET Core 3.1 | 20.088 ns | 0.2339 ns | 0.3501 ns | 20.130 ns | 13.20 |    1.23 |      - |     - |     - |         - |
+|        LogDictionary | core31 | .NET Core 3.1 |  7.632 ns | 0.0873 ns | 0.1306 ns |  7.636 ns |  5.02 |    0.54 | 0.0051 |     - |     - |      32 B |
+|          LogSequence | core31 | .NET Core 3.1 |  7.606 ns | 0.0574 ns | 0.0859 ns |  7.597 ns |  5.00 |    0.51 | 0.0051 |     - |     - |      32 B |
+|         LogAnonymous | core31 | .NET Core 3.1 |  7.632 ns | 0.1437 ns | 0.2151 ns |  7.625 ns |  5.02 |    0.54 | 0.0051 |     - |     - |      32 B |
+|              LogMix2 | core31 | .NET Core 3.1 | 11.086 ns | 0.1198 ns | 0.1794 ns | 11.161 ns |  7.29 |    0.74 |      - |     - |     - |         - |
+|              LogMix3 | core31 | .NET Core 3.1 | 12.100 ns | 0.3658 ns | 0.5475 ns | 11.934 ns |  7.93 |    0.54 |      - |     - |     - |         - |
+|              LogMix4 | core31 | .NET Core 3.1 | 24.618 ns | 0.2429 ns | 0.3636 ns | 24.662 ns | 16.19 |    1.67 | 0.0217 |     - |     - |     136 B |
+|              LogMix5 | core31 | .NET Core 3.1 | 29.590 ns | 0.5902 ns | 0.8834 ns | 29.569 ns | 19.46 |    2.05 | 0.0268 |     - |     - |     168 B |
+|           LogMixMany | core31 | .NET Core 3.1 | 55.901 ns | 0.8472 ns | 1.2681 ns | 55.676 ns | 36.80 |    4.20 | 0.0446 |     - |     - |     280 B |
 |                      |        |               |           |           |           |           |       |         |        |       |       |           |
-|             LogEmpty |  net48 |      .NET 4.8 |  2.433 ns | 0.0288 ns | 0.0431 ns |  2.436 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-| LogEmptyWithEnricher |  net48 |      .NET 4.8 |  2.429 ns | 0.0309 ns | 0.0462 ns |  2.415 ns |  1.00 |    0.02 |      - |     - |     - |         - |
-|               LogMsg |  net48 |      .NET 4.8 |  4.081 ns | 0.0373 ns | 0.0547 ns |  4.091 ns |  1.68 |    0.04 |      - |     - |     - |         - |
-|         LogMsgWithEx |  net48 |      .NET 4.8 |  4.096 ns | 0.0275 ns | 0.0412 ns |  4.099 ns |  1.68 |    0.04 |      - |     - |     - |         - |
-|           LogScalar1 |  net48 |      .NET 4.8 |  7.537 ns | 0.1075 ns | 0.1609 ns |  7.565 ns |  3.10 |    0.09 |      - |     - |     - |         - |
-|           LogScalar2 |  net48 |      .NET 4.8 | 13.132 ns | 0.1430 ns | 0.2140 ns | 13.080 ns |  5.40 |    0.16 |      - |     - |     - |         - |
-|           LogScalar3 |  net48 |      .NET 4.8 | 17.018 ns | 0.1258 ns | 0.1845 ns | 16.998 ns |  6.99 |    0.14 |      - |     - |     - |         - |
-|        LogScalarMany |  net48 |      .NET 4.8 | 17.618 ns | 0.2208 ns | 0.3305 ns | 17.438 ns |  7.24 |    0.18 | 0.0089 |     - |     - |      56 B |
-|     LogScalarStruct1 |  net48 |      .NET 4.8 |  7.159 ns | 0.1033 ns | 0.1546 ns |  7.147 ns |  2.94 |    0.08 |      - |     - |     - |         - |
-|     LogScalarStruct2 |  net48 |      .NET 4.8 |  7.246 ns | 0.0844 ns | 0.1263 ns |  7.215 ns |  2.98 |    0.07 |      - |     - |     - |         - |
-|     LogScalarStruct3 |  net48 |      .NET 4.8 | 11.134 ns | 0.0811 ns | 0.1214 ns | 11.167 ns |  4.58 |    0.10 |      - |     - |     - |         - |
-|  LogScalarStructMany |  net48 |      .NET 4.8 | 25.464 ns | 0.1546 ns | 0.2315 ns | 25.543 ns | 10.47 |    0.17 | 0.0242 |     - |     - |     152 B |
-|   LogScalarBigStruct |  net48 |      .NET 4.8 | 26.077 ns | 2.3277 ns | 3.4840 ns | 26.162 ns | 10.72 |    1.46 |      - |     - |     - |         - |
-|        LogDictionary |  net48 |      .NET 4.8 |  9.476 ns | 0.0861 ns | 0.1288 ns |  9.488 ns |  3.90 |    0.06 | 0.0051 |     - |     - |      32 B |
-|          LogSequence |  net48 |      .NET 4.8 |  9.586 ns | 0.1172 ns | 0.1754 ns |  9.614 ns |  3.94 |    0.10 | 0.0051 |     - |     - |      32 B |
-|         LogAnonymous |  net48 |      .NET 4.8 |  9.586 ns | 0.0880 ns | 0.1317 ns |  9.604 ns |  3.94 |    0.10 | 0.0051 |     - |     - |      32 B |
-|              LogMix2 |  net48 |      .NET 4.8 | 14.191 ns | 0.4208 ns | 0.6299 ns | 14.130 ns |  5.84 |    0.28 |      - |     - |     - |         - |
-|              LogMix3 |  net48 |      .NET 4.8 | 17.734 ns | 0.6176 ns | 0.9243 ns | 17.733 ns |  7.29 |    0.41 |      - |     - |     - |         - |
-|              LogMix4 |  net48 |      .NET 4.8 | 24.184 ns | 0.1539 ns | 0.2257 ns | 24.267 ns |  9.94 |    0.20 | 0.0217 |     - |     - |     136 B |
-|              LogMix5 |  net48 |      .NET 4.8 | 29.919 ns | 0.3298 ns | 0.4937 ns | 29.943 ns | 12.31 |    0.39 | 0.0268 |     - |     - |     168 B |
-|           LogMixMany |  net48 |      .NET 4.8 | 55.664 ns | 0.2670 ns | 0.3996 ns | 55.728 ns | 22.89 |    0.42 | 0.0446 |     - |     - |     281 B |
+|             LogEmpty |  net48 |      .NET 4.8 |  1.687 ns | 0.0318 ns | 0.0476 ns |  1.691 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+| LogEmptyWithEnricher |  net48 |      .NET 4.8 |  1.704 ns | 0.0370 ns | 0.0554 ns |  1.709 ns |  1.01 |    0.04 |      - |     - |     - |         - |
+|               LogMsg |  net48 |      .NET 4.8 |  1.996 ns | 0.0256 ns | 0.0375 ns |  1.997 ns |  1.18 |    0.03 |      - |     - |     - |         - |
+|         LogMsgWithEx |  net48 |      .NET 4.8 |  2.315 ns | 0.0668 ns | 0.1000 ns |  2.298 ns |  1.37 |    0.08 |      - |     - |     - |         - |
+|           LogScalar1 |  net48 |      .NET 4.8 |  7.885 ns | 0.1584 ns | 0.2371 ns |  7.926 ns |  4.68 |    0.21 |      - |     - |     - |         - |
+|           LogScalar2 |  net48 |      .NET 4.8 | 13.973 ns | 0.0999 ns | 0.1400 ns | 13.971 ns |  8.29 |    0.28 |      - |     - |     - |         - |
+|           LogScalar3 |  net48 |      .NET 4.8 | 14.508 ns | 0.4312 ns | 0.6453 ns | 14.569 ns |  8.61 |    0.46 |      - |     - |     - |         - |
+|        LogScalarMany |  net48 |      .NET 4.8 | 15.537 ns | 0.2650 ns | 0.3967 ns | 15.440 ns |  9.22 |    0.38 | 0.0089 |     - |     - |      56 B |
+|     LogScalarStruct1 |  net48 |      .NET 4.8 |  7.761 ns | 0.1367 ns | 0.2046 ns |  7.757 ns |  4.60 |    0.18 |      - |     - |     - |         - |
+|     LogScalarStruct2 |  net48 |      .NET 4.8 |  7.253 ns | 0.1103 ns | 0.1617 ns |  7.232 ns |  4.30 |    0.16 |      - |     - |     - |         - |
+|     LogScalarStruct3 |  net48 |      .NET 4.8 |  7.513 ns | 0.1876 ns | 0.2807 ns |  7.483 ns |  4.46 |    0.22 |      - |     - |     - |         - |
+|  LogScalarStructMany |  net48 |      .NET 4.8 | 22.334 ns | 0.3007 ns | 0.4500 ns | 22.398 ns | 13.25 |    0.56 | 0.0242 |     - |     - |     152 B |
+|   LogScalarBigStruct |  net48 |      .NET 4.8 | 22.188 ns | 0.2854 ns | 0.4272 ns | 22.291 ns | 13.17 |    0.50 |      - |     - |     - |         - |
+|        LogDictionary |  net48 |      .NET 4.8 |  7.664 ns | 0.1417 ns | 0.2121 ns |  7.677 ns |  4.55 |    0.19 | 0.0051 |     - |     - |      32 B |
+|          LogSequence |  net48 |      .NET 4.8 |  7.774 ns | 0.0801 ns | 0.1199 ns |  7.778 ns |  4.61 |    0.15 | 0.0051 |     - |     - |      32 B |
+|         LogAnonymous |  net48 |      .NET 4.8 |  7.752 ns | 0.1164 ns | 0.1742 ns |  7.774 ns |  4.60 |    0.18 | 0.0051 |     - |     - |      32 B |
+|              LogMix2 |  net48 |      .NET 4.8 | 13.860 ns | 0.1851 ns | 0.2771 ns | 13.813 ns |  8.22 |    0.27 |      - |     - |     - |         - |
+|              LogMix3 |  net48 |      .NET 4.8 | 13.664 ns | 0.1761 ns | 0.2637 ns | 13.615 ns |  8.11 |    0.29 |      - |     - |     - |         - |
+|              LogMix4 |  net48 |      .NET 4.8 | 22.861 ns | 0.2993 ns | 0.4480 ns | 22.998 ns | 13.57 |    0.57 | 0.0217 |     - |     - |     136 B |
+|              LogMix5 |  net48 |      .NET 4.8 | 27.727 ns | 0.2188 ns | 0.3138 ns | 27.855 ns | 16.45 |    0.55 | 0.0268 |     - |     - |     168 B |
+|           LogMixMany |  net48 |      .NET 4.8 | 52.005 ns | 0.4149 ns | 0.6211 ns | 52.030 ns | 30.85 |    0.94 | 0.0446 |     - |     - |     281 B |
 |                      |        |               |           |           |           |           |       |         |        |       |       |           |
-|             LogEmpty |  net50 | .NET Core 5.0 |  2.278 ns | 0.0237 ns | 0.0355 ns |  2.276 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-| LogEmptyWithEnricher |  net50 | .NET Core 5.0 |  2.279 ns | 0.0240 ns | 0.0359 ns |  2.281 ns |  1.00 |    0.03 |      - |     - |     - |         - |
-|               LogMsg |  net50 | .NET Core 5.0 |  3.179 ns | 0.0360 ns | 0.0539 ns |  3.184 ns |  1.40 |    0.03 |      - |     - |     - |         - |
-|         LogMsgWithEx |  net50 | .NET Core 5.0 |  3.413 ns | 0.0411 ns | 0.0589 ns |  3.423 ns |  1.50 |    0.04 |      - |     - |     - |         - |
-|           LogScalar1 |  net50 | .NET Core 5.0 |  6.858 ns | 0.0890 ns | 0.1304 ns |  6.867 ns |  3.01 |    0.06 |      - |     - |     - |         - |
-|           LogScalar2 |  net50 | .NET Core 5.0 |  7.325 ns | 0.1864 ns | 0.2790 ns |  7.340 ns |  3.22 |    0.13 |      - |     - |     - |         - |
-|           LogScalar3 |  net50 | .NET Core 5.0 | 12.980 ns | 0.3131 ns | 0.4687 ns | 12.971 ns |  5.70 |    0.22 |      - |     - |     - |         - |
-|        LogScalarMany |  net50 | .NET Core 5.0 | 12.967 ns | 0.2523 ns | 0.3777 ns | 12.967 ns |  5.69 |    0.20 | 0.0089 |     - |     - |      56 B |
-|     LogScalarStruct1 |  net50 | .NET Core 5.0 |  5.380 ns | 0.0356 ns | 0.0533 ns |  5.397 ns |  2.36 |    0.04 |      - |     - |     - |         - |
-|     LogScalarStruct2 |  net50 | .NET Core 5.0 |  5.610 ns | 0.0328 ns | 0.0492 ns |  5.613 ns |  2.46 |    0.05 |      - |     - |     - |         - |
-|     LogScalarStruct3 |  net50 | .NET Core 5.0 |  9.099 ns | 0.0864 ns | 0.1293 ns |  9.087 ns |  3.99 |    0.08 |      - |     - |     - |         - |
-|  LogScalarStructMany |  net50 | .NET Core 5.0 | 22.068 ns | 0.2200 ns | 0.3225 ns | 22.081 ns |  9.70 |    0.16 | 0.0242 |     - |     - |     152 B |
-|   LogScalarBigStruct |  net50 | .NET Core 5.0 |  8.084 ns | 0.0709 ns | 0.1061 ns |  8.099 ns |  3.55 |    0.07 |      - |     - |     - |         - |
-|        LogDictionary |  net50 | .NET Core 5.0 |  7.863 ns | 0.1745 ns | 0.2612 ns |  7.893 ns |  3.45 |    0.12 | 0.0051 |     - |     - |      32 B |
-|          LogSequence |  net50 | .NET Core 5.0 |  8.199 ns | 0.1219 ns | 0.1825 ns |  8.160 ns |  3.60 |    0.10 | 0.0051 |     - |     - |      32 B |
-|         LogAnonymous |  net50 | .NET Core 5.0 |  8.325 ns | 0.0770 ns | 0.1153 ns |  8.336 ns |  3.66 |    0.08 | 0.0051 |     - |     - |      32 B |
-|              LogMix2 |  net50 | .NET Core 5.0 |  7.960 ns | 0.5752 ns | 0.8609 ns |  7.966 ns |  3.49 |    0.38 |      - |     - |     - |         - |
-|              LogMix3 |  net50 | .NET Core 5.0 | 12.627 ns | 0.5318 ns | 0.7960 ns | 12.633 ns |  5.54 |    0.36 |      - |     - |     - |         - |
-|              LogMix4 |  net50 | .NET Core 5.0 | 20.620 ns | 0.4601 ns | 0.6887 ns | 20.489 ns |  9.05 |    0.36 | 0.0217 |     - |     - |     136 B |
-|              LogMix5 |  net50 | .NET Core 5.0 | 23.377 ns | 0.1655 ns | 0.2476 ns | 23.431 ns | 10.26 |    0.19 | 0.0268 |     - |     - |     168 B |
-|           LogMixMany |  net50 | .NET Core 5.0 | 48.632 ns | 1.1064 ns | 1.6560 ns | 48.630 ns | 21.35 |    0.75 | 0.0446 |     - |     - |     280 B |
+|             LogEmpty |  net50 | .NET Core 5.0 |  1.653 ns | 0.0321 ns | 0.0480 ns |  1.658 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+| LogEmptyWithEnricher |  net50 | .NET Core 5.0 |  1.633 ns | 0.0332 ns | 0.0497 ns |  1.639 ns |  0.99 |    0.03 |      - |     - |     - |         - |
+|               LogMsg |  net50 | .NET Core 5.0 |  1.949 ns | 0.0293 ns | 0.0438 ns |  1.961 ns |  1.18 |    0.04 |      - |     - |     - |         - |
+|         LogMsgWithEx |  net50 | .NET Core 5.0 |  2.412 ns | 0.0709 ns | 0.1061 ns |  2.382 ns |  1.46 |    0.08 |      - |     - |     - |         - |
+|           LogScalar1 |  net50 | .NET Core 5.0 |  7.108 ns | 0.1379 ns | 0.2064 ns |  7.050 ns |  4.30 |    0.18 |      - |     - |     - |         - |
+|           LogScalar2 |  net50 | .NET Core 5.0 |  7.605 ns | 0.1918 ns | 0.2811 ns |  7.588 ns |  4.61 |    0.23 |      - |     - |     - |         - |
+|           LogScalar3 |  net50 | .NET Core 5.0 |  8.256 ns | 0.1745 ns | 0.2611 ns |  8.246 ns |  5.00 |    0.21 |      - |     - |     - |         - |
+|        LogScalarMany |  net50 | .NET Core 5.0 | 11.048 ns | 0.2109 ns | 0.3157 ns | 11.039 ns |  6.69 |    0.27 | 0.0089 |     - |     - |      56 B |
+|     LogScalarStruct1 |  net50 | .NET Core 5.0 |  5.501 ns | 0.0771 ns | 0.1154 ns |  5.496 ns |  3.33 |    0.12 |      - |     - |     - |         - |
+|     LogScalarStruct2 |  net50 | .NET Core 5.0 |  5.879 ns | 0.2577 ns | 0.3858 ns |  5.946 ns |  3.56 |    0.24 |      - |     - |     - |         - |
+|     LogScalarStruct3 |  net50 | .NET Core 5.0 |  6.019 ns | 0.1504 ns | 0.2252 ns |  5.944 ns |  3.65 |    0.17 |      - |     - |     - |         - |
+|  LogScalarStructMany |  net50 | .NET Core 5.0 | 19.484 ns | 0.2761 ns | 0.4132 ns | 19.476 ns | 11.80 |    0.45 | 0.0242 |     - |     - |     152 B |
+|   LogScalarBigStruct |  net50 | .NET Core 5.0 |  8.227 ns | 0.1954 ns | 0.2925 ns |  8.258 ns |  4.98 |    0.23 |      - |     - |     - |         - |
+|        LogDictionary |  net50 | .NET Core 5.0 |  5.878 ns | 0.0644 ns | 0.0963 ns |  5.886 ns |  3.56 |    0.11 | 0.0051 |     - |     - |      32 B |
+|          LogSequence |  net50 | .NET Core 5.0 |  6.029 ns | 0.0763 ns | 0.1143 ns |  6.027 ns |  3.65 |    0.13 | 0.0051 |     - |     - |      32 B |
+|         LogAnonymous |  net50 | .NET Core 5.0 |  6.052 ns | 0.0898 ns | 0.1345 ns |  6.067 ns |  3.67 |    0.13 | 0.0051 |     - |     - |      32 B |
+|              LogMix2 |  net50 | .NET Core 5.0 |  6.667 ns | 0.1450 ns | 0.2170 ns |  6.638 ns |  4.04 |    0.17 |      - |     - |     - |         - |
+|              LogMix3 |  net50 | .NET Core 5.0 |  7.900 ns | 0.2135 ns | 0.3195 ns |  7.908 ns |  4.78 |    0.24 |      - |     - |     - |         - |
+|              LogMix4 |  net50 | .NET Core 5.0 | 17.114 ns | 0.2537 ns | 0.3798 ns | 16.973 ns | 10.36 |    0.38 | 0.0217 |     - |     - |     136 B |
+|              LogMix5 |  net50 | .NET Core 5.0 | 22.242 ns | 0.2763 ns | 0.4135 ns | 22.264 ns | 13.47 |    0.50 | 0.0268 |     - |     - |     168 B |
+|           LogMixMany |  net50 | .NET Core 5.0 | 44.145 ns | 0.4768 ns | 0.7137 ns | 44.135 ns | 26.74 |    1.10 | 0.0446 |     - |     - |     280 B |
